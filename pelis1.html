@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Playlist MEGA</title>
+    <title>Playlist MEGA - 14 pelis (orden alfabético)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -25,7 +25,7 @@
             min-height: calc(100vh - 60px);
         }
         .sidebar {
-            width: 260px;
+            width: 280px;
             background: #181818;
             border-right: 1px solid #333;
             padding: 10px;
@@ -83,15 +83,30 @@
 </head>
 <body>
 <header>
-    <h1>Reproductor MEGA - Playlist (12 pelis)</h1>
+    <h1>Reproductor MEGA - 14 pelis (A-Z)</h1>
 </header>
 
 <div class="layout">
-    <!-- Lista izquierda -->
+    <!-- Lista alfabética izquierda -->
     <aside class="sidebar">
-        <h2>Películas</h2>
+        <h2>Películas (orden A-Z)</h2>
+
+        <button class="movie-link"
+                data-src="https://mega.nz/embed/TM1yEB7J#VwuJXaXh_AfPSu0A3AO2CURc2VIbfzDipBpRBwagpI4">
+            El Hobbit La batalla de los cinco ejércitos
+        </button>
+
+        <button class="movie-link"
+                data-src="https://mega.nz/embed/mJlliayb#jXNbecn0w_T6b3aoBbnaXv1hV0etUCdQ9Ott2RXX_MI">
+            El Hobbit La desolación de Smaug
+        </button>
 
         <button class="movie-link active"
+                data-src="https://mega.nz/embed/iEcSWZgb#G55RiC4yHFN05GZA7Avg9OyKwCGr0e5Klovgy0OJr_I">
+            El Hobbit Un viaje inesperado
+        </button>
+
+        <button class="movie-link"
                 data-src="https://mega.nz/embed/2ZkikDIR#iytsSR0_zoUIgZ3McbmmPC29NCKdtfGClkuKw3UcKvQ">
             Gran Turismo
         </button>
@@ -136,20 +151,14 @@
             Padre no hay más que uno 5
         </button>
 
-        <!-- NUEVAS: Trilogía del Hobbit -->
         <button class="movie-link"
-                data-src="https://mega.nz/embed/mJlliayb#jXNbecn0w_T6b3aoBbnaXv1hV0etUCdQ9Ott2RXX_MI">
-            El Hobbit La desolación de Smaug
+                data-src="https://vidmoly.net/embed-vodqoovm8cya.html">
+            Scream (Vigila quién llama)
         </button>
 
         <button class="movie-link"
-                data-src="https://mega.nz/embed/iEcSWZgb#G55RiC4yHFN05GZA7Avg9OyKwCGr0e5Klovgy0OJr_I">
-            El Hobbit Un viaje inesperado
-        </button>
-
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/TM1yEB7J#VwuJXaXh_AfPSu0A3AO2CURc2VIbfzDipBpRBwagpI4">
-            El Hobbit La batalla de los cinco ejércitos
+                data-src="https://vidmoly.net/embed-qi7s0j884p4r.html">
+            Torrente 2 Misión en Marbella
         </button>
 
     </aside>
@@ -157,24 +166,20 @@
     <!-- Reproductor derecha -->
     <main class="player">
         <iframe id="playerFrame"
-                src="https://mega.nz/embed/2ZkikDIR#iytsSR0_zoUIgZ3McbmmPC29NCKdtfGClkuKw3UcKvQ"
+                src="https://mega.nz/embed/iEcSWZgb#G55RiC4yHFN05GZA7Avg9OyKwCGr0e5Klovgy0OJr_I"
                 allowfullscreen>
         </iframe>
     </main>
 </div>
 
 <script>
-    // Seleccionar todos los botones y el iframe
     const buttons = document.querySelectorAll('.movie-link');
     const player = document.getElementById('playerFrame');
 
     buttons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Cambiar src del iframe
             const newSrc = btn.getAttribute('data-src');
             player.setAttribute('src', newSrc);
-
-            // Marcar activo
             buttons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
         });
