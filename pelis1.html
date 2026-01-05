@@ -2,244 +2,244 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Playlist Películas - 25 pelis (A-Z)</title>
+    <title>Playlist Películas - Portadas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             margin: 0;
+            font-family: Arial, sans-serif;
             background: #111;
             color: #eee;
-            font-family: Arial, sans-serif;
-        }
-        header {
-            background: #222;
-            padding: 15px;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 1.4rem;
-        }
-        .layout {
             display: flex;
-            min-height: calc(100vh - 60px);
+            height: 100vh;
         }
-        .sidebar {
-            width: 300px;
+        aside {
+            width: 260px;
             background: #181818;
-            border-right: 1px solid #333;
-            padding: 10px;
-            box-sizing: border-box;
             overflow-y: auto;
+            padding: 15px;
+            box-sizing: border-box;
         }
-        .sidebar h2 {
-            font-size: 1.1rem;
-            margin-top: 0;
-            background: #333;
-            padding: 8px 10px;
-            margin: 10px -10px 5px -10px;
-            font-weight: bold;
-        }
-        .movie-link {
-            display: block;
-            width: 100%;
-            text-align: left;
-            margin-bottom: 6px;
-            padding: 8px 10px;
-            background: #252525;
-            color: #eee;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.88rem;
-        }
-        .movie-link:hover {
-            background: #333;
-        }
-        .movie-link.active {
-            background: #4a148c;
-        }
-        .player {
+        main {
             flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 10px;
             box-sizing: border-box;
         }
         #playerFrame {
             width: 100%;
-            height: 480px;
+            height: 100%;
             border: none;
-            background: #000;
+            max-width: 1000px;
+            max-height: 100%;
         }
-        @media (max-width: 850px) {
-            .layout {
+        h1 {
+            font-size: 18px;
+            margin: 0 0 10px;
+            text-align: center;
+        }
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+        }
+        .movie-card {
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            background: #222;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .movie-card img {
+            width: 100%;
+            display: block;
+        }
+        .movie-card:hover {
+            transform: scale(1.03);
+            border-color: #555;
+        }
+        .movie-card.active {
+            border-color: #00a2ff;
+        }
+        @media (max-width: 768px) {
+            body {
                 flex-direction: column;
             }
-            .sidebar {
+            aside {
                 width: 100%;
-                border-right: none;
-                border-bottom: 1px solid #333;
+                height: 40%;
             }
-            #playerFrame {
-                height: 260px;
+            main {
+                height: 60%;
             }
         }
     </style>
 </head>
 <body>
-<header>
-    <h1>Reproductor Películas - 25 pelis (A-Z)</h1>
-</header>
 
-<div class="layout">
-    <!-- Sidebar con letras separadoras -->
-    <aside class="sidebar">
-        <h2>E - El Hobbit</h2>
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/TM1yEB7J#VwuJXaXh_AfPSu0A3AO2CURc2VIbfzDipBpRBwagpI4">
-            El Hobbit: La batalla de los cinco ejércitos
-        </button>
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/mJlliayb#jXNbecn0w_T6b3aoBbnaXv1hV0etUCdQ9Ott2RXX_MI">
-            El Hobbit: La desolación de Smaug
-        </button>
-        <button class="movie-link active"
-                data-src="https://mega.nz/embed/iEcSWZgb#G55RiC4yHFN05GZA7Avg9OyKwCGr0e5Klovgy0OJr_I">
-            El Hobbit: Un viaje inesperado
-        </button>
+    <aside>
+        <h1>Películas</h1>
+        <div class="movie-grid">
 
-        <h2>G</h2>
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/2ZkikDIR#iytsSR0_zoUIgZ3McbmmPC29NCKdtfGClkuKw3UcKvQ">
-            Gran Turismo
-        </button>
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/6I1miIaZ#EP55uS7w8NlZcoCH_EeyJhtT3WeZ0yCY4VgBFsyRrIQ">
-            Gremlins
-        </button>
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/PMt1yZKb#rE4i-o1aydc9MfUSM0dJpzIvP82rMI5MSIt4OHNkIjs">
-            Gru mi villano favorito 3
-        </button>
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/PBtGyDZK#c8WecySPrGP_zh1Xdk3Cov6n9fQT9EKSjhBMKEi7nAE">
-            Guerra Mundial Z
-        </button>
+            <!-- EJEMPLO PELIS (PORTADAS INVENTADAS) -->
+            <div class="movie-card active" data-src="https://mega.nz/embed/TM1yEB7J#VwuJXaXh_AfPSu0A3AO2CURc2VIbfzDipBpRBwagpI4">
+                <img src="https://pics.filmaffinity.com/the_hobbit_the_battle_of_the_five_armies-282438316-mmed.jpg" alt="El Hobbit: La batalla de los cinco ejércitos">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
 
-        <h2>H - Harry Potter</h2>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-hm9byeng2na6.html">
-            Harry Potter y la piedra filosofal (2001)
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-v5kfwben4zbx.html">
-            Harry Potter y la cámara secreta (2002)
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-wuri8c6ztdel.html">
-            Harry Potter y el prisionero de Azkaban (2004)
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-yj8skt6kljll.html">
-            Harry Potter y el cáliz de fuego (2005)
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-rquesq6wwagy.html">
-            Harry Potter y la Orden del Fénix (2007)
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-f0g4jwal1yn2.html">
-            Harry Potter y el misterio del príncipe (2009)
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-0o5pw5faqbn7.html">
-            Harry Potter y las Reliquias de la Muerte: Parte 1 (2010)
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-c5dby2e3n57r.html">
-            Harry Potter y las Reliquias de la Muerte: Parte 2 (2011)
-        </button>
+            <div class="movie-card" data-src="https://mega.nz/embed/mJlliayb#jXNbecn0w_T6b3aoBbnaXv1hV0etUCdQ9Ott2RXX_MI">
+                <img src="https://www.movistarplus.es/recorte/n/caratula5/MNEOXP1129134" alt="El Hobbit: La desolación de Smaug">
+				<div class="movie-title">El Hobbit: La desolación de Smaug</div>
+            </div>
 
-        <h2>P</h2>
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/PINGiBjA#Xx1My65ABlNaRd-YWdh4qSELfkrQVx71ORUv7lPRr6Q">
-            Padre no hay más que uno 1
-        </button>
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/2ElGxQAY#XdSpfaRca2RXqOc747zXnnrRyolkrEvm0w4ZyNuFqNk">
-            Padre no hay más que uno 2
-        </button>
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/jdl3xTyD#B1i0xKkNz_nxEvvQ9C6DrfN0rH1Y6K-efl9rQX1UGUg">
-            Padre no hay más que uno 3
-        </button>
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/jZFy3a4J#T9iZ9XkynNINavgpY8VKH6hwZOgSRiXlMXRR3pEtLXM">
-            Padre no hay más que uno 4
-        </button>
-        <button class="movie-link"
-                data-src="https://mega.nz/embed/vMcX3aRC#6lhWgb_CfgJ6wD-EcH3cJpUDoyxA_WgR4Ni1Llh3VnQ">
-            Padre no hay más que uno 5
-        </button>
+            <div class="movie-card" data-src="https://mega.nz/embed/iEcSWZgb#G55RiC4yHFN05GZA7Avg9OyKwCGr0e5Klovgy0OJr_I">
+                <img src="https://www.movistarplus.es/recorte/n/caratula5/MNEOXP1082609" alt="El Hobbit: Un viaje inesperado">
+				<div class="movie-title">El Hobbit: Un viaje inesperado</div>
+            </div>
 
-        <h2>S</h2>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-fpgtgtibok19.html">
-            Scary Movie 1
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-vodqoovm8cya.html">
-            Scream (Vigila quién llama)
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-c7h3obr4u4qf.html">
-            Scream 4
-        </button>
+            <div class="movie-card" data-src="https://mega.nz/embed/2ZkikDIR#iytsSR0_zoUIgZ3McbmmPC29NCKdtfGClkuKw3UcKvQ">
+                <img src="https://pics.filmaffinity.com/Gran_Turismo-703890981-large.jpg" alt="Gran Turismo">
+				<div class="movie-title">Gran Turismo</div>
+            </div>
 
-        <h2>T - Torrente</h2>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-qi7s0j884p4r.html">
-            Torrente 2: Misión en Marbella
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-4xjujhg7s77i.html">
-            Torrente 3: El protector
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-aidjq9e88ax3.html">
-            Torrente 4: Lethal Crisis
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-12v6dzkjqlek.html">
-            Torrente 5: Operación Eurovegas
-        </button>
-        <button class="movie-link"
-                data-src="https://vidmoly.net/embed-i03w7zmqzjo5.html">
-            Torrente: El brazo tonto de la ley
-        </button>
+            <div class="movie-card" data-src="https://mega.nz/embed/6I1miIaZ#EP55uS7w8NlZcoCH_EeyJhtT3WeZ0yCY4VgBFsyRrIQ">
+                <img src="https://static.posters.cz/image/750/16479.jpg" alt="Gremlins">
+				<div class="movie-title">Gremlins</div>
+            </div>
+
+            <div class="movie-card" data-src="https://mega.nz/embed/PMt1yZKb#rE4i-o1aydc9MfUSM0dJpzIvP82rMI5MSIt4OHNkIjs">
+                <img src="https://pics.filmaffinity.com/Gru_3_Mi_villano_favorito-346342282-large.jpg" alt="Gru mi villano favorito 3">
+				<div class="movie-title">Gru mi villano favorito 3</div>
+            </div>
+
+            <div class="movie-card" data-src="https://mega.nz/embed/PBtGyDZK#c8WecySPrGP_zh1Xdk3Cov6n9fQT9EKSjhBMKEi7nAE">
+                <img src="https://pics.filmaffinity.com/Guerra_Mundial_Z-495906000-large.jpg" alt="Guerra Mundial Z">
+				<div class="movie-title">Guerra Mundial Z</div>
+            </div>
+
+            <div class="movie-card" data-src="https://vidmoly.net/embed-hm9byeng2na6.html">
+                <img src="https://pics.filmaffinity.com/Harry_Potter_y_la_piedra_filosofal-192221009-large.jpg" alt="Harry Potter y la piedra filosofal (2001)">
+				<div class="movie-title">Harry Potter y la piedra filosofal (2001)</div>
+            </div>
+
+            <div class="movie-card" data-src="https://vidmoly.net/embed-v5kfwben4zbx.html">
+                <img src="https://pics.filmaffinity.com/Harry_Potter_y_la_caamara_secreta-420538488-large.jpg" alt="Harry Potter y la cámara secreta (2002)">
+				<div class="movie-title">Harry Potter y la cámara secreta (2002)</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://vidmoly.net/embed-wuri8c6ztdel.html">
+                <img src="https://m.media-amazon.com/images/S/pv-target-images/5abd8217a74c31735cf5f5532f3614324d5ff9aa13d858b2a00bf875e8e94be6.jpg" alt="Harry Potter y el prisionero de Azkaban (2004)">
+				<div class="movie-title">Harry Potter y el prisionero de Azkaban (2004)</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://vidmoly.net/embed-wuri8c6ztdel.html">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 11">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 12">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 13">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 14">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 15">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 16">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 17">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
+						<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 18">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 19">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 20">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+			
+            </div>
+			
+			<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 21">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>				
+            </div>
+			
+						<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 22">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 23">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+				
+				 </div>
+				
+							<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 24">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+            </div>
+			
+			<div class="movie-card" data-src="https://mega.nz/embed/PELI10#clave10">
+                <img src="https://example.com/posters/peli10.jpg" alt="Peli 25">
+				<div class="movie-title">El Hobbit: La batalla de los cinco ejércitos</div>
+				
+            <!-- COPIA Y PEGA MÁS .movie-card SI TIENES MÁS PELIS -->
+
+        </div>
     </aside>
 
-    <!-- Reproductor -->
-    <main class="player">
-        <iframe id="playerFrame"
-                src="https://mega.nz/embed/iEcSWZgb#G55RiC4yHFN05GZA7Avg9OyKwCGr0e5Klovgy0OJr_I"
-                allowfullscreen>
+    <main>
+        <!-- Reproductor único (misma peli que la .active) -->
+        <iframe
+            id="playerFrame"
+            src="https://mega.nz/embed/PELI1#clave1"
+            allowfullscreen
+            referrerpolicy="no-referrer">
         </iframe>
     </main>
-</div>
 
-<script>
-    const buttons = document.querySelectorAll('.movie-link');
-    const player = document.getElementById('playerFrame');
+    <script>
+        const cards = document.querySelectorAll('.movie-card');
+        const player = document.getElementById('playerFrame');
 
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const newSrc = btn.getAttribute('data-src');
-            player.setAttribute('src', newSrc);
-            buttons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const newSrc = card.getAttribute('data-src');
+                player.setAttribute('src', newSrc);
+
+                cards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+            });
         });
-    });
-</script>
+    </script>
 
 </body>
 </html>
+
