@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Playlist MEGA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            background: #111;
+            color: #eee;
+            font-family: Arial, sans-serif;
+        }
+        header {
+            background: #222;
+            padding: 15px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.4rem;
+        }
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+        .sidebar {
+            width: 260px;
+            background: #181818;
+            border-right: 1px solid #333;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .sidebar h2 {
+            font-size: 1.1rem;
+            margin-top: 0;
+        }
+        .movie-link {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 6px;
+            padding: 8px 10px;
+            background: #252525;
+            color: #eee;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .movie-link:hover {
+            background: #333;
+        }
+        .movie-link.active {
+            background: #4a148c;
+        }
+        .player {
+            flex: 1;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #playerFrame {
+            width: 100%;
+            height: 480px;
+            border: none;
+            background: #000;
+        }
+        @media (max-width: 800px) {
+            .layout {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #333;
+            }
+            #playerFrame {
+                height: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Reproductor MEGA - Playlist</h1>
+</header>
+
+<div class="layout">
+    <!-- Lista izquierda -->
+    <aside class="sidebar">
+        <h2>Películas</h2>
+
+        <button class="movie-link active"
+                data-src="https://mega.nz/embed/2ZkikDIR#iytsSR0_zoUIgZ3McbmmPC29NCKdtfGClkuKw3UcKvQ">
+            Gran Turismo
+        </button>
+
+        <button class="movie-link"
+                data-src="https://mega.nz/embed/6I1miIaZ#EP55uS7w8NlZcoCH_EeyJhtT3WeZ0yCY4VgBFsyRrIQ">
+            Gremlins
+        </button>
+
+        <button class="movie-link"
+                data-src="https://mega.nz/embed/PMt1yZKb#rE4i-o1aydc9MfUSM0dJpzIvP82rMI5MSIt4OHNkIjs">
+            Gru mi villano favorito 3
+        </button>
+
+        <button class="movie-link"
+                data-src="https://mega.nz/embed/PBtGyDZK#c8WecySPrGP_zh1Xdk3Cov6n9fQT9EKSjhBMKEi7nAE">
+            Guerra Mundial Z
+        </button>
+
+        <button class="movie-link"
+                data-src="https://mega.nz/embed/PINGiBjA#Xx1My65ABlNaRd-YWdh4qSELfkrQVx71ORUv7lPRr6Q">
+            Padre no hay más que uno 1
+        </button>
+
+        <button class="movie-link"
+                data-src="https://mega.nz/embed/2ElGxQAY#XdSpfaRca2RXqOc747zXnnrRyolkrEvm0w4ZyNuFqNk">
+            Padre no hay más que uno 2
+        </button>
+
+        <button class="movie-link"
+                data-src="https://mega.nz/embed/jdl3xTyD#B1i0xKkNz_nxEvvQ9C6DrfN0rH1Y6K-efl9rQX1UGUg">
+            Padre no hay más que uno 3
+        </button>
+
+        <button class="movie-link"
+                data-src="https://mega.nz/embed/jZFy3a4J#T9iZ9XkynNINavgpY8VKH6hwZOgSRiXlMXRR3pEtLXM">
+            Padre no hay más que uno 4
+        </button>
+
+        <button class="movie-link"
+                data-src="https://mega.nz/embed/vMcX3aRC#6lhWgb_CfgJ6wD-EcH3cJpUDoyxA_WgR4Ni1Llh3VnQ">
+            Padre no hay más que uno 5
+        </button>
+    </aside>
+
+    <!-- Reproductor derecha -->
+    <main class="player">
+        <iframe id="playerFrame"
+                src="https://mega.nz/embed/2ZkikDIR#iytsSR0_zoUIgZ3McbmmPC29NCKdtfGClkuKw3UcKvQ"
+                allowfullscreen>
+        </iframe>
+    </main>
+</div>
+
+<script>
+    // Seleccionar todos los botones y el iframe
+    const buttons = document.querySelectorAll('.movie-link');
+    const player = document.getElementById('playerFrame');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Cambiar src del iframe
+            const newSrc = btn.getAttribute('data-src');
+            player.setAttribute('src', newSrc);
+
+            // Marcar activo
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>
