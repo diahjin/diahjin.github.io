@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>The Good Doctor T7 - fernolv</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      text-align: center;
+      margin: 0;
+    }
+    h1 { margin: 20px 0 5px; }
+    h2 { margin: 0 0 20px; font-weight: normal; color: #ccc; }
+    .lista {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: 900px;
+    }
+    .lista button {
+      padding: 8px 12px;
+      background: #444;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .lista button:hover {
+      background: #666;
+    }
+    iframe {
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cine de fernolv</h1>
+  <h2>The Good Doctor - Temporada 7</h2>
+
+  <!-- Reproductor MEGA -->
+  <iframe
+    id="player"
+    width="800"
+    height="450"
+    src="https://mega.nz/embed/mJ8hSIwa#irSioXCMY5i8WVdRYTeo7lQKkSyhzuMu1ZmmXpeUFAo"
+    allowfullscreen>
+  </iframe>
+
+  <!-- Lista de capítulos -->
+  <div class="lista">
+    <button onclick="cambiarCap(0)">7x01</button>
+    <button onclick="cambiarCap(1)">7x02</button>
+    <button onclick="cambiarCap(2)">7x03</button>
+    <button onclick="cambiarCap(3)">7x04</button>
+    <button onclick="cambiarCap(4)">7x05</button>
+    <button onclick="cambiarCap(5)">7x06</button>
+    <button onclick="cambiarCap(6)">7x07</button>
+    <button onclick="cambiarCap(7)">7x08</button>
+    <button onclick="cambiarCap(8)">7x09</button>
+    <button onclick="cambiarCap(9)">7x10</button>
+  </div>
+
+  <script>
+    const caps = [
+      "https://mega.nz/embed/mJ8hSIwa#irSioXCMY5i8WVdRYTeo7lQKkSyhzuMu1ZmmXpeUFAo", // 7x1
+      "https://mega.nz/embed/jVVGnCgD#u7ZdRO0lToREtzAJ_Ghh-W5Lt_YBOqpCSwaVDGnnI9o", // 7x2
+      "https://mega.nz/embed/adlxXISK#AqJ46NpiVTfsdi0OfT8FFJAbAdiZGTHBr0GJDRu_Bus", // 7x3
+      "https://mega.nz/embed/uFljHJBT#YuLSzWVBNlYQf5K_7tEeWWv6tHMjBRlqw9akyyL4VGo", // 7x4
+      "https://mega.nz/embed/iM9XjD4J#ZS5DdTQVAzdQGgCp4FOlcAJvbIjjvVFmJp66EyPOSQc", // 7x5
+      "https://mega.nz/embed/PYNVBLjJ#LbKcla2srtqgsdxhQZlstGWyznwiwrG4MPyBwvtXxPE", // 7x6
+      "https://mega.nz/embed/CR8EhSIL#xoDK2SuDv5lwVeWrODU6OqrDRUgMel8NVTv5Munr3hU", // 7x7
+      "https://mega.nz/embed/bN9H3TCT#fd9bJT0hXb8kM53UGRYgBl7oH8UEFQb1_SqzxMU3D5M", // 7x8
+      "https://mega.nz/embed/XA9QnYSA#k7y4jvFmIs99mowxf2PJeD5IE6T-SwanSuirwfjtO2Q", // 7x9
+      "https://mega.nz/embed/aJVFjQaT#YfruzkKLGZHcOZvCq8cpae8X795X268iJRPoiJKSrWA"  // 7x10
+    ];
+
+    function cambiarCap(i) {
+      const iframe = document.getElementById('player');
+      iframe.src = caps[i];
+    }
+  </script>
+</body>
+</html>
