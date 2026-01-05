@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Peliculas</title>
+    <title>Playlist Películas - 25 pelis (A-Z)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
@@ -25,7 +25,7 @@
             min-height: calc(100vh - 60px);
         }
         .sidebar {
-            width: 280px;
+            width: 300px;
             background: #181818;
             border-right: 1px solid #333;
             padding: 10px;
@@ -35,6 +35,10 @@
         .sidebar h2 {
             font-size: 1.1rem;
             margin-top: 0;
+            background: #333;
+            padding: 8px 10px;
+            margin: 10px -10px 5px -10px;
+            font-weight: bold;
         }
         .movie-link {
             display: block;
@@ -47,7 +51,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
         .movie-link:hover {
             background: #333;
@@ -66,7 +70,7 @@
             border: none;
             background: #000;
         }
-        @media (max-width: 800px) {
+        @media (max-width: 850px) {
             .layout {
                 flex-direction: column;
             }
@@ -83,87 +87,138 @@
 </head>
 <body>
 <header>
-    <h1>Reproductor MEGA - 14 pelis (A-Z)</h1>
+    <h1>Reproductor Películas - 25 pelis (A-Z)</h1>
 </header>
 
 <div class="layout">
-    <!-- Lista alfabética izquierda -->
+    <!-- Sidebar con letras separadoras -->
     <aside class="sidebar">
-        <h2>Películas (orden A-Z)</h2>
-
+        <h2>E - El Hobbit</h2>
         <button class="movie-link"
                 data-src="https://mega.nz/embed/TM1yEB7J#VwuJXaXh_AfPSu0A3AO2CURc2VIbfzDipBpRBwagpI4">
-            El Hobbit La batalla de los cinco ejércitos
+            El Hobbit: La batalla de los cinco ejércitos
         </button>
-
         <button class="movie-link"
                 data-src="https://mega.nz/embed/mJlliayb#jXNbecn0w_T6b3aoBbnaXv1hV0etUCdQ9Ott2RXX_MI">
-            El Hobbit La desolación de Smaug
+            El Hobbit: La desolación de Smaug
         </button>
-
         <button class="movie-link active"
                 data-src="https://mega.nz/embed/iEcSWZgb#G55RiC4yHFN05GZA7Avg9OyKwCGr0e5Klovgy0OJr_I">
-            El Hobbit Un viaje inesperado
+            El Hobbit: Un viaje inesperado
         </button>
 
+        <h2>G</h2>
         <button class="movie-link"
                 data-src="https://mega.nz/embed/2ZkikDIR#iytsSR0_zoUIgZ3McbmmPC29NCKdtfGClkuKw3UcKvQ">
             Gran Turismo
         </button>
-
         <button class="movie-link"
                 data-src="https://mega.nz/embed/6I1miIaZ#EP55uS7w8NlZcoCH_EeyJhtT3WeZ0yCY4VgBFsyRrIQ">
             Gremlins
         </button>
-
         <button class="movie-link"
                 data-src="https://mega.nz/embed/PMt1yZKb#rE4i-o1aydc9MfUSM0dJpzIvP82rMI5MSIt4OHNkIjs">
             Gru mi villano favorito 3
         </button>
-
         <button class="movie-link"
                 data-src="https://mega.nz/embed/PBtGyDZK#c8WecySPrGP_zh1Xdk3Cov6n9fQT9EKSjhBMKEi7nAE">
             Guerra Mundial Z
         </button>
 
+        <h2>H - Harry Potter</h2>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-hm9byeng2na6.html">
+            Harry Potter y la piedra filosofal (2001)
+        </button>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-v5kfwben4zbx.html">
+            Harry Potter y la cámara secreta (2002)
+        </button>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-wuri8c6ztdel.html">
+            Harry Potter y el prisionero de Azkaban (2004)
+        </button>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-yj8skt6kljll.html">
+            Harry Potter y el cáliz de fuego (2005)
+        </button>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-rquesq6wwagy.html">
+            Harry Potter y la Orden del Fénix (2007)
+        </button>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-f0g4jwal1yn2.html">
+            Harry Potter y el misterio del príncipe (2009)
+        </button>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-0o5pw5faqbn7.html">
+            Harry Potter y las Reliquias de la Muerte: Parte 1 (2010)
+        </button>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-c5dby2e3n57r.html">
+            Harry Potter y las Reliquias de la Muerte: Parte 2 (2011)
+        </button>
+
+        <h2>P</h2>
         <button class="movie-link"
                 data-src="https://mega.nz/embed/PINGiBjA#Xx1My65ABlNaRd-YWdh4qSELfkrQVx71ORUv7lPRr6Q">
             Padre no hay más que uno 1
         </button>
-
         <button class="movie-link"
                 data-src="https://mega.nz/embed/2ElGxQAY#XdSpfaRca2RXqOc747zXnnrRyolkrEvm0w4ZyNuFqNk">
             Padre no hay más que uno 2
         </button>
-
         <button class="movie-link"
                 data-src="https://mega.nz/embed/jdl3xTyD#B1i0xKkNz_nxEvvQ9C6DrfN0rH1Y6K-efl9rQX1UGUg">
             Padre no hay más que uno 3
         </button>
-
         <button class="movie-link"
                 data-src="https://mega.nz/embed/jZFy3a4J#T9iZ9XkynNINavgpY8VKH6hwZOgSRiXlMXRR3pEtLXM">
             Padre no hay más que uno 4
         </button>
-
         <button class="movie-link"
                 data-src="https://mega.nz/embed/vMcX3aRC#6lhWgb_CfgJ6wD-EcH3cJpUDoyxA_WgR4Ni1Llh3VnQ">
             Padre no hay más que uno 5
         </button>
 
+        <h2>S</h2>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-fpgtgtibok19.html">
+            Scary Movie 1
+        </button>
         <button class="movie-link"
                 data-src="https://vidmoly.net/embed-vodqoovm8cya.html">
             Scream (Vigila quién llama)
         </button>
-
         <button class="movie-link"
-                data-src="https://vidmoly.net/embed-qi7s0j884p4r.html">
-            Torrente 2 Misión en Marbella
+                data-src="https://vidmoly.net/embed-c7h3obr4u4qf.html">
+            Scream 4
         </button>
 
+        <h2>T - Torrente</h2>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-qi7s0j884p4r.html">
+            Torrente 2: Misión en Marbella
+        </button>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-4xjujhg7s77i.html">
+            Torrente 3: El protector
+        </button>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-aidjq9e88ax3.html">
+            Torrente 4: Lethal Crisis
+        </button>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-12v6dzkjqlek.html">
+            Torrente 5: Operación Eurovegas
+        </button>
+        <button class="movie-link"
+                data-src="https://vidmoly.net/embed-i03w7zmqzjo5.html">
+            Torrente: El brazo tonto de la ley
+        </button>
     </aside>
 
-    <!-- Reproductor derecha -->
+    <!-- Reproductor -->
     <main class="player">
         <iframe id="playerFrame"
                 src="https://mega.nz/embed/iEcSWZgb#G55RiC4yHFN05GZA7Avg9OyKwCGr0e5Klovgy0OJr_I"
@@ -188,4 +243,3 @@
 
 </body>
 </html>
-
