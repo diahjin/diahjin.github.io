@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Series y capítulos</title>
+</head>
+<body>
+
+    <h1>Ver series</h1>
+
+    <!-- Select de series -->
+    <label for="serie">Serie:</label>
+    <select id="serie">
+        <option value="">-- Elige una serie --</option>
+        <option value="house">House</option>
+        <option value="thegooddoctor">The Good Doctor</option>
+        <option value="thestrain">The Strain</option>
+    </select>
+
+    <br><br>
+
+    <!-- Select de capítulos -->
+    <label for="capitulo">Capítulo:</label>
+    <select id="capitulo" disabled>
+        <option value="">-- Elige primero una serie --</option>
+    </select>
+
+    <br><br>
+
+    <!-- Reproductor MEGA integrado en la misma página -->
+    <iframe
+        id="megaPlayer"
+        width="640"
+        height="360"
+        frameborder="0"
+        allowfullscreen
+        src="">
+    </iframe>
+
+    <script>
+        // ENLACES EMBED DE MEGA (CAMBIA ESTOS POR LOS TUYOS SI QUIERES)
+        const datosSeries = {
+            house: [
+                { nombre: "House - Capítulo 1", url: "https://mega.nz/embed/AAAAAAAA#AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+                { nombre: "House - Capítulo 2", url: "https://mega.nz/embed/BBBBBBBB#BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" }
+            ],
+            thegooddoctor: [
+                { nombre: "The Good Doctor - 6x1",  url: "https://vidmoly.net/embed-ofmwfmbv2s4y.html" },
+                { nombre: "The Good Doctor - 6x2",  url: "https://vidmoly.net/embed-2oalv0ft40hz.html" },
+                { nombre: "The Good Doctor - 6x3",  url: "https://vidmoly.net/embed-98oolgef57j2.html" },
+                { nombre: "The Good Doctor - 6x4",  url: "https://vidmoly.net/embed-yu3tikdrtic4.htmlo" },
+                { nombre: "The Good Doctor - 6x5",  url: "https://vidmoly.net/embed-t4rhmcnu56a3.html" },
+                { nombre: "The Good Doctor - 6x6",  url: "https://vidmoly.net/embed-xsaiwftec5z9.html" },
+                { nombre: "The Good Doctor - 6x7",  url: "https://vidmoly.net/embed-h14cmlrtyrg4.html" },
+                { nombre: "The Good Doctor - 6x8",  url: "https://vidmoly.net/embed-zhizfaopn04l.html" },
+                { nombre: "The Good Doctor - 6x9",  url: "https://vidmoly.net/embed-uh4s3hr11k7s.html" },
+                { nombre: "The Good Doctor - 6x10",  url: "https://vidmoly.net/embed-ilnfnml8inob.html" },
+                { nombre: "The Good Doctor - 6x11",  url: "https://vidmoly.net/embed-m1ibdqhkoh7m.html" },
+                { nombre: "The Good Doctor - 6x12",  url: "https://vidmoly.net/embed-du0p6e25m24n.html" },
+                { nombre: "The Good Doctor - 6x13",  url: "https://vidmoly.net/embed-ii3a8reobavy.html" },
+                { nombre: "The Good Doctor - 6x14",  url: "https://vidmoly.net/embed-5c9zmaplsr4l.html" },
+                { nombre: "The Good Doctor - 6x15",  url: "https://vidmoly.net/embed-s5u91vcw2evm.html" },
+                { nombre: "The Good Doctor - 6x16",  url: "https://vidmoly.net/embed-l4gx65fv0sis.html" },
+                { nombre: "The Good Doctor - 6x17",  url: "https://vidmoly.net/embed-hyexyu8f36fq.html" },
+                { nombre: "The Good Doctor - 6x18",  url: "https://vidmoly.net/embed-834au7z2ofp0.html" },
+                { nombre: "The Good Doctor - 6x19",  url: "https://vidmoly.net/embed-u7kme30wypo8.html" },
+                { nombre: "The Good Doctor - 6x20",  url: "https://vidmoly.net/embed-ihce1hnovvoh.html" },
+                { nombre: "The Good Doctor - 6x21",  url: "https://vidmoly.net/embed-ogwezurmwoj0.html" },
+                { nombre: "The Good Doctor - 6x22",  url: "https://vidmoly.net/embed-7dw16wffktqn.html" },                           
+                { nombre: "The Good Doctor - 7x1",  url: "https://mega.nz/embed/mJ8hSIwa#irSioXCMY5i8WVdRYTeo7lQKkSyhzuMu1ZmmXpeUFAo" },
+                { nombre: "The Good Doctor - 7x2",  url: "https://mega.nz/embed/jVVGnCgD#u7ZdRO0lToREtzAJ_Ghh-W5Lt_YBOqpCSwaVDGnnI9o" },
+                { nombre: "The Good Doctor - 7x3",  url: "https://mega.nz/embed/adlxXISK#AqJ46NpiVTfsdi0OfT8FFJAbAdiZGTHBr0GJDRu_Bus" },
+                { nombre: "The Good Doctor - 7x4",  url: "https://mega.nz/embed/uFljHJBT#YuLSzWVBNlYQf5K_7tEeWWv6tHMjBRlqw9akyyL4VGo" },
+                { nombre: "The Good Doctor - 7x5",  url: "https://mega.nz/embed/iM9XjD4J#ZS5DdTQVAzdQGgCp4FOlcAJvbIjjvVFmJp66EyPOSQc" },
+                { nombre: "The Good Doctor - 7x6",  url: "https://mega.nz/embed/PYNVBLjJ#LbKcla2srtqgsdxhQZlstGWyznwiwrG4MPyBwvtXxPE" },
+                { nombre: "The Good Doctor - 7x7",  url: "https://mega.nz/embed/CR8EhSIL#xoDK2SuDv5lwVeWrODU6OqrDRUgMel8NVTv5Munr3hU" },
+                { nombre: "The Good Doctor - 7x8",  url: "https://mega.nz/embed/bN9H3TCT#fd9bJT0hXb8kM53UGRYgBl7oH8UEFQb1_SqzxMU3D5M" },
+                { nombre: "The Good Doctor - 7x9",  url: "https://mega.nz/embed/XA9QnYSA#k7y4jvFmIs99mowxf2PJeD5IE6T-SwanSuirwfjtO2Q" },
+                { nombre: "The Good Doctor - 7x10", url: "https://mega.nz/embed/aJVFjQaT#YfruzkKLGZHcOZvCq8cpae8X795X268iJRPoiJKSrWA" }
+            ],
+            thestrain: [
+                { nombre: "The Strain - Capítulo 1", url: "https://mega.nz/embed/CCCCCCCC#CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" },
+                { nombre: "The Strain - Capítulo 2", url: "https://mega.nz/embed/DDDDDDDD#DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" },
+                { nombre: "The Strain - Capítulo 3", url: "https://mega.nz/embed/CCCCCCCC#CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" },
+                { nombre: "The Strain - Capítulo 4", url: "https://mega.nz/embed/DDDDDDDD#DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" },  
+                { nombre: "The Strain - Capítulo 5", url: "https://mega.nz/embed/CCCCCCCC#CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" },
+                { nombre: "The Strain - Capítulo 6", url: "https://mega.nz/embed/DDDDDDDD#DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" },
+                { nombre: "The Strain - Capítulo 7", url: "https://mega.nz/embed/CCCCCCCC#CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" },
+                { nombre: "The Strain - Capítulo 8", url: "https://mega.nz/embed/DDDDDDDD#DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" },                                
+                { nombre: "The Strain - Capítulo 9", url: "https://mega.nz/embed/CCCCCCCC#CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" },
+                { nombre: "The Strain - Capítulo 10", url: "https://mega.nz/embed/DDDDDDDD#DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" },                
+                { nombre: "The Strain - Capítulo 11", url: "https://mega.nz/embed/CCCCCCCC#CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" },
+                { nombre: "The Strain - Capítulo 12", url: "https://mega.nz/embed/DDDDDDDD#DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD" },
+                { nombre: "The Strain - Capítulo 13", url: "https://mega.nz/embed/CCCCCCCC#CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC" }               
+            ]
+        };
+
+        const selectSerie    = document.getElementById('serie');
+        const selectCapitulo = document.getElementById('capitulo');
+        const megaPlayer     = document.getElementById('megaPlayer');
+
+        // Cuando cambias de serie
+        selectSerie.addEventListener('change', function () {
+            const serie = this.value;
+
+            // Limpiar capítulos anteriores
+            selectCapitulo.innerHTML = "";
+
+            // Vaciar reproductor al cambiar de serie
+            megaPlayer.src = "";
+
+            if (!serie) {
+                selectCapitulo.disabled = true;
+                const opt = document.createElement('option');
+                opt.value = "";
+                opt.textContent = "-- Elige primero una serie --";
+                selectCapitulo.appendChild(opt);
+                return;
+            }
+
+            selectCapitulo.disabled = false;
+
+            const optDefault = document.createElement('option');
+            optDefault.value = "";
+            optDefault.textContent = "-- Elige un capítulo --";
+            selectCapitulo.appendChild(optDefault);
+
+            // Rellenar capítulos de la serie elegida
+            datosSeries[serie].forEach(cap => {
+                const opt = document.createElement('option');
+                opt.value = cap.url;          // enlace embed de MEGA
+                opt.textContent = cap.nombre; // texto visible
+                selectCapitulo.appendChild(opt);
+            });
+        });
+
+        // Cuando eliges un capítulo
+        selectCapitulo.addEventListener('change', function () {
+            const url = this.value;
+            if (url) {
+                // Cargar el reproductor de MEGA dentro del iframe
+                megaPlayer.src = url;
+            } else {
+                megaPlayer.src = "";
+            }
+        });
+    </script>
+
+</body>
+</html>
