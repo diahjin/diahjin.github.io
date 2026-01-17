@@ -2,45 +2,194 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Series y capítulos</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VenomPlayer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #1a1a2e;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #ff6b6b;
+            margin-bottom: 8px;
+        }
+        
+        .header p {
+            font-size: 0.95rem;
+            color: #aaa;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .controls-section {
+            background: #252540;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        
+        .control-group {
+            margin-bottom: 18px;
+        }
+        
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ff6b6b;
+        }
+        
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1rem;
+            background: #1a1a2e;
+            border: 2px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        select:hover {
+            border-color: #ff6b6b;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+        
+        select:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+        
+        .player-section {
+            background: #252540;
+            border-radius: 15px;
+            padding: 20px;
+        }
+        
+        .player-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+            color: #ff6b6b;
+        }
+        
+        .player-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: #1a1a2e;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .player-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .empty-player {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #666;
+        }
+        
+        .empty-player.hidden {
+            display: none;
+        }
+        
+        .empty-player-icon {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .controls-section, .player-section { padding: 15px; }
+        }
+    </style>
 </head>
 <body>
-
-    <h1>Ver series</h1>
-
-    <!-- Select de series -->
-    <label for="serie">Serie:</label>
-    <select id="serie">
-        <option value="">-- Elige una serie --</option>
-        <option value="house">House</option>
-        <option value="thegooddoctor">The Good Doctor</option>
-        <option value="thestrain">The Strain</option>
-        <option value="Machosalfas">Machos alfas</option>
-        <option value="isladelastentaciones">La isla de las tentaciones</option>
-    </select>
-
-    <br><br>
-
-    <!-- Select de capítulos -->
-    <label for="capitulo">Capítulo:</label>
-    <select id="capitulo" disabled>
-        <option value="">-- Elige primero una serie --</option>
-    </select>
-
-    <br><br>
-
-    <!-- Reproductor MEGA integrado en la misma página -->
-    <iframe
-        id="megaPlayer"
-        width="640"
-        height="360"
-        frameborder="0"
-        allowfullscreen
-        src="">
-    </iframe>
+    <div class="header">
+        <h1>VenomPlayer</h1>
+        <p>Tu plataforma de series</p>
+    </div>
+    
+    <div class="container">
+        <div class="controls-section">
+            <div class="control-group">
+                <label for="serie">📺 Serie</label>
+                <select id="serie">
+                    <option value="">-- Elige una serie --</option>
+                    <option value="house">House</option>
+                    <option value="thegooddoctor">The Good Doctor</option>
+                    <option value="thestrain">The Strain</option>
+                    <option value="Machosalfas">Machos alfas</option>
+                    <option value="isladelastentaciones">La isla de las tentaciones</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="capitulo">🎬 Capítulo</label>
+                <select id="capitulo" disabled>
+                    <option value="">-- Elige primero una serie --</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="player-section">
+            <div class="player-title">▶ Reproductor</div>
+            <div class="player-wrapper">
+                <div class="empty-player" id="emptyPlayer">
+                    <div class="empty-player-icon">📺</div>
+                    <p>Selecciona una serie y capítulo</p>
+                </div>
+                <iframe id="megaPlayer" allowfullscreen loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
 
     <script>
-        // ENLACES EMBED DE MEGA (CAMBIA ESTOS POR LOS TUYOS SI QUIERES)
         const datosSeries = {
             house: [
                 { nombre: "House - 1x1", url: "https://vidmoly.net/embed-q0j7u9cmmb6h.html" },
@@ -64,9 +213,9 @@
                 { nombre: "House - 1x19", url: "https://vidmoly.net/embed-8n6xko3ullu4.html" },
                 { nombre: "House - 1x20", url: "https://vidmoly.net/embed-y5vgjt3e3cj6.html" },
                 { nombre: "House - 1x21", url: "https://vidmoly.net/embed-yshkenjv772w.html" },
-                { nombre: "House - 1x22", url: "https://vidmoly.net/embed-xpncpt4dc8ri.html" }                                                                 
+                { nombre: "House - 1x22", url: "https://vidmoly.net/embed-xpncpt4dc8ri.html" }
             ],
-            thegooddoctor: [
+ thegooddoctor: [
                 { nombre: "The Good Doctor - 1x1",  url: "https://vidmoly.net/embed-sk7fo6gasf0j.html" },
                 { nombre: "The Good Doctor - 1x2",  url: "https://vidmoly.net/embed-s1hgty667c2d.html" },
                 { nombre: "The Good Doctor - 1x3",  url: "https://vidmoly.net/embed-r93467quebfz.html" },
@@ -211,7 +360,6 @@
             ],
 
              isladelastentaciones: [
-                { nombre: "La isla de las tentaciones - 8x0", url: "https://vidmoly.net/embed-xadmyrr296nh.html" }
                 { nombre: "La isla de las tentaciones - 8x1", url: "https://vidmoly.net/embed-2w556kwwse90.html" },
                 { nombre: "La isla de las tentaciones - 8x2", url: "https://vidmoly.net/embed-ifazuenspv29.html" },
                 { nombre: "La isla de las tentaciones - 8x3", url: "https://vidmoly.net/embed-3t8xwrl90ugv.html" },
@@ -225,7 +373,7 @@
                 { nombre: "La isla de las tentaciones - 8x11", url: "https://vidmoly.net/embed-mvcv5ili6p26.html" },
                 { nombre: "La isla de las tentaciones - 8x12", url: "https://vidmoly.net/embed-d77jbkqejd0f.html" },
                 { nombre: "La isla de las tentaciones - 8x13", url: "https://vidmoly.net/embed-8e1s4xczq43x.html" },
-                { nombre: "La isla de las tentaciones - 8x14", url: "https://vidmoly.net/embed-co5w8s170d1a.html" },
+                { nombre: "La isla de las tentaciones - 8x14", url: "" },
                 { nombre: "La isla de las tentaciones - 8x15", url: "https://vidmoly.net/embed-nvnsi7q1cwff.html" },
                 { nombre: "La isla de las tentaciones - 8x16", url: "https://vidmoly.net/embed-mwlzfdki2003.html" },
                 { nombre: "La isla de las tentaciones - 8x17", url: "https://vidmoly.net/embed-rdav5wd9rvfu.html" },
@@ -327,4 +475,5 @@
 
 </body>
 </html>
+
 
