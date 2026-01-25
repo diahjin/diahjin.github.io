@@ -49,9 +49,37 @@
 
     .catalogo-sub {
       font-size: 12px;
-      margin: 0 0 12px;
+      margin: 0 0 10px;
       color: #aaa;
     }
+
+    /* BUSCADOR */
+
+    .buscador-wrapper {
+      margin-bottom: 10px;
+    }
+
+    #buscadorPelis {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(20,20,20,0.95);
+      color: #f5f5f5;
+      font-size: 13px;
+      outline: none;
+    }
+
+    #buscadorPelis::placeholder {
+      color: #888;
+    }
+
+    #buscadorPelis:focus {
+      border-color: #e50914;
+      box-shadow: 0 0 0 1px rgba(229,9,20,0.5);
+    }
+
+    /* GRID DE PELIS */
 
     .movie-grid {
       display: grid;
@@ -68,7 +96,11 @@
       background: #111;
       display: flex;
       flex-direction: column;
-      transition: transform 0.18s ease-out, border-color 0.18s ease-out, box-shadow 0.18s ease-out, background 0.18s ease-out;
+      transition:
+        transform 0.18s ease-out,
+        border-color 0.18s ease-out,
+        box-shadow 0.18s ease-out,
+        background 0.18s ease-out;
     }
 
     .movie-card img {
@@ -178,13 +210,20 @@
 
     <!-- CATÁLOGO PELIS -->
     <aside class="catalogo">
-        <h2 class="catalogo-titulo">Películas</h2>
-        <p class="catalogo-sub">Pulsa una portada para reproducir</p>
+      <h2 class="catalogo-titulo">Películas</h2>
+      <p class="catalogo-sub">Mi Cine - Películas</p>
 
-        <div class="movie-grid">
+      <!-- BUSCADOR -->
+      <div class="buscador-wrapper">
+        <input
+          type="text"
+          id="buscadorPelis"
+          placeholder="Buscar película..."
+          autocomplete="off">
+      </div>
 
-            <!-- EJEMPLOS: CAMBIA data-src, PORTADA Y TÍTULO POR LOS TUYOS -->
-                        <div class="movie-card active" data-src="https://vidmoly.net/embed-mms9br8n3rub.html">
+      <div class="movie-grid">
+ <div class="movie-card active" data-src="https://vidmoly.net/embed-mms9br8n3rub.html">
                 <img src="https://pics.filmaffinity.com/aladdin_and_the_king_of_thieves-477752056-large.jpg" alt="Aladdín y el rey de los ladrones">
 				<div class="movie-title">Aladdín y el rey de los ladrones</div>
             </div>
@@ -632,23 +671,22 @@
 
     <!-- REPRODUCTOR ÚNICO -->
     <section class="player-area">
-        <div class="player-wrapper">
-            <iframe
-                id="playerFrame"
-                src="https://mega.nz/embed/PELI1#CLAVE1"
-                allowfullscreen
-                referrerpolicy="no-referrer">
-            </iframe>
-            <div class="player-overlay"></div>
-        </div>
+      <div class="player-wrapper">
+        <!-- PELI INICIAL (la misma que la tarjeta .active) -->
+        <iframe
+          id="playerFrame"
+          src="https://vidmoly.net/embed-aa4yt9biphpc.html"
+          allowfullscreen
+          referrerpolicy="no-referrer">
+        </iframe>
+        <div class="player-overlay"></div>
+      </div>
     </section>
-
-</div>
-
 
   </div>
 
   <script>
+    // CAMBIO DE PELÍCULA EN EL REPRODUCTOR
     const cards = document.querySelectorAll('.movie-card');
     const player = document.getElementById('playerFrame');
 
@@ -670,8 +708,26 @@
         card.classList.add('active');
       });
     });
+
+    // BUSCADOR POR TÍTULO
+    const buscador = document.getElementById('buscadorPelis');
+
+    if (buscador) {
+      buscador.addEventListener('input', () => {
+        const texto = buscador.value.trim().toLowerCase();
+
+        cards.forEach(card => {
+          const titleEl = card.querySelector('.movie-title');
+          const titulo = titleEl ? titleEl.textContent.toLowerCase() : '';
+
+          if (!texto || titulo.includes(texto)) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    }
   </script>
 </body>
 </html>
-
-
