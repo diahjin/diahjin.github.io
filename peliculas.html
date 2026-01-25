@@ -1,190 +1,180 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Mi Cine - Películas</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            margin: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: radial-gradient(circle at top, #1b2838 0, #050505 55%, #000 100%);
-            color: #eee;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+  <meta charset="UTF-8">
+  <title>Mi Cine - Películas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        /* Layout general */
-        .layout {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-            backdrop-filter: blur(4px);
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: auto;
+    }
 
-        /* Catálogo izquierda */
-        .catalogo {
-            width: 40%;
-            min-width: 280px;
-            background: linear-gradient(180deg, rgba(5,5,5,0.95), rgba(5,5,5,0.98));
-            padding: 18px 16px 16px;
-            overflow-y: auto;
-            box-shadow: 4px 0 18px rgba(0,0,0,0.8);
-        }
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1b2838 0, #050505 55%, #000 100%);
+      color: #eee;
+      overflow: hidden;
+    }
 
-        .catalogo-titulo {
-            font-size: 22px;
-            margin: 0 0 4px;
-            font-weight: 700;
-        }
+    .layout {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.94);
+    }
 
-        .catalogo-sub {
-            font-size: 12px;
-            margin: 0 0 12px;
-            color: #aaa;
-        }
+    /* CATÁLOGO IZQUIERDA */
 
-        .movie-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            gap: 12px;
-        }
+    .catalogo {
+      width: 40%;
+      min-width: 280px;
+      max-width: 420px;
+      background: linear-gradient(180deg, rgba(5,5,5,0.97), rgba(5,5,5,0.99));
+      padding: 18px 16px 16px;
+      overflow-y: auto;
+      box-shadow: 4px 0 18px rgba(0,0,0,0.8);
+    }
 
-        .movie-card {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            border: 2px solid transparent;
-            background: #111;
-            display: flex;
-            flex-direction: column;
-            transition:
-                transform 0.18s ease-out,
-                border-color 0.18s ease-out,
-                box-shadow 0.18s ease-out,
-                background 0.18s ease-out;
-        }
+    .catalogo-titulo {
+      font-size: 22px;
+      margin: 0 0 4px;
+      font-weight: 700;
+    }
 
-        .movie-card::after {
-            content: "▶";
-            position: absolute;
-            bottom: 26px;
-            right: 8px;
-            font-size: 14px;
-            color: rgba(255,255,255,0.9);
-            text-shadow: 0 0 5px rgba(0,0,0,0.8);
-            opacity: 0;
-            transform: translateY(8px);
-            transition: opacity 0.18s ease-out, transform 0.18s ease-out;
-        }
+    .catalogo-sub {
+      font-size: 12px;
+      margin: 0 0 12px;
+      color: #aaa;
+    }
 
-        .movie-card img {
-            width: 100%;
-            display: block;
-            aspect-ratio: 2 / 3;
-            object-fit: cover;
-        }
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
 
-        .movie-title {
-            font-size: 11px;
-            text-align: center;
-            padding: 5px 4px 8px;
-            line-height: 1.25;
-            color: #ddd;
-            background: radial-gradient(circle at top, #252525 0, #111 70%);
-        }
+    .movie-card {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 2px solid transparent;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.18s ease-out, border-color 0.18s ease-out, box-shadow 0.18s ease-out, background 0.18s ease-out;
+    }
 
-        .movie-card:hover {
-            transform: translateY(-3px) scale(1.03);
-            border-color: #e50914;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.9);
-            background: #181818;
-        }
+    .movie-card img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 2 / 3;
+      object-fit: cover;
+    }
 
-        .movie-card:hover::after {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .movie-title {
+      font-size: 11px;
+      text-align: center;
+      padding: 5px 4px 8px;
+      line-height: 1.25;
+      color: #ddd;
+      background: radial-gradient(circle at top, #252525 0, #111 70%);
+    }
 
-        .movie-card.active {
-            border-color: #e50914;
-            box-shadow: 0 0 18px rgba(229,9,20,0.7);
-        }
+    .movie-card:hover {
+      transform: translateY(-3px) scale(1.03);
+      border-color: #e50914;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.9);
+      background: #181818;
+    }
 
-        /* Lado derecho: reproductor con animación */
-        .player-area {
-            flex: 1;
-            position: relative;
-            background: radial-gradient(circle at top, #202020 0, #000 60%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 18px 14px;
-        }
+    .movie-card.active {
+      border-color: #e50914;
+      box-shadow: 0 0 18px rgba(229,9,20,0.7);
+    }
 
-        .player-wrapper {
-            width: 100%;
-            max-width: 1150px;
-            aspect-ratio: 16 / 9;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 18px 40px rgba(0,0,0,0.85);
-            border: 1px solid rgba(255,255,255,0.06);
-            position: relative;
-        }
+    /* REPRODUCTOR DERECHA */
 
-        .player-overlay {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at top left, rgba(229,9,20,0.28), transparent 55%);
-            pointer-events: none;
-            mix-blend-mode: screen;
-        }
+    .player-area {
+      flex: 1;
+      position: relative;
+      background: radial-gradient(circle at top, #202020 0, #000 60%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 14px;
+    }
 
-        #playerFrame {
-            width: 100%;
-            height: 100%;
-            border: none;
-            opacity: 1;
-            transition: opacity 0.2s ease-out;
-        }
+    .player-wrapper {
+      width: 100%;
+      max-width: 1150px;
+      aspect-ratio: 16 / 9;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.85);
+      border: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+    }
 
-        .player-fade-out {
-            opacity: 0;
-        }
+    #playerFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      opacity: 1;
+      transition: opacity 0.2s ease-out;
+    }
 
-        @media (max-width: 900px) {
-            .layout {
-                flex-direction: column;
-            }
-            .catalogo {
-                width: 100%;
-                height: 46%;
-                box-shadow: 0 4px 18px rgba(0,0,0,0.8);
-            }
-            .player-area {
-                height: 54%;
-            }
-        }
+    .player-fade-out {
+      opacity: 0;
+    }
 
-        @media (max-width: 600px) {
-            .catalogo-titulo {
-                font-size: 18px;
-            }
-            .movie-grid {
-                grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
-            }
-        }
-    </style>
+    .player-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(229,9,20,0.28), transparent 55%);
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+      .layout {
+        flex-direction: column;
+      }
+
+      .catalogo {
+        width: 100%;
+        height: 46vh;
+        max-width: none;
+        box-shadow: 0 4px 18px rgba(0,0,0,0.8);
+      }
+
+      .player-area {
+        height: 54vh;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .catalogo-titulo {
+        font-size: 18px;
+      }
+
+      .movie-grid {
+        grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+      }
+    }
+  </style>
 </head>
 <body>
-
-<div class="layout">
+  <div class="layout">
 
     <!-- CATÁLOGO PELIS -->
     <aside class="catalogo">
@@ -329,6 +319,60 @@
             <div class="movie-card" data-src="https://mega.nz/embed/iEcSWZgb#G55RiC4yHFN05GZA7Avg9OyKwCGr0e5Klovgy0OJr_I">
                 <img src="https://www.movistarplus.es/recorte/n/caratula5/MNEOXP1082609" alt="El Hobbit: Un viaje inesperado">
 				<div class="movie-title">El Hobbit: Un viaje inesperado</div>
+            </div>
+            <div class="movie-card active" data-src="https://vidmoly.net/embed-ogsm60bbt9ej.html">
+                <img src="https://pics.filmaffinity.com/A_todo_gas-994796969-large.jpg" alt="Fast & Furious">
+				<div class="movie-title">Fast & Furious</div>
+            </div>
+ 
+            <div class="movie-card active" data-src="https://vidmoly.net/embed-mfam2bhf7brq.html">
+                <img src="https://imgs.search.brave.com/1AT0fSjbTxZQ-i2kojhrcaW85PW0D9hTUPM-qXaOmb4/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDg5NTIw/MDkuanBn" alt="Fast & Furious 2">
+				<div class="movie-title">Fast & Furious 2</div>
+            </div>
+
+            <div class="movie-card active" data-src="https://vidmoly.net/embed-uody30q2r052.html">
+                <img src="https://es.web.img2.acsta.net/c_310_420/pictures/14/04/25/11/01/221261.jpg" alt="Fast & Furious Aun mas rapido">
+				<div class="movie-title">Fast & Furious Aun mas rapido</div>
+            </div>
+                        <div class="movie-card active" data-src="https://vidmoly.net/embed-nov6e3hq25mp.html">
+                <img src="https://pics.filmaffinity.com/the_fast_and_the_furious_tokyo_drift-349229245-large.jpg" alt="A todo gas Tokyo Race">
+				<div class="movie-title">A todo gas Tokyo Race</div>
+            </div>
+
+            <div class="movie-card active" data-src="https://vidmoly.net/embed-nueil6zg7ae8.html">
+                <img src="https://www.movistarplus.es/recorte/n/caratula5/F4348735?od[]=Z1V:SKYSHOW_V" alt="Fast & Furious 5">
+				<div class="movie-title">Fast & Furious 5</div>
+            </div>
+
+            <div class="movie-card active" data-src="https://vidmoly.net/embed-308p33vo3ba0.html">
+                <img src="https://www.movistarplus.es/recorte/n/caratula5/F4154744?od[]=Z1V:SKYSHOW_V" alt="Fast & Furious 6">
+				<div class="movie-title">Fast & Furious 6</div>
+            </div>
+
+            <div class="movie-card active" data-src="https://vidmoly.net/embed-kbxsa7nq297r.html">
+                <img src="https://imgs.search.brave.com/e-3wQsLK52IA64EBT8wnjh6Sn9fI_Ld1DR1q2eMMW2Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL00v/TVY1QlptWTBZV0po/TlRjdFlUUXhaQzAw/WkRVNUxXSmxZbUl0/Tm1Rek1qRmxPR016/TldJM1hrRXlYa0Zx/Y0djQC5qcGc" alt="Fast & Furious 7">
+				<div class="movie-title">Fast & Furious 7</div>
+            </div>
+
+
+             <div class="movie-card active" data-src="https://vidmoly.net/embed-c8bv480quh5m.html">
+                <img src="https://imgs.search.brave.com/_A-yFABK32w6erL5mydC5NZ5-FbpSk1cb5yt1PLdHgg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/NzFyRXJJeFRoMEwu/anBn" alt="Fast & Furious 8">
+				<div class="movie-title">Fast & Furious 8</div>
+            </div>
+            
+            <div class="movie-card active" data-src="https://vidmoly.net/embed-0r5ubmzmyjxb.html">
+                <img src="https://imgs.search.brave.com/T5_mZWzl5ordS96RhDNug8pOsdIbrB4JZg8C9jmN1bo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL1Mv/cHYtdGFyZ2V0LWlt/YWdlcy82MzA2YzEz/ZjZmOGU5Y2RkNWFj/M2MzMTVhYTMxOWVi/Y2IyY2I5YzM1Zjcz/MGVkYzJjMGJiMGRh/NzM0NzFhMzI5Lmpw/Zw" alt="Fast & Furious Hobbs & Shaw">
+				<div class="movie-title">Fast & Furious Hobbs & Shaws </div>
+            </div>
+
+             <div class="movie-card active" data-src="https://vidmoly.net/embed-wplcr0xcrhcd.html">
+                <img src="https://imgs.search.brave.com/Z6_TIz3S5wRihV9M12MMGqW251nL-7uBqKxJGfzWq0w/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnBp/bmltZy5jb20vb3Jp/Z2luYWxzLzZlLzZj/LzFiLzZlNmMxYjI0/NDFiY2NkNjE4ODU3/MGZlZDBhNzAyNjI0/LmpwZw" alt="Fast & Furious 9">
+				<div class="movie-title">Fast & Furious 9</div>
+            </div>
+
+             <div class="movie-card active" data-src="https://vidmoly.net/embed-hhcl55y6sit0.html">
+                <img src="https://images.justwatch.com/poster/304339411/s166/fast-x" alt="Fast & Furious 10">
+				<div class="movie-title">Fast & Furious 10</div>
             </div>
             
             <div class="movie-card active" data-src="https://vidmoly.net/embed-aa4yt9biphpc.html">
@@ -552,30 +596,32 @@
 
 </div>
 
-<script>
+
+  </div>
+
+  <script>
     const cards = document.querySelectorAll('.movie-card');
     const player = document.getElementById('playerFrame');
 
     function cambiarPelicula(newSrc) {
-        if (!newSrc) return;
-        player.classList.add('player-fade-out');
-
-        setTimeout(() => {
-            player.setAttribute('src', newSrc);
-            player.classList.remove('player-fade-out');
-        }, 180);
+      if (!newSrc || !player) return;
+      player.classList.add('player-fade-out');
+      setTimeout(() => {
+        player.setAttribute('src', newSrc);
+        player.classList.remove('player-fade-out');
+      }, 180);
     }
 
     cards.forEach(card => {
-        card.addEventListener('click', () => {
-            const newSrc = card.getAttribute('data-src');
-            cambiarPelicula(newSrc);
-
-            cards.forEach(c => c.classList.remove('active'));
-            card.classList.add('active');
-        });
+      card.addEventListener('click', () => {
+        const newSrc = card.getAttribute('data-src');
+        if (!newSrc) return;
+        cambiarPelicula(newSrc);
+        cards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
     });
-</script>
-
+  </script>
 </body>
 </html>
+
