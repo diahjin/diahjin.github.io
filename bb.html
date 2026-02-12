@@ -9,7 +9,6 @@
         body {
             font-family: 'Georgia', 'Times New Roman', serif;
             background: radial-gradient(circle at center, #1e1b4b 0%, #0f0f23 50%, #000 100%);
-            background-attachment: fixed;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -25,14 +24,8 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background: 
                 radial-gradient(circle at 20% 80%, rgba(147,51,234,0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(96,165,250,0.4) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(147,197,253,0.2) 0%, transparent 50%);
-            animation: sparkle 6s ease-in-out infinite alternate;
+                radial-gradient(circle at 80% 20%, rgba(96,165,250,0.4) 0%, transparent 50%);
             pointer-events: none;
-        }
-        @keyframes sparkle {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
         }
         .container {
             text-align: center;
@@ -65,63 +58,58 @@
         svg {
             max-width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 40px rgba(96, 165, 250, 0.7));
+            filter: drop-shadow(0 0 40px rgba(96, 165, 250, 0.6));
         }
         .ring-band {
             fill: none;
             stroke: #c0c0c0;
-            stroke-width: 12;
+            stroke-width: 14;
             stroke-linecap: round;
             stroke-linejoin: round;
-            filter: drop-shadow(0 0 10px rgba(192,192,192,0.5));
-            animation: shineRing 4s ease-in-out infinite;
+            filter: drop-shadow(0 2px 8px rgba(192,192,192,0.4));
         }
-        @keyframes shineRing {
-            0%, 100% { stroke: #c0c0c0; }
-            50% { stroke: #e5e5e5; }
+        .ring-band-inner {
+            fill: none;
+            stroke: #e5e5e5;
+            stroke-width: 6;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
         .serpent-body {
             fill: none;
             stroke: #60a5fa;
-            stroke-width: 8;
+            stroke-width: 9;
             stroke-linecap: round;
             stroke-linejoin: round;
-            stroke-dasharray: 300;
-            stroke-dashoffset: 300;
-            animation: serpentCrawl 3s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.8s forwards, wiggleSerpent 2s ease-in-out infinite 3.8s;
-            filter: drop-shadow(0 0 12px #60a5fa);
-        }
-        @keyframes serpentCrawl {
-            to { stroke-dashoffset: 0; }
-        }
-        @keyframes wiggleSerpent {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-3px); }
+            stroke-miterlimit: 10;
+            filter: drop-shadow(0 1px 6px rgba(96,165,250,0.5));
         }
         .serpent-head {
-            opacity: 0;
-            transform: scale(0);
-            animation: headEmerge 1.5s ease-out 3s forwards;
-            filter: drop-shadow(0 0 20px #93c5fd);
+            fill: #1e40af;
+            stroke: #1d4ed8;
+            stroke-width: 2;
+            filter: drop-shadow(0 1px 4px rgba(30,64,175,0.6));
         }
-        @keyframes headEmerge {
-            to { opacity: 1; transform: scale(1); }
+        .serpent-eye {
+            fill: #f3f4f6;
+            stroke: #1f2937;
+            stroke-width: 0.5;
+        }
+        .serpent-tongue {
+            fill: #ef4444;
+            stroke: #dc2626;
+            stroke-width: 1.5;
+            stroke-linecap: round;
         }
         .emerald-gem {
             fill: url(#gemGradient);
-            opacity: 0;
-            transform: scale(0) rotate(-180deg);
-            animation: gemPulse 2s ease-out 2.5s forwards;
-            filter: drop-shadow(0 0 25px #10b981);
-        }
-        @keyframes gemPulse {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(5deg); }
+            filter: drop-shadow(0 0 20px #10b981);
         }
         .engraving {
-            font: bold 12px serif;
-            fill: rgba(224, 231, 255, 0.8);
-            filter: drop-shadow(0 0 5px rgba(147,197,253,0.6));
+            font: bold 11px serif;
+            fill: rgba(224, 231, 255, 0.9);
+            font-style: italic;
+            filter: drop-shadow(0 0 4px rgba(147,197,253,0.7));
         }
         .content {
             line-height: 1.7;
@@ -173,25 +161,27 @@
                     </radialGradient>
                 </defs>
                 
-                <!-- Banda plateada del anillo (brillo pulsante) -->
-                <circle class="ring-band" cx="160" cy="160" r="110" />
-                <circle class="ring-band" cx="160" cy="160" r="95" stroke-width="6" />
+                <!-- Banda principal plateada -->
+                <circle class="ring-band" cx="160" cy="160" r="105" />
                 
-                <!-- Serpiente esmeralda 🩵 (Slytherin style, Disney curvada) -->
-                <path class="serpent-body" d="M 80 160 Q 120 100 160 80 Q 200 100 240 160 Q 200 220 160 240 Q 120 220 80 160" />
+                <!-- Banda interior grabada -->
+                <circle class="ring-band-inner" cx="160" cy="160" r="90" />
                 
-                <!-- Cabeza de serpiente con ojos y lengua -->
-                <ellipse class="serpent-head" cx="260" cy="155" rx="18" ry="12" fill="#1e40af" />
-                <ellipse cx="270" cy="150" rx="3" ry="2" fill="#f3f4f6" />
-                <ellipse cx="270" cy="160" rx="3" ry="2" fill="#f3f4f6" />
-                <path class="serpent-head" d="M 275 157 Q 280 155 275 153" stroke="#ef4444" stroke-width="2" stroke-linecap="round" fill="none" />
+                <!-- Serpiente esmeralda 🩵 curvada elegantemente -->
+                <path class="serpent-body" d="M 85 145 Q 125 95 165 85 Q 205 105 245 155 Q 205 205 165 215 Q 125 195 85 155" />
                 
-                <!-- Gema esmeralda central pulsante -->
-                <ellipse class="emerald-gem" cx="160" cy="160" rx="22" ry="28" />
+                <!-- Cabeza de serpiente detallada -->
+                <ellipse class="serpent-head" cx="255" cy="152" rx="16" ry="11" />
+                <ellipse class="serpent-eye" cx="265" cy="148" rx="2.5" ry="1.8" />
+                <ellipse class="serpent-eye" cx="265" cy="157" rx="2.5" ry="1.8" />
+                <path class="serpent-tongue" d="M 268 154.5 Q 274 152 268 149.5" />
                 
-                <!-- Grabados mágicos Slytherin -->
-                <text class="engraving" x="160" y="190" text-anchor="middle">Amor Eternvs</text>
-                <text class="engraving" x="160" y="330" text-anchor="middle" transform="rotate(-45 160 330)">🩵</text>
+                <!-- Gema esmeralda central -->
+                <ellipse class="emerald-gem" cx="160" cy="160" rx="20" ry="26" />
+                
+                <!-- Grabados sutiles -->
+                <text class="engraving" x="160" y="188" text-anchor="middle">Amor Aeternum</text>
+                <text class="engraving" x="160" y="50" text-anchor="middle" font-size="14px">🩵</text>
             </svg>
         </div>
         
@@ -203,7 +193,7 @@
         <div class="love-you">— I Love You! 🩵🩵🩵</div>
         
         <div class="timer">
-            Han pasado: <strong>307 días 8 horas 7 minutos 0 segundos</strong>
+            Han pasado: <strong>307 días 8 horas 11 minutos 0 segundos</strong>
         </div>
         
         <p class="footer">Desde el 11/04/2025... 🩵</p>
