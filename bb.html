@@ -7,122 +7,142 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(-45deg, #e0f2fe, #b3d9ff, #bae6fd, #e0f2fe);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: radial-gradient(circle at center, #1e1b4b 0%, #0f0f23 50%, #000 100%);
+            background-attachment: fixed;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: #1e3a8a;
-            overflow-x: hidden;
-            padding: 20px;
+            color: #e0e7ff;
+            overflow: hidden;
+            position: relative;
         }
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(147,51,234,0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(96,165,250,0.4) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(147,197,253,0.2) 0%, transparent 50%);
+            animation: sparkle 6s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
         }
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 40px 30px;
-            border-radius: 30px;
-            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.25);
-            max-width: 420px;
-            width: 100%;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+            background: rgba(15, 15, 35, 0.9);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(147, 197, 253, 0.3);
+            border-radius: 25px;
+            padding: 45px 35px;
+            max-width: 440px;
+            width: 95%;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 2;
         }
         h2 {
-            color: #2563eb;
-            font-size: clamp(1.4em, 5vw, 2em);
-            margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+            color: #93c5fd;
+            font-size: clamp(1.5em, 6vw, 2.2em);
+            margin-bottom: 25px;
+            text-shadow: 0 0 20px rgba(147, 197, 253, 0.8);
+            font-style: italic;
         }
-        .tree-container {
+        .magic-ring {
             position: relative;
-            height: clamp(220px, 35vw, 300px);
-            margin: 25px auto;
+            height: clamp(240px, 40vw, 320px);
+            margin: 30px auto;
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
         }
         svg {
             max-width: 100%;
             height: 100%;
-            filter: drop-shadow(0 10px 20px rgba(96, 165, 250, 0.3));
+            filter: drop-shadow(0 0 30px rgba(96, 165, 250, 0.6));
         }
-        .tree-trunk {
-            fill: #8B4513;
-            stroke: #A0522D;
-            stroke-width: 3;
+        .ring-path {
+            fill: none;
+            stroke: url(#gradientRing);
+            stroke-width: 8;
+            stroke-linecap: round;
             stroke-linejoin: round;
-            transform-origin: bottom center;
-            animation: growTrunk 1.2s ease-out forwards;
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: drawRing 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s forwards, rotateRing 20s linear infinite 3.5s;
+            transform-origin: center;
+        }
+        @keyframes drawRing {
+            to { stroke-dashoffset: 0; }
+        }
+        @keyframes rotateRing {
+            to { transform: rotate(360deg); }
+        }
+        .gem {
+            fill: #60a5fa;
             opacity: 0;
-            transform: scaleY(0);
+            transform: scale(0);
+            animation: gemSparkle 2s ease-out forwards;
+            filter: drop-shadow(0 0 15px #60a5fa);
         }
-        @keyframes growTrunk {
-            to { opacity: 1; transform: scaleY(1); }
+        .gem:nth-child(1) { animation-delay: 2s; }
+        .gem:nth-child(2) { animation-delay: 2.3s; }
+        .gem:nth-child(3) { animation-delay: 2.6s; }
+        @keyframes gemSparkle {
+            50% { transform: scale(1.3); opacity: 1; }
+            to { transform: scale(1); opacity: 1; }
         }
-        .heart {
-            font-size: clamp(1.3em, 4vw, 1.8em);
+        .heart-big {
+            font-size: clamp(3em, 8vw, 4.5em);
             opacity: 0;
-            transform: scale(0) rotate(-5deg);
-            animation: bloomHeart 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-            filter: drop-shadow(0 2px 4px rgba(96, 165, 250, 0.4));
+            transform: scale(0) rotateY(180deg);
+            animation: heartAppear 1.5s ease-out 3s forwards;
+            text-shadow: 0 0 30px rgba(147, 51, 234, 0.8);
+            filter: drop-shadow(0 0 25px #93c5fd);
         }
-        .heart:nth-child(1) { animation-delay: 1s; }
-        .heart:nth-child(2) { animation-delay: 1.2s; transform: rotate(2deg); }
-        .heart:nth-child(3) { animation-delay: 1.4s; transform: rotate(-3deg); }
-        .heart:nth-child(4) { animation-delay: 1.6s; }
-        .heart:nth-child(5) { animation-delay: 1.8s; transform: rotate(4deg); }
-        .heart:nth-child(6) { animation-delay: 2s; transform: rotate(-4deg); }
-        .heart:nth-child(7) { animation-delay: 2.2s; }
-        .heart:nth-child(8) { animation-delay: 2.4s; transform: rotate(1deg); }
-        .heart:nth-child(9) { animation-delay: 2.6s; transform: rotate(-2deg); }
-        .heart:nth-child(10) { animation-delay: 2.8s; }
-        @keyframes bloomHeart {
-            to { 
-                opacity: 1; 
-                transform: scale(1) rotate(0deg); 
-            }
+        @keyframes heartAppear {
+            to { opacity: 1; transform: scale(1) rotateY(0); }
         }
         .content {
-            line-height: 1.6;
-            margin: 15px 0;
-            font-size: clamp(0.95em, 3.5vw, 1.1em);
-        }
-        .love-you {
-            font-size: clamp(1.4em, 5vw, 1.8em);
-            color: #2563eb;
-            margin: 25px 0;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
-        }
-        .timer {
-            font-size: clamp(1.1em, 4vw, 1.3em);
-            font-weight: 700;
-            color: #1e40af;
-            margin-top: 20px;
-            padding: 15px 20px;
-            background: linear-gradient(135deg, rgba(147, 197, 253, 0.6), rgba(96, 165, 250, 0.4));
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
-            backdrop-filter: blur(10px);
-        }
-        .footer {
-            font-size: 0.95em;
-            color: #64748b;
-            margin-top: 20px;
+            line-height: 1.7;
+            margin: 20px 0;
+            font-size: clamp(1em, 3.8vw, 1.15em);
             font-style: italic;
         }
+        .love-you {
+            font-size: clamp(1.6em, 5.5vw, 2em);
+            color: #93c5fd;
+            margin: 30px 0;
+            font-weight: 600;
+            text-shadow: 0 0 15px rgba(147, 197, 253, 0.7);
+        }
+        .timer {
+            font-size: clamp(1.15em, 4.2vw, 1.35em);
+            font-weight: 700;
+            background: linear-gradient(135deg, rgba(96,165,250,0.9), rgba(147,197,253,0.8));
+            color: #1e1b4b;
+            margin-top: 25px;
+            padding: 20px 25px;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(96, 165, 250, 0.4);
+            backdrop-filter: blur(15px);
+        }
+        .footer {
+            font-size: 1em;
+            color: #94a3b8;
+            margin-top: 25px;
+            font-style: italic;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
         @media (max-width: 480px) {
-            body { padding: 10px; }
-            .container { padding: 30px 20px; margin: 10px; }
+            .container { padding: 35px 25px; margin: 10px; }
+            body { background-size: 300% 300%; }
         }
     </style>
 </head>
@@ -130,22 +150,26 @@
     <div class="container">
         <h2>Para el amor de mi vida 🩵</h2>
         
-        <div class="tree-container">
-            <svg viewBox="0 0 220 280">
-                <!-- Tronco grueso y ramificado -->
-                <path class="tree-trunk" d="M 105 250 Q 100 200 95 150 Q 105 140 110 150 Q 115 140 120 150 Q 115 200 110 250 L 105 250 Z M 110 250 L 115 260 L 105 260 Z" />
+        <div class="magic-ring">
+            <svg viewBox="0 0 300 300">
+                <defs>
+                    <linearGradient id="gradientRing" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#60a5fa" />
+                        <stop offset="50%" stop-color="#93c5fd" />
+                        <stop offset="100%" stop-color="#2563eb" />
+                    </linearGradient>
+                </defs>
                 
-                <!-- Copa del árbol con muchos corazones centrados -->
-                <text x="110" y="135" class="heart" text-anchor="middle">🩵</text>
-                <text x="95" y="115" class="heart" text-anchor="middle">🩵🩵</text>
-                <text x="125" y="118" class="heart" text-anchor="middle">🩵🩵</text>
-                <text x="85" y="95" class="heart" text-anchor="middle">🩵</text>
-                <text x="110" y="92" class="heart" text-anchor="middle">🩵🩵🩵</text>
-                <text x="135" y="95" class="heart" text-anchor="middle">🩵</text>
-                <text x="75" y="80" class="heart" text-anchor="middle">🩵</text>
-                <text x="102" y="75" class="heart" text-anchor="middle">🩵🩵</text>
-                <text x="140" y="78" class="heart" text-anchor="middle">🩵🩵</text>
-                <text x="118" y="65" class="heart" text-anchor="middle">🩵🩵🩵</text>
+                <!-- Anillo encantado (círculo roto para efecto serpiente) -->
+                <path class="ring-path" d="M 150 80 Q 220 120 260 150 Q 220 180 150 220 Q 80 180 40 150 Q 80 120 150 80" />
+                
+                <!-- Gemas brillantes -->
+                <circle cx="150" cy="100" r="8" class="gem" />
+                <circle cx="200" cy="140" r="7" class="gem" />
+                <circle cx="190" cy="190" r="9" class="gem" />
+                
+                <!-- Corazón central gigante que aparece al final -->
+                <text x="150" y="175" class="heart-big" text-anchor="middle">🩵</text>
             </svg>
         </div>
         
@@ -157,7 +181,7 @@
         <div class="love-you">— I Love You! 🩵🩵🩵</div>
         
         <div class="timer">
-            Han pasado: <strong>307 días 8 horas 0 minutos 0 segundos</strong>
+            Han pasado: <strong>307 días 8 horas 4 minutos 0 segundos</strong>
         </div>
         
         <p class="footer">Desde el 11/04/2025... 🩵</p>
