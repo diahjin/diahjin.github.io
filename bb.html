@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para el amor de mi vida</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #f0f8ff, #e0f2fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(147, 197, 253, 0.3);
+            max-width: 400px;
+        }
+        .heart-tree {
+            font-size: 80px;
+            margin: 20px 0;
+            background: linear-gradient(to right, #93c5fd, #60a5fa, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        .heart-tree .leaf { color: #60a5fa; }
+        .timer {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-top: 10px;
+        }
+        h2 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .love-you {
+            font-size: 24px;
+            color: #2563eb;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Para el amor de mi vida 🩵</h2>
+        <div class="heart-tree">
+            🩵🩵🩵<br>
+            🩵🩵🩵🩵🩵<br>
+            🩵🩵🩵🩵🩵🩵🩵
+        </div>
+        <p>Si pudiera elegir un lugar<br>seguro, sería a tu lado.</p>
+        <p>Cuanto más tiempo estoy<br>contigo más te amo.</p>
+        <div class="love-you">— I Love You! 🩵🩵🩵</div>
+        <div class="timer">
+            Han pasado: <strong>307 días 7 horas 55 minutos 0 segundos</strong>
+        </div>
+        <p style="font-size: 14px; color: #666; margin-top: 20px;">Desde el 11/04/2025... 🩵</p>
+    </div>
+
+    <script>
+        // Contador en tiempo real
+        const startDate = new Date('2025-04-11T00:00:00').getTime();
+        function updateTimer() {
+            const now = new Date().getTime();
+            const delta = now - startDate;
+            const days = Math.floor(delta / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((delta % (1000 * 60)) / 1000);
+            document.querySelector('.timer strong').textContent = `${days} días ${hours} horas ${minutes} minutos ${seconds} segundos`;
+        }
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
