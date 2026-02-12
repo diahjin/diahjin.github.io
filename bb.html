@@ -47,52 +47,37 @@
             text-shadow: 0 0 20px rgba(147, 197, 253, 0.8);
             font-style: italic;
         }
-        .snake-ring {
+        .flower-wrap {
             position: relative;
-            height: clamp(280px, 45vw, 360px);
+            height: clamp(260px, 42vw, 340px);
             margin: 30px auto;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        svg.snake-svg {
+        svg.flower-svg {
             max-width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 40px rgba(56, 189, 248, 0.7));
+            filter: drop-shadow(0 0 40px rgba(129, 206, 255, 0.7));
         }
-        .ring-band {
-            fill: none;
-            stroke: #c0c0c0;
-            stroke-width: 14;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            filter: drop-shadow(0 2px 8px rgba(192,192,192,0.4));
-        }
-        .ring-band-inner {
-            fill: none;
-            stroke: #e5e5e5;
-            stroke-width: 6;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-        /* Snake del código exacto - colores #38bdf8 (cabeza) y #60a5fa (cuerpo) */
-        .snake-segment {
-            fill: #60a5fa;
-            stroke: #0d0f1a;
-            stroke-width: 1.5;
-            filter: drop-shadow(0 1px 4px rgba(96,165,250,0.6));
-        }
-        .snake-head {
-            fill: #38bdf8;
-            stroke: #0d0f1a;
+        .petal {
+            fill: #bae6fd;
+            stroke: #7dd3fc;
             stroke-width: 2;
-            filter: drop-shadow(0 2px 6px rgba(56,189,248,0.8));
         }
-        .engraving {
-            font: bold 11px serif;
-            fill: rgba(224, 231, 255, 0.9);
-            font-style: italic;
-            filter: drop-shadow(0 0 4px rgba(147,197,253,0.7));
+        .center-circle {
+            fill: #f9fafb;
+            stroke: #e5e7eb;
+            stroke-width: 2;
+        }
+        .stem {
+            fill: none;
+            stroke: #22c55e;
+            stroke-width: 4;
+            stroke-linecap: round;
+        }
+        .leaf {
+            fill: #22c55e;
         }
         .content {
             line-height: 1.7;
@@ -134,32 +119,19 @@
     <div class="container">
         <h2>Para el amor de mi vida 🩵</h2>
         
-        <div class="snake-ring">
-            <svg class="snake-svg" viewBox="0 0 350 350">
-                <!-- Banda plateada del anillo SIN centro -->
-                <circle class="ring-band" cx="175" cy="175" r="110" />
-                <circle class="ring-band-inner" cx="175" cy="175" r="95" />
-                
-                <!-- Snake del código JUEGO - recreado estático en SVG -->
-                <!-- Cuerpo (múltiples segmentos #60a5fa como en canvas) -->
-                <rect class="snake-segment" x="90" y="150" width="18" height="18" rx="3" />
-                <rect class="snake-segment" x="110" y="135" width="18" height="18" rx="3" />
-                <rect class="snake-segment" x="130" y="125" width="18" height="18" rx="3" />
-                <rect class="snake-segment" x="150" y="118" width="18" height="18" rx="3" />
-                <rect class="snake-segment" x="170" y="115" width="18" height="18" rx="3" />
-                <rect class="snake-segment" x="190" y="125" width="18" height="18" rx="3" />
-                <rect class="snake-segment" x="210" y="135" width="18" height="18" rx="3" />
-                <rect class="snake-segment" x="230" y="150" width="18" height="18" rx="3" />
-                <rect class="snake-segment" x="245" y="165" width="18" height="18" rx="3" />
-                
-                <!-- Cabeza del snake (#38bdf8 como en el código) -->
-                <ellipse class="snake-head" cx="265" cy="178" rx="12" ry="10" />
-                <ellipse fill="#f8fafc" cx="272" cy="174" rx="2" ry="1.5" />
-                <ellipse fill="#f8fafc" cx="272" cy="182" rx="2" ry="1.5" />
-                
-                <!-- Grabados sutiles -->
-                <text class="engraving" x="175" y="200" text-anchor="middle">Amor Aeternum</text>
-                <text class="engraving" x="175" y="60" text-anchor="middle" font-size="14px">🩵</text>
+        <div class="flower-wrap">
+            <svg class="flower-svg" viewBox="0 0 320 320">
+                <!-- Tallo -->
+                <path class="stem" d="M160 180 Q162 220 158 260" />
+                <!-- Hojas -->
+                <path class="leaf" d="M150 215 Q130 210 120 230 Q140 228 150 235 Z" />
+                <path class="leaf" d="M170 225 Q190 220 200 240 Q180 238 170 245 Z" />
+                <!-- Pétalos (flor azul cielo) -->
+                <ellipse class="petal" cx="160" cy="135" rx="22" ry="40" />
+                <ellipse class="petal" cx="160" cy="135" rx="22" ry="40" transform="rotate(60 160 135)" />
+                <ellipse class="petal" cx="160" cy="135" rx="22" ry="40" transform="rotate(120 160 135)" />
+                <!-- Centro -->
+                <circle class="center-circle" cx="160" cy="135" r="16" />
             </svg>
         </div>
         
@@ -186,7 +158,8 @@
             const hours = Math.floor((delta % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((delta % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((delta % (1000 * 60)) / 1000);
-            document.querySelector('.timer strong').textContent = `${days} días ${hours} horas ${minutes} minutos ${seconds} segundos`;
+            document.querySelector('.timer strong').textContent =
+                `${days} días ${hours} horas ${minutes} minutos ${seconds} segundos`;
         }
         updateTimer();
         setInterval(updateTimer, 1000);
