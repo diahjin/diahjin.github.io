@@ -3,133 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para el amor de mi vida</title>
+    <title>Para el amor de mi vida 🩵</title>
     <style>
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #f0f8ff, #e0f2fe);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(-45deg, #e0f2fe, #b3d9ff, #bae6fd, #e0f2fe);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            color: #333;
+            color: #1e3a8a;
             overflow-x: hidden;
+            padding: 20px;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         .container {
             text-align: center;
             background: rgba(255, 255, 255, 0.95);
-            padding: 30px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(147, 197, 253, 0.3);
-            max-width: 400px;
+            backdrop-filter: blur(20px);
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(37, 99, 235, 0.25);
+            max-width: 420px;
             width: 100%;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
         }
         h2 {
             color: #2563eb;
-            margin-bottom: 15px;
-            font-size: 1.4em;
+            font-size: clamp(1.4em, 5vw, 2em);
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
         }
         .tree-container {
             position: relative;
-            height: 200px;
-            margin: 20px auto;
+            height: clamp(220px, 35vw, 300px);
+            margin: 25px auto;
             display: flex;
             align-items: flex-end;
             justify-content: center;
         }
         svg {
             max-width: 100%;
-            height: auto;
-        }
-        .heart {
-            font-size: 1.2em;
-            opacity: 0;
-            transform: scale(0) translateY(20px);
-            animation: growHeart 0.8s ease-out forwards;
-        }
-        .heart:nth-child(1) { animation-delay: 0.5s; }
-        .heart:nth-child(2) { animation-delay: 0.7s; }
-        .heart:nth-child(3) { animation-delay: 0.9s; }
-        .heart:nth-child(4) { animation-delay: 1.1s; }
-        .heart:nth-child(5) { animation-delay: 1.3s; }
-        .heart:nth-child(6) { animation-delay: 1.5s; }
-        .heart:nth-child(7) { animation-delay: 1.7s; }
-        @keyframes growHeart {
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+            height: 100%;
+            filter: drop-shadow(0 10px 20px rgba(96, 165, 250, 0.3));
         }
         .tree-trunk {
-            stroke: #8b4513;
-            stroke-width: 8;
-            fill: none;
-            stroke-dasharray: 100;
-            stroke-dashoffset: 100;
-            animation: growTrunk 1s ease-out 0.2s forwards;
+            fill: #8B4513;
+            stroke: #A0522D;
+            stroke-width: 3;
+            stroke-linejoin: round;
+            transform-origin: bottom center;
+            animation: growTrunk 1.2s ease-out forwards;
+            opacity: 0;
+            transform: scaleY(0);
         }
         @keyframes growTrunk {
-            to { stroke-dashoffset: 0; }
+            to { opacity: 1; transform: scaleY(1); }
         }
-        p {
-            line-height: 1.5;
-            margin: 10px 0;
-            font-size: 1em;
+        .heart {
+            font-size: clamp(1.3em, 4vw, 1.8em);
+            opacity: 0;
+            transform: scale(0) rotate(-5deg);
+            animation: bloomHeart 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            filter: drop-shadow(0 2px 4px rgba(96, 165, 250, 0.4));
+        }
+        .heart:nth-child(1) { animation-delay: 1s; }
+        .heart:nth-child(2) { animation-delay: 1.2s; transform: rotate(2deg); }
+        .heart:nth-child(3) { animation-delay: 1.4s; transform: rotate(-3deg); }
+        .heart:nth-child(4) { animation-delay: 1.6s; }
+        .heart:nth-child(5) { animation-delay: 1.8s; transform: rotate(4deg); }
+        .heart:nth-child(6) { animation-delay: 2s; transform: rotate(-4deg); }
+        .heart:nth-child(7) { animation-delay: 2.2s; }
+        .heart:nth-child(8) { animation-delay: 2.4s; transform: rotate(1deg); }
+        .heart:nth-child(9) { animation-delay: 2.6s; transform: rotate(-2deg); }
+        .heart:nth-child(10) { animation-delay: 2.8s; }
+        @keyframes bloomHeart {
+            to { 
+                opacity: 1; 
+                transform: scale(1) rotate(0deg); 
+            }
+        }
+        .content {
+            line-height: 1.6;
+            margin: 15px 0;
+            font-size: clamp(0.95em, 3.5vw, 1.1em);
         }
         .love-you {
-            font-size: 1.5em;
+            font-size: clamp(1.4em, 5vw, 1.8em);
             color: #2563eb;
-            margin: 20px 0;
-            font-weight: bold;
+            margin: 25px 0;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
         }
         .timer {
-            font-size: 1.1em;
-            font-weight: bold;
-            color: #2563eb;
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(147, 197, 253, 0.2);
-            border-radius: 10px;
+            font-size: clamp(1.1em, 4vw, 1.3em);
+            font-weight: 700;
+            color: #1e40af;
+            margin-top: 20px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, rgba(147, 197, 253, 0.6), rgba(96, 165, 250, 0.4));
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
+            backdrop-filter: blur(10px);
         }
         .footer {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 15px;
+            font-size: 0.95em;
+            color: #64748b;
+            margin-top: 20px;
+            font-style: italic;
         }
         @media (max-width: 480px) {
-            .container { padding: 25px 15px; }
-            h2 { font-size: 1.3em; }
-            .tree-container { height: 160px; }
-            .heart { font-size: 1.1em; }
+            body { padding: 10px; }
+            .container { padding: 30px 20px; margin: 10px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Para el amor de mi vida 🩵</h2>
+        
         <div class="tree-container">
-            <svg viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
-                <!-- Tronco -->
-                <path class="tree-trunk" d="M 90 150 L 110 150 L 105 100 L 95 100 Z" />
-                <!-- Corazones como hojas con animación -->
-                <text x="100" y="90" class="heart" text-anchor="middle">🩵</text>
-                <text x="80" y="75" class="heart" text-anchor="middle">🩵</text>
-                <text x="120" y="75" class="heart" text-anchor="middle">🩵</text>
-                <text x="70" y="60" class="heart" text-anchor="middle">🩵</text>
-                <text x="100" y="55" class="heart" text-anchor="middle">🩵</text>
-                <text x="130" y="60" class="heart" text-anchor="middle">🩵</text>
-                <text x="95" y="40" class="heart" text-anchor="middle">🩵🩵🩵</text>
+            <svg viewBox="0 0 220 280">
+                <!-- Tronco grueso y ramificado -->
+                <path class="tree-trunk" d="M 105 250 Q 100 200 95 150 Q 105 140 110 150 Q 115 140 120 150 Q 115 200 110 250 L 105 250 Z M 110 250 L 115 260 L 105 260 Z" />
+                
+                <!-- Copa del árbol con muchos corazones centrados -->
+                <text x="110" y="135" class="heart" text-anchor="middle">🩵</text>
+                <text x="95" y="115" class="heart" text-anchor="middle">🩵🩵</text>
+                <text x="125" y="118" class="heart" text-anchor="middle">🩵🩵</text>
+                <text x="85" y="95" class="heart" text-anchor="middle">🩵</text>
+                <text x="110" y="92" class="heart" text-anchor="middle">🩵🩵🩵</text>
+                <text x="135" y="95" class="heart" text-anchor="middle">🩵</text>
+                <text x="75" y="80" class="heart" text-anchor="middle">🩵</text>
+                <text x="102" y="75" class="heart" text-anchor="middle">🩵🩵</text>
+                <text x="140" y="78" class="heart" text-anchor="middle">🩵🩵</text>
+                <text x="118" y="65" class="heart" text-anchor="middle">🩵🩵🩵</text>
             </svg>
         </div>
-        <p>Si pudiera elegir un lugar<br>seguro, sería a tu lado.</p>
-        <p>Cuanto más tiempo estoy<br>contigo más te amo.</p>
-        <div class="love-you">— I Love You! 🩵🩵🩵</div>
-        <div class="timer">
-            Han pasado: <strong>307 días 7 horas 57 minutos 0 segundos</strong>
+        
+        <div class="content">
+            <p>Si pudiera elegir un lugar<br>seguro, sería a tu lado.</p>
+            <p>Cuanto más tiempo estoy<br>contigo más te amo.</p>
         </div>
+        
+        <div class="love-you">— I Love You! 🩵🩵🩵</div>
+        
+        <div class="timer">
+            Han pasado: <strong>307 días 8 horas 0 minutos 0 segundos</strong>
+        </div>
+        
         <p class="footer">Desde el 11/04/2025... 🩵</p>
     </div>
 
