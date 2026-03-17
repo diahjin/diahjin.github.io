@@ -4,952 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VenomPlayer</title>
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  body {
-    background: #1a1a2e;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-    color: #fff;
-    min-height: 100vh;
-    padding: 20px;
-  }
+        body {
+            background: #1a1a2e;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-  .header {
-    text-align: center;
-    margin-bottom: 25px;
-  }
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
 
-  .header h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    color: #ff6b6b;
-    margin-bottom: 8px;
-  }
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #ff6b6b;
+            margin-bottom: 8px;
+        }
 
-  .header p {
-    font-size: 0.95rem;
-    color: #aaa;
-  }
+        .header p {
+            font-size: 0.95rem;
+            color: #aaa;
+        }
 
-  .container {
-    max-width: 1000px;
-    margin: 0 auto;
-  }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
-  .controls-section {
-    background: #252540;
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 20px;
-  }
+        .controls-section {
+            background: #252540;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
 
-  .control-group {
-    margin-bottom: 18px;
-  }
+        .control-group {
+            margin-bottom: 18px;
+        }
 
-  .control-group:last-child {
-    margin-bottom: 0;
-  }
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
 
-  label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #ff6b6b;
-  }
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ff6b6b;
+        }
 
-  select {
-    width: 100%;
-    padding: 12px 15px;
-    font-size: 1rem;
-    background: #1a1a2e;
-    border: 2px solid #333;
-    border-radius: 10px;
-    color: #fff;
-    cursor: pointer;
-  }
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1rem;
+            background: #1a1a2e;
+            border: 2px solid #333;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+        }
 
-  select:hover {
-    border-color: #ff6b6b;
-  }
+        select:hover {
+            border-color: #ff6b6b;
+        }
 
-  select:focus {
-    outline: none;
-    border-color: #ff6b6b;
-  }
-
-  /* ¡FIX PRINCIPAL AQUÍ! */
-  #serie {
-    opacity: 1 !important;
-    cursor: pointer !important;
-  }
-
-  #serie:disabled {
-    opacity: 1 !important;
-    cursor: pointer !important;
-  }
-
-  /* Quita el estilo disabled problemático */
-  select:disabled {
-    opacity: 1;
-    cursor: pointer;
-    background: #1a1a2e;
-    border-color: #ff6b6b;
-  }
-
-  option {
-    background: #1a1a2e;
-    color: #fff;
-  }
-
-  .player-section {
-    background: #252540;
-    border-radius: 15px;
-    padding: 20px;
-  }
-
-  .player-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 12px;
-    text-align: center;
-    color: #ff6b6b;
-  }
-
-  .player-wrapper {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%;
-    background: #1a1a2e;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-
-  .player-wrapper iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-
-  .empty-player {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #666;
-  }
-
-  .empty-player.hidden {
-    display: none;
-  }
-
-  .empty-player-icon {
-    font-size: 3.5rem;
-    margin-bottom: 10px;
-  }
-
-  @media (max-width: 768px) {
-    body {
-      padding: 10px;
-    }
-    .controls-section, .player-section {
-      padding: 15px;
-    }
-  }
-</style>
-</head>
-<body>
-    <div class="header">
-        <h1>VenomPlayer</h1>
-        <p>Tu plataforma de series</p>
-    </div>
-    
-    <div class="container">
-        <div class="controls-section">
-            <div class="control-group">
-                <label for="serie">📺 Serie</label>
-                <select id="serie">
-                    <option value="">-- Elige una serie --</option>
-                    <option value="house">House</option>
-                    <option value="FallingSkies">Falling Skies</option>
-                    <option value="The100">The 100</option>
-                    <option value="teenwolf">Teen Wolf</option>
-                    <option value="thegooddoctor">The Good Doctor</option>
-                    <option value="thestrain">The Strain</option>
-                    <option value="DragonBallZ">Dragon Ball Z</option>
-                    <option value="LasTame">LasTame</option>
-                    <option value="DragonBallSuper">Dragon Ball Super</option>
-                    <option value="Machosalfas">Machos alfas</option>
-                    <option value="Cuandonadiemeve">Cuando nadie me ve</option>
-                    <option value="GeronimoStilton">Gerónimo Stilton</option>
-                    <option value="Herederosdelanoche">Herederos de la noche</option>
-                    <option value="isladelastentaciones">La isla de las tentaciones</option>
-                </select>
-            </div>
-            
-            <div class="control-group">
-                <label for="capitulo">🎬 Capítulo</label>
-                <select id="capitulo" disabled>
-                    <option value="">-- Elige primero una serie --</option>
-                </select>
-            </div>
-        </div>
-        
-        <div class="player-section">
-            <div class="player-title">▶ Reproductor</div>
-            <div class="player-wrapper">
-                <div class="empty-player" id="emptyPlayer">
-                    <div class="empty-player-icon">📺</div>
-                    <p>Selecciona una serie y capítulo</p>
-                </div>
-                <iframe id="megaPlayer" allowfullscreen loading="lazy"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const datosSeries = {
-            house:  [
-                { nombre: "House - 1x1", url: "https://vidmoly.net/embed-q0j7u9cmmb6h.html" },
-                { nombre: "House - 1x2", url: "https://vidmoly.net/embed-qpxbby39nz0c.html" },
-                { nombre: "House - 1x3", url: "https://vidmoly.net/embed-qxs4pu3j0k6f.html" },
-                { nombre: "House - 1x4", url: "https://vidmoly.net/embed-u28l453t61sf.html" },
-                { nombre: "House - 1x5", url: "https://vidmoly.net/embed-wsipm59yzlg3.html" },
-                { nombre: "House - 1x6", url: "https://vidmoly.net/embed-w9f2yu3utq4f.html" },
-                { nombre: "House - 1x7", url: "https://vidmoly.net/embed-1cyyihpakock.html" },
-                { nombre: "House - 1x8", url: "https://vidmoly.net/embed-y0uz5tzcbbmo.html" },
-                { nombre: "House - 1x9", url: "https://vidmoly.net/embed-hd5333g8wo27.html" },
-                { nombre: "House - 1x10", url: "https://vidmoly.net/embed-yn93owbfqc5p.html" },
-                { nombre: "House - 1x11", url: "https://vidmoly.net/embed-jlnnc45niuuq.html" },
-                { nombre: "House - 1x12", url: "https://vidmoly.net/embed-olac8yqu5fs0.html" },
-                { nombre: "House - 1x13", url: "https://vidmoly.net/embed-h9j4bxv0hkfp.html" },
-                { nombre: "House - 1x14", url: "https://vidmoly.net/embed-r7s7w5kkfsrw.html" },
-                { nombre: "House - 1x15", url: "https://vidmoly.net/embed-03hcoeayi3j3.html" },
-                { nombre: "House - 1x16", url: "https://vidmoly.net/embed-v0az2imdk38n.html" },
-                { nombre: "House - 1x17", url: "https://vidmoly.net/embed-v74zr03ngxao.html" },
-                { nombre: "House - 1x18", url: "https://vidmoly.net/embed-3ep8t6zs1b2e.html" },
-                { nombre: "House - 1x19", url: "https://vidmoly.net/embed-8n6xko3ullu4.html" },
-                { nombre: "House - 1x20", url: "https://vidmoly.net/embed-y5vgjt3e3cj6.html" },
-                { nombre: "House - 1x21", url: "https://vidmoly.net/embed-yshkenjv772w.html" },
-                { nombre: "House - 1x22", url: "https://vidmoly.net/embed-xpncpt4dc8ri.html" }
-            ],
-
-The100: [
-                { nombre: "The 100 - 1x1",  url: "https://vidmoly.net/embed-1yuy59r3rojg.html" },
-                { nombre: "The 100 - 1x2",  url: "https://vidmoly.net/embed-pk7zk7g0y91n.html" },
-                { nombre: "The 100 - 1x3",  url: "https://vidmoly.net/embed-a8s88cxojeg3.html" },
-                { nombre: "The 100 - 1x4",  url: "https://vidmoly.net/embed-uty6o9c5c558.html" },
-                { nombre: "The 100 - 1x5",  url: "https://vidmoly.net/embed-177erfwit8c1.html" },
-                { nombre: "The 100 - 1x6",  url: "https://vidmoly.net/embed-5eybvbkzf189.html" },
-                { nombre: "The 100 - 1x7",  url: "https://vidmoly.net/embed-1tdp37vinqqj.html" },
-                { nombre: "The 100 - 1x8",  url: "https://vidmoly.net/embed-7bq30l40kqs0.html" },
-                { nombre: "The 100 - 1x9",  url: "https://vidmoly.net/embed-lnkbwthcs1jp.html" },
-                { nombre: "The 100 - 1x10", url: "https://vidmoly.net/embed-xns26f06wor6.html" },
-                { nombre: "The 100 - 1x11", url: "https://vidmoly.net/embed-fq8d49f2jmdt.html" },
-                { nombre: "The 100 - 1x12", url: "https://vidmoly.net/embed-t60djjrldng0.html" },
-                { nombre: "The 100 - 1x13", url: "https://vidmoly.net/embed-wjzixr1kflhg.html" },
-                { nombre: "The 100 - 2x1", url: "https://vidmoly.net/6e4gmnI8gnpj.html" },
-                { nombre: "The 100 - 2x2", url: "https://vidmoly.net/689e1xt56su1.html" },
-                { nombre: "The 100 - 2x3", url: "https://vidmoly.net/3atidf3veo6.html" },
-                { nombre: "The 100 - 2x4", url: "https://vidmoly.net/15Iu052iuh.html" },
-                { nombre: "The 100 - 2x5", url: "https://vidmoly.net/9hc2z3huhq64.html" },
-                { nombre: "The 100 - 2x6", url: "https://vidmoly.net/8Ikx2xyr7gc.html" },
-                { nombre: "The 100 - 2x7", url: "https://vidmoly.net/5fpqjorufkrnj.html" },
-                { nombre: "The 100 - 2x8", url: "https://vidmoly.net/h0u6im7obddu.html" },
-                { nombre: "The 100 - 2x9", url: "https://vidmoly.net/albyn5n0uvh9.html" },
-                { nombre: "The 100 - 2x10", url: "https://vidmoly.net/39msesmiiyr5.html" },
-                { nombre: "The 100 - 2x11", url: "https://vidmoly.net/ejzgnx87rci9.html" },
-                { nombre: "The 100 - 2x12", url: "https://vidmoly.net/qI29hmkl7yu4.html" },
-                { nombre: "The 100 - 2x13", url: "https://vidmoly.net/yo0rnkk7s1e.html" },
-                { nombre: "The 100 - 2x14", url: "https://vidmoly.net/wewvcd91chfr.html" },
-                { nombre: "The 100 - 2x15", url: "https://vidmoly.net/1r5a2d5ett61.html" },
-                { nombre: "The 100 - 2x16", url: "https://vidmoly.net/eqeyoeccu98.html" }
-
-],
-
-FallingSkies: [
-                { nombre: "Falling Skies - 1x1", url: "https://vidmoly.net/embed-qfehtlr28vs8.html" },
-                { nombre: "Falling Skies - 1x2", url: "https://vidmoly.net/embed-qxp71mkniq5e.html" },
-                { nombre: "Falling Skies - 1x3", url: "https://vidmoly.net/embed-hkro3ax680de.html" },
-                { nombre: "Falling Skies - 1x4", url: "https://vidmoly.net/embed-s73wr2etpbo8.html" },
-                { nombre: "Falling Skies - 1x5", url: "https://vidmoly.net/embed-d1r35nb4wfjg.html" },
-                { nombre: "Falling Skies - 1x6", url: "https://vidmoly.net/embed-hudwzx59jkwg.html" },
-                { nombre: "Falling Skies - 1x7", url: "https://vidmoly.net/embed-laxfpp01qzpa.html" },
-                { nombre: "Falling Skies - 1x8", url: "https://vidmoly.net/embed-lgl0bdzgpa94.html" },
-                { nombre: "Falling Skies - 1x9", url: "https://vidmoly.net/embed-tf8s5rah6rhd.html" },
-                { nombre: "Falling Skies - 1x10", url: "https://vidmoly.net/embed-l263qvscyv9i.html" },
-                { nombre: "Falling Skies - 2x1",  url: "https://vidmoly.net/embed-s1em2zvmp4oj.html" },
-                { nombre: "Falling Skies - 2x2",  url: "https://vidmoly.net/embed-yrbmb7boyoic.html" },
-                { nombre: "Falling Skies - 2x3",  url: "https://vidmoly.net/embed-po1at5qp8gup.html" },
-                { nombre: "Falling Skies - 2x4",  url: "https://vidmoly.net/embed-w9l0o273nmqs.html" },
-                { nombre: "Falling Skies - 2x5",  url: "https://vidmoly.net/embed-m7tlpd16sdu8.html" },
-                { nombre: "Falling Skies - 2x6",  url: "https://vidmoly.net/embed-n375d0dueclt.html" },
-                { nombre: "Falling Skies - 2x7",  url: "https://vidmoly.net/embed-3af33y0uerl8.html" },
-                { nombre: "Falling Skies - 2x8",  url: "https://vidmoly.net/embed-5lha7oytybbt.html" },
-                { nombre: "Falling Skies - 2x9",  url: "https://vidmoly.net/embed-maa27genjl000.html" },
-                { nombre: "Falling Skies - 2x10", url: "https://vidmoly.net/embed-8st1kd8kioea.html" },
-                { nombre: "Falling Skies - 3x1",  url: "https://vidmoly.net/embed-66j9ezq5bq21.html" },
-                { nombre: "Falling Skies - 3x2",  url: "https://vidmoly.net/embed-dc5kmm5678uz.html" },
-                { nombre: "Falling Skies - 3x3",  url: "https://vidmoly.net/embed-6t1ux603jj3t.html" },
-                { nombre: "Falling Skies - 3x4",  url: "https://vidmoly.net/embed-g93aana5m6zh.html" },
-                { nombre: "Falling Skies - 3x5",  url: "https://vidmoly.net/embed-5ildm36eauod.html" },
-                { nombre: "Falling Skies - 3x6",  url: "https://vidmoly.net/embed-md8j3tzv45tu.html" },
-                { nombre: "Falling Skies - 3x7",  url: "https://vidmoly.net/embed-rkqxi9n7dkmk.html" },
-                { nombre: "Falling Skies - 3x8",  url: "https://vidmoly.net/embed-vt437t9gyjhw.html" },
-                { nombre: "Falling Skies - 3x9",  url: "https://vidmoly.net/embed-1ovifpzk6q9s.html" },
-                {nombre: "Falling Skies - 3x10", url: "https://vidmoly.net/embed-gn59rb3ycctp.html" },
-                { nombre: "Falling Skies - 4x1",  url: "https://vidmoly.net/embed-px90qz7lrhjw.html" },
-                { nombre: "Falling Skies - 4x2",  url: "https://vidmoly.net/embed-5xq0o7ifiyod.html" },
-                { nombre: "Falling Skies - 4x3",  url: "https://vidmoly.net/embed-ogc1q9q0roo08.html" },
-                { nombre: "Falling Skies - 4x4",  url: "https://vidmoly.net/embed-aj03764m74c6.html" },
-                { nombre: "Falling Skies - 4x5",  url: "https://vidmoly.net/embed-y9484sulu6ke.html" },
-                { nombre: "Falling Skies - 4x6",  url: "https://vidmoly.net/embed-fjdie66lgu7s.html" },
-                { nombre: "Falling Skies - 4x7",  url: "https://vidmoly.net/embed-42r4lc3p9zkq.html" },
-                { nombre: "Falling Skies - 4x8",  url: "https://vidmoly.net/embed-2b8q0h1qj93s.html" },
-                { nombre: "Falling Skies - 4x9",  url: "https://vidmoly.net/embed-vudiywsam4en.html" },
-                { nombre: "Falling Skies - 4x10", url: "https://vidmoly.net/embed-7ojnli2tkqcr.html" },
-                { nombre: "Falling Skies - 4x11", url: "https://vidmoly.net/embed-a65z3fz7safs.html" },
-                { nombre: "Falling Skies - 4x12", url: "https://vidmoly.net/embed-pvvibxcbf1tz.html" },
-                { nombre: "Falling Skies - 5x1",  url: "https://vidmoly.net/embed-fkng1zc280cr.html" },
-                { nombre: "Falling Skies - 5x2",  url: "https://vidmoly.net/embed-d55qpy3ci72x.html" },
-                { nombre: "Falling Skies - 5x3",  url: "https://vidmoly.net/embed-9w1yf7sqb1kg.html" },
-                { nombre: "Falling Skies - 5x4",  url: "https://vidmoly.net/embed-6polrnyr43bn.html" },
-                { nombre: "Falling Skies - 5x5",  url: "https://vidmoly.net/embed-gpjze18jdiuw.html" },
-                { nombre: "Falling Skies - 5x6",  url: "https://vidmoly.net/embed-g1w6jspsovle.html" },
-                { nombre: "Falling Skies - 5x7",  url: "https://vidmoly.net/embed-95jhvg7mzdvd.html" },
-                { nombre: "Falling Skies - 5x8",  url: "https://vidmoly.net/embed-kf5719ovfu9q.html" },
-                { nombre: "Falling Skies - 5x9",  url: "https://vidmoly.net/embed-4zmhcud7dpok.html" },
-                { nombre: "Falling Skies - 5x10", url: "https://vidmoly.net/embed-hqd4totwltf0.html" }
-                
-            ],
-
-
-            teenwolf : [
-                { nombre: "Teen Wolf - 1x1", url: "https://vidmoly.net/embed-3le21eq61agx.html" },
-                { nombre: "Teen Wolf - 1x2", url: "https://vidmoly.net/embed-8rcuohl60o57.html" },
-                { nombre: "Teen Wolf - 1x3", url: "https://vidmoly.net/embed-enwvhsor7hzx.html" },
-                { nombre: "Teen Wolf - 1x4", url: "https://vidmoly.net/embed-glcphdutr8dq.html" },
-                { nombre: "Teen Wolf - 1x5", url: "https://vidmoly.net/embed-vicyigshivt7.html" },
-                { nombre: "Teen Wolf - 1x6", url: "https://vidmoly.net/embed-bsj5z9sq872p.html" },
-                { nombre: "Teen Wolf - 1x7", url: "https://vidmoly.net/embed-88euwxqte23j.html" },
-                { nombre: "Teen Wolf - 1x8", url: "https://vidmoly.net/embed-ajrqtlxyjkf5.html" },
-                { nombre: "Teen Wolf - 1x9", url: "https://vidmoly.net/embed-fjehtobn4xrd.html" },
-                { nombre: "Teen Wolf - 1x10", url: "https://vidmoly.net/embed-558exv65o40y.html" },
-                { nombre: "Teen Wolf - 1x11", url: "https://vidmoly.net/embed-wpjc1tlzj6cw.html" },
-                { nombre: "Teen Wolf - 1x12", url: "https://vidmoly.net/embed-juahvv7e1s25.html" },
-                { nombre: "Teen Wolf - 2x1", url: "https://vidmoly.net/embed-5zdriomx9544.html" },
-                { nombre: "Teen Wolf - 2x2", url: "https://vidmoly.net/embed-igfnvthd7wkh.html" },
-                { nombre: "Teen Wolf - 2x3", url: "https://vidmoly.net/embed-ph06k70o13my.html" },
-                { nombre: "Teen Wolf - 2x4", url: "https://vidmoly.net/embed-wkch7uh2dv0n.html" },
-                { nombre: "Teen Wolf - 2x5", url: "https://vidmoly.net/embed-m5x7luz1glpm.html" },
-                { nombre: "Teen Wolf - 2x6", url: "https://vidmoly.net/embed-9iors1c7zcbj.html" },
-                { nombre: "Teen Wolf - 2x7", url: "https://vidmoly.net/embed-7grxq6mdtdhk.html" },
-                { nombre: "Teen Wolf - 2x8", url: "https://vidmoly.net/embed-4pu5wu5q5u3e.html" },
-                { nombre: "Teen Wolf - 2x9", url: "https://vidmoly.net/embed-58e23xggipxk.html" },
-                { nombre: "Teen Wolf - 2x10", url: "https://vidmoly.net/embed-cn1i6bqkfrm9.html" },
-                { nombre: "Teen Wolf - 2x11", url: "https://vidmoly.net/embed-vf0yhsp1xwvo.html" },
-                { nombre: "Teen Wolf - 2x12", url: "https://vidmoly.net/embed-rncfu7hsql9k.html" },
-                { nombre: "Teen Wolf - 3x1", url: "https://vidmoly.net/embed-0vas4xeql9lz.html" },
-                { nombre: "Teen Wolf - 3x2", url: "https://vidmoly.net/embed-aougpy02gkab.html" },
-                { nombre: "Teen Wolf - 3x3", url: "https://vidmoly.net/embed-kyrwbuvqx9jw.html" },
-                { nombre: "Teen Wolf - 3x4", url: "https://vidmoly.net/embed-19n94ib40v7c.html" },
-                { nombre: "Teen Wolf - 3x5", url: "https://vidmoly.net/embed-l1m5beh3x39l.html" },
-                { nombre: "Teen Wolf - 3x6", url: "https://vidmoly.net/embed-ky7i96gqipr2.html" },
-                { nombre: "Teen Wolf - 3x7", url: "https://vidmoly.net/embed-l20km45fprfc.html" },
-                { nombre: "Teen Wolf - 3x8", url: "https://vidmoly.net/embed-6zjxj9rtgb5y.html" },
-                { nombre: "Teen Wolf - 3x9", url: "https://vidmoly.net/embed-isbqsg9tzprx.html" },
-                { nombre: "Teen Wolf - 3x10", url: "https://vidmoly.net/embed-wjho9wrsg0kq.html" },
-                { nombre: "Teen Wolf - 3x11", url: "https://vidmoly.net/embed-euktmlzdte6f.html" },
-                { nombre: "Teen Wolf - 3x12", url: "https://vidmoly.net/embed-oleotv1gn7f8.html" },
-                { nombre: "Teen Wolf - 3x13", url: "https://vidmoly.net/embed-58t2la34toz5.html" },
-                { nombre: "Teen Wolf - 3x14", url: "https://vidmoly.net/embed-d03oqdyd2nx3.html" },
-                { nombre: "Teen Wolf - 3x15", url: "https://vidmoly.net/embed-ph06k70o13my.html" },
-                { nombre: "Teen Wolf - 3x16", url: "https://vidmoly.net/embed-ymajycskalxt.html" },
-                { nombre: "Teen Wolf - 3x17", url: "https://vidmoly.net/embed-irvdqnpzclac.html" },
-                { nombre: "Teen Wolf - 3x18", url: "https://vidmoly.net/embed-pfhe0tv3u7j2.html" },
-                { nombre: "Teen Wolf - 3x19", url: "https://vidmoly.net/embed-o0f3q9obpsjp.html" },
-                { nombre: "Teen Wolf - 3x20", url: "https://vidmoly.net/embed-49lh20khx0pi.html" },
-                { nombre: "Teen Wolf - 3x21", url: "https://vidmoly.net/embed-apk9nsmqqhan.html" },
-                { nombre: "Teen Wolf - 3x22", url: "https://vidmoly.net/embed-wev41kixn3ah.html" },
-                { nombre: "Teen Wolf - 3x23", url: "https://vidmoly.net/embed-w7gqs3wlwu1w.html" },
-                { nombre: "Teen Wolf - 3x24", url: "https://vidmoly.net/embed-18gymza3vr1v.html" },
-                { nombre: "Teen Wolf - 4x1", url: "https://vidmoly.net/embed-bgu05zb901a0.html" },
-                { nombre: "Teen Wolf - 4x2", url: "https://vidmoly.net/embed-83n635w4u04l.html" },
-                { nombre: "Teen Wolf - 4x3", url: "https://vidmoly.net/embed-a4j0geqvz4eb.html" },
-                { nombre: "Teen Wolf - 4x4", url: "https://vidmoly.net/embed-2hhobx0y69bw.html" },
-                { nombre: "Teen Wolf - 4x5", url: "https://vidmoly.net/embed-2maawifx56nf.html" },
-                { nombre: "Teen Wolf - 4x6", url: "https://vidmoly.net/embed-rjmkoc006lrk.html" },
-                { nombre: "Teen Wolf - 4x7", url: "https://vidmoly.net/embed-bqxehhpjni4n.html" },
-                { nombre: "Teen Wolf - 4x8", url: "https://vidmoly.net/embed-jtmzc91oscyj.html" },
-                { nombre: "Teen Wolf - 4x9", url: "https://vidmoly.net/embed-iv5mxq9p0vso.html" },
-                { nombre: "Teen Wolf - 4x10", url: "https://vidmoly.net/embed-dgxqgn4icxjt.html" },
-                { nombre: "Teen Wolf - 4x11", url: "https://vidmoly.net/embed-uu05q9bk7j0f.html" },
-                { nombre: "Teen Wolf - 4x12", url: "https://vidmoly.net/embed-9vz1ozedh0ct.html" },
-                { nombre: "Teen Wolf - 5x1", url: "https://vidmoly.net/embed-azdowyxbn68j.html" },
-                { nombre: "Teen Wolf - 5x2", url: "https://vidmoly.net/embed-cg4ml0fvhc6n.html" },
-                { nombre: "Teen Wolf - 5x3", url: "https://vidmoly.net/embed-ciw69b7v7pjd.html" },
-                { nombre: "Teen Wolf - 5x4", url: "https://vidmoly.net/embed-uu6yajw3jbga.html" },
-                { nombre: "Teen Wolf - 5x5", url: "https://vidmoly.net/embed-xuo6frp5tj32.html" },
-                { nombre: "Teen Wolf - 5x6", url: "https://vidmoly.net/embed-uyvx9v7jvikc.html" },
-                { nombre: "Teen Wolf - 5x7", url: "https://vidmoly.net/embed-qkwqf3wl0af6.html" },
-                { nombre: "Teen Wolf - 5x8", url: "https://vidmoly.net/embed-fo55ese21zfd.html" },
-                { nombre: "Teen Wolf - 5x9", url: "https://vidmoly.net/embed-x68s16sh6vqq.html" },
-                { nombre: "Teen Wolf - 5x10", url: "https://vidmoly.net/embed-gyzrf1fwq3w4.html" },
-                { nombre: "Teen Wolf - 5x11", url: "https://vidmoly.net/embed-qqgni0x1j11f.html" },
-                { nombre: "Teen Wolf - 5x12", url: "https://vidmoly.net/embed-kq0njz1ct8xq.html" },
-                { nombre: "Teen Wolf - 5x13", url: "https://vidmoly.net/embed-qrggqlnd7uzt.html" },
-                { nombre: "Teen Wolf - 5x14", url: "https://vidmoly.net/embed-424swo1tl33v.html" },
-                { nombre: "Teen Wolf - 5x15", url: "https://vidmoly.net/embed-bwrbz66vnk5h.html" },
-                { nombre: "Teen Wolf - 5x16", url: "https://vidmoly.net/embed-xcj7q724qya8.html" },
-                { nombre: "Teen Wolf - 5x17", url: "https://vidmoly.net/embed-1z8aqxaowqhl.html" },
-                { nombre: "Teen Wolf - 5x18", url: "https://vidmoly.net/embed-r35mzb3gycte.html" },
-                { nombre: "Teen Wolf - 5x19", url: "https://vidmoly.net/embed-h8vmdzuax1ks.html" },
-                { nombre: "Teen Wolf - 5x20", url: "https://vidmoly.net/embed-zrxsegy1pb7p.html" },  
-                { nombre: "Teen Wolf - 6x1", url: "https://vidmoly.net/embed-xxf7acynnszw.html" },
-                { nombre: "Teen Wolf - 6x2", url: "https://vidmoly.net/embed-w4ym35v2cah6.html" },
-                { nombre: "Teen Wolf - 6x3", url: "https://vidmoly.net/embed-pj323576f2xo.html" },
-                { nombre: "Teen Wolf - 6x4", url: "https://vidmoly.net/embed-sjq28scughuj.html" },
-                { nombre: "Teen Wolf - 6x5", url: "https://vidmoly.net/embed-pb4mhkxzxkh8.html" },
-                { nombre: "Teen Wolf - 6x6", url: "https://vidmoly.net/embed-k9g6qm74x54w.html" },
-                { nombre: "Teen Wolf - 6x7", url: "https://vidmoly.net/embed-oj3ot1gnlobx.html" },
-                { nombre: "Teen Wolf - 6x8", url: "https://vidmoly.net/embed-7m8dmi2v40im.html" },
-                { nombre: "Teen Wolf - 6x9", url: "https://vidmoly.net/embed-2ajlg24k7h6g.html" },
-                { nombre: "Teen Wolf - 6x10", url: "https://vidmoly.net/embed-bdtgkisfcay7.html" },
-                { nombre: "Teen Wolf - 6x11", url: "https://vidmoly.net/embed-8zqj2kin0o5m.html" },
-                { nombre: "Teen Wolf - 6x12", url: "https://vidmoly.net/embed-3voctrtw17c9.html" },
-                { nombre: "Teen Wolf - 6x13", url: "https://vidmoly.net/embed-wex90zfxgzer.html" },
-                { nombre: "Teen Wolf - 6x14", url: "https://vidmoly.net/embed-edcysdmbjtm3.html" },
-                { nombre: "Teen Wolf - 6x15", url: "https://vidmoly.net/embed-d82x37hlzdkj.html" },
-                { nombre: "Teen Wolf - 6x16", url: "https://vidmoly.net/embed-z88xmrd3991j.html" },
-                { nombre: "Teen Wolf - 6x17", url: "https://vidmoly.net/embed-z8fr5mcnrf4c.html" },
-                { nombre: "Teen Wolf - 6x18", url: "https://vidmoly.net/embed-u52ifxlem0rc.html" },
-                { nombre: "Teen Wolf - 6x19", url: "https://vidmoly.net/embed-28axlzf6ipd5.html" },
-                { nombre: "Teen Wolf - 6x20", url: "https://vidmoly.net/embed-pq3g24cwh4ra.html" }                                                                 
-                ],
- thegooddoctor: [
-                { nombre: "The Good Doctor - 1x1",  url: "https://vidmoly.net/embed-sk7fo6gasf0j.html" },
-                { nombre: "The Good Doctor - 1x2",  url: "https://vidmoly.net/embed-s1hgty667c2d.html" },
-                { nombre: "The Good Doctor - 1x3",  url: "https://vidmoly.net/embed-r93467quebfz.html" },
-                { nombre: "The Good Doctor - 1x4",  url: "https://vidmoly.net/embed-8dy4zwmqaoi7.html" },
-                { nombre: "The Good Doctor - 1x5",  url: "https://vidmoly.net/embed-kibz58zrszp7.html" },
-                { nombre: "The Good Doctor - 1x6",  url: "https://vidmoly.net/embed-c0s66989o77s.html" },
-                { nombre: "The Good Doctor - 1x7",  url: "https://vidmoly.net/embed-s66ohdvhd7o9.html" },
-                { nombre: "The Good Doctor - 1x8",  url: "https://vidmoly.net/embed-avfnuo7bmbyj.html" },
-                { nombre: "The Good Doctor - 1x9",  url: "https://vidmoly.net/embed-o8og2qzpdp7f.html" },
-                { nombre: "The Good Doctor - 1x10",  url: "https://vidmoly.net/embed-4a7e9nafle0a.html" },
-                { nombre: "The Good Doctor - 1x11",  url: "https://vidmoly.net/embed-fpko6fgow5z6.html" },
-                { nombre: "The Good Doctor - 1x12",  url: "https://vidmoly.net/embed-0ri15cpkwrdx.html" },
-                { nombre: "The Good Doctor - 1x13",  url: "https://vidmoly.net/embed-e8smqhlv0j36.html" },
-                { nombre: "The Good Doctor - 1x14",  url: "https://vidmoly.net/embed-5yfk6ruravg6.html" },
-                { nombre: "The Good Doctor - 1x15",  url: "https://vidmoly.net/embed-qe1qsvvihakm.html" },
-                { nombre: "The Good Doctor - 1x16",  url: "https://vidmoly.net/embed-6zj004q5os4n.html" },
-                { nombre: "The Good Doctor - 1x17",  url: "https://vidmoly.net/embed-lszd7f7v35nb.html" },
-                { nombre: "The Good Doctor - 1x18",  url: "https://vidmoly.net/embed-kr7tyebp8wrr.html" },
-                { nombre: "The Good Doctor - 2x1",  url: "https://vidmoly.net/embed-5733dzdsi65z.html" },
-                { nombre: "The Good Doctor - 2x2",  url: "https://vidmoly.net/embed-3m87443ttbte.html" },
-                { nombre: "The Good Doctor - 2x3",  url: "https://vidmoly.net/embed-4j2cly5mhp3c.html" },
-                { nombre: "The Good Doctor - 2x4",  url: "https://vidmoly.net/embed-2qa9w30rqpcl.html" },
-                { nombre: "The Good Doctor - 2x5",  url: "https://vidmoly.net/embed-7xoy5nrwr1gl.html" },
-                { nombre: "The Good Doctor - 2x6",  url: "https://vidmoly.net/embed-lrou7vvjmmk1.html" },
-                { nombre: "The Good Doctor - 2x7",  url: "https://vidmoly.net/embed-6r2hse2gg87j.html" },
-                { nombre: "The Good Doctor - 2x8",  url: "https://vidmoly.net/embed-r9rliscwfm15.html" },
-                { nombre: "The Good Doctor - 2x9",  url: "https://vidmoly.net/embed-ptxkpuoy8mpc.html" },
-                { nombre: "The Good Doctor - 2x10",  url: "https://vidmoly.net/embed-2z1uxuniiulh.html" },
-                { nombre: "The Good Doctor - 2x11",  url: "https://vidmoly.net/embed-rl06dzqeh68v.html" },
-                { nombre: "The Good Doctor - 2x12",  url: "https://vidmoly.net/embed-v3l4mnths9d2.html" },
-                { nombre: "The Good Doctor - 2x13",  url: "https://vidmoly.net/embed-u17s87m6bb7m.html" },
-                { nombre: "The Good Doctor - 2x14",  url: "https://vidmoly.net/embed-02y95qzlh3k7.html" },
-                { nombre: "The Good Doctor - 2x15",  url: "https://vidmoly.net/embed-u6gqzlpkwq7m.html" },
-                { nombre: "The Good Doctor - 2x16",  url: "https://vidmoly.net/embed-z2yeajpv4gxx.html" },
-                { nombre: "The Good Doctor - 2x17",  url: "https://vidmoly.net/embed-r7a281ldzjzr.html" },
-                { nombre: "The Good Doctor - 2x18",  url: "https://vidmoly.net/embed-8803riyzgrl5.html" },                         
-                { nombre: "The Good Doctor - 3x1",  url: "https://vidmoly.net/embed-p0hvgr0f4zk1.html" },
-                { nombre: "The Good Doctor - 3x2",  url: "https://vidmoly.net/embed-dpxjavhy000o.html" },
-                { nombre: "The Good Doctor - 3x3",  url: "https://vidmoly.net/embed-rnem28o1f7y9.html" },
-                { nombre: "The Good Doctor - 3x4",  url: "https://vidmoly.net/embed-ktno7u6o53g3.html" },
-                { nombre: "The Good Doctor - 3x5",  url: "https://vidmoly.net/embed-pixvyufo6xoq.html" },
-                { nombre: "The Good Doctor - 3x6",  url: "https://vidmoly.net/embed-jooi2is7zds8.html" },
-                { nombre: "The Good Doctor - 3x7",  url: "https://vidmoly.net/embed-td8oj1rvmer2.html" },
-                { nombre: "The Good Doctor - 3x8",  url: "https://vidmoly.net/embed-063trwf9es8i.html" },
-                { nombre: "The Good Doctor - 3x9",  url: "https://vidmoly.net/embed-bvhznv7glwuk.html" },
-                { nombre: "The Good Doctor - 3x10", url: "https://vidmoly.net/embed-bsm0nhb7rp2c.html" },
-                { nombre: "The Good Doctor - 3x11",  url: "https://vidmoly.net/embed-iwi4u52baja8.html" },
-                { nombre: "The Good Doctor - 3x12",  url: "https://vidmoly.net/embed-og64i2avrdss.html" },
-                { nombre: "The Good Doctor - 3x13",  url: "https://vidmoly.net/embed-fcgd2nsi6o8u.html" },
-                { nombre: "The Good Doctor - 3x14",  url: "https://vidmoly.net/embed-cwig0dpcpqv2.html" },
-                { nombre: "The Good Doctor - 3x15",  url: "https://vidmoly.net/embed-arj6isjpgzsj.html" },
-                { nombre: "The Good Doctor - 3x16",  url: "https://vidmoly.net/embed-1pcv8y0x8bva.html" },
-                { nombre: "The Good Doctor - 3x17",  url: "https://vidmoly.net/embed-c4t4d9w3kohv.html" },
-                { nombre: "The Good Doctor - 3x18",  url: "https://vidmoly.net/embed-zv1532dnari9.html" },
-                { nombre: "The Good Doctor - 3x19",  url: "https://vidmoly.net/embed-6nwnr28tdpci.html" },
-                { nombre: "The Good Doctor - 3x20", url: "https://vidmoly.net/embed-5gxha2e5mxub.html" },
-                { nombre: "The Good Doctor - 4x1",  url: "https://vidmoly.net/embed-xisxbolxglks.html" },
-                { nombre: "The Good Doctor - 4x2",  url: "https://vidmoly.net/embed-ytztfsm09yo2.html" },
-                { nombre: "The Good Doctor - 4x3",  url: "https://vidmoly.net/embed-arvoto93xadl.html" },
-                { nombre: "The Good Doctor - 4x4",  url: "https://vidmoly.net/embed-kx3wiiuxkdw9.html" },
-                { nombre: "The Good Doctor - 4x5",  url: "https://vidmoly.net/embed-lt33vl4y22o3.html" },
-                { nombre: "The Good Doctor - 4x6",  url: "https://vidmoly.net/embed-ulwrbfl4967a.html" },
-                { nombre: "The Good Doctor - 4x7",  url: "https://vidmoly.net/embed-kk2bovlzpds8.html" },
-                { nombre: "The Good Doctor - 4x8",  url: "https://vidmoly.net/embed-qyiwyry4667v.html" },
-                { nombre: "The Good Doctor - 4x9",  url: "https://vidmoly.net/embed-2lq0lib6276r.html" },
-                { nombre: "The Good Doctor - 4x10", url: "https://vidmoly.net/embed-dkqjn42r3xy8.html" },
-                { nombre: "The Good Doctor - 4x11",  url: "https://vidmoly.net/embed-s0ezr4lxshyh.html" },
-                { nombre: "The Good Doctor - 4x12",  url: "https://vidmoly.net/embed-duvuqktmt4bo.html" },
-                { nombre: "The Good Doctor - 4x13",  url: "https://vidmoly.net/embed-v43en040b8mc.html" },
-                { nombre: "The Good Doctor - 4x14",  url: "https://vidmoly.net/embed-7llyha6vfdcl.html" },
-                { nombre: "The Good Doctor - 4x15",  url: "https://vidmoly.net/embed-yazv2syi25bh.html" },
-                { nombre: "The Good Doctor - 4x16",  url: "https://vidmoly.net/embed-zagqeif3j18k.html" },
-                { nombre: "The Good Doctor - 4x17",  url: "https://vidmoly.net/embed-dbkmoxykcsoz.html" },
-                { nombre: "The Good Doctor - 4x18",  url: "https://vidmoly.net/embed-y224qrcug9mx.html" },
-                { nombre: "The Good Doctor - 4x19",  url: "https://vidmoly.net/embed-wk233awjohai.html" },
-                { nombre: "The Good Doctor - 4x20", url: "https://vidmoly.net/embed-huv9qbrrlb27.html" },                                                 
-                { nombre: "The Good Doctor - 5x1",  url: "https://vidmoly.net/embed-0fpw96j2cifd.html" },
-                { nombre: "The Good Doctor - 5x2",  url: "https://vidmoly.net/embed-tacvegy2bisv.html" },
-                { nombre: "The Good Doctor - 5x3",  url: "https://vidmoly.net/embed-chi47cz4lwi5.html" },
-                { nombre: "The Good Doctor - 5x4",  url: "https://vidmoly.net/embed-hhrnk1i1pff2.html" },
-                { nombre: "The Good Doctor - 5x5",  url: "https://vidmoly.net/embed-3j0t531iuvgq.html" },
-                { nombre: "The Good Doctor - 5x6",  url: "https://vidmoly.net/embed-3ostzvpfydbx.html" },
-                { nombre: "The Good Doctor - 5x7",  url: "https://vidmoly.net/embed-s3jb0k72oord.html" },
-                { nombre: "The Good Doctor - 5x8",  url: "https://vidmoly.net/embed-a42i3sk48kuu.html" },
-                { nombre: "The Good Doctor - 5x9",  url: "https://vidmoly.net/embed-8pzy4jhefabm.html" },
-                { nombre: "The Good Doctor - 5x10",  url: "https://vidmoly.net/embed-w645fqflcjja.html" },
-                { nombre: "The Good Doctor - 5x11",  url: "https://vidmoly.net/embed-v85sy5ifyeic.html" },
-                { nombre: "The Good Doctor - 5x12",  url: "https://vidmoly.net/embed-69tabojr4mip.html" },
-                { nombre: "The Good Doctor - 5x13",  url: "https://vidmoly.net/embed-3qffbaop336k.html" },
-                { nombre: "The Good Doctor - 5x14",  url: "https://vidmoly.net/embed-uw5cwbeifggv.html" },
-                { nombre: "The Good Doctor - 5x15",  url: "https://vidmoly.net/embed-dkvz08nojsep.html" },
-                { nombre: "The Good Doctor - 5x16",  url: "https://vidmoly.net/embed-tgqvf3n1j29e.html" },
-                { nombre: "The Good Doctor - 5x17",  url: "https://vidmoly.net/embed-0s21g3yg5suc.html" },
-                { nombre: "The Good Doctor - 5x18",  url: "https://vidmoly.net/embed-cw3yfidmnv0c.html" },
-                { nombre: "The Good Doctor - 6x1",  url: "https://vidmoly.net/embed-ofmwfmbv2s4y.html" },
-                { nombre: "The Good Doctor - 6x2",  url: "https://vidmoly.net/embed-2oalv0ft40hz.html" },
-                { nombre: "The Good Doctor - 6x3",  url: "https://vidmoly.net/embed-98oolgef57j2.html" },
-                { nombre: "The Good Doctor - 6x4",  url: "https://vidmoly.net/embed-yu3tikdrtic4.html" },
-                { nombre: "The Good Doctor - 6x5",  url: "https://vidmoly.net/embed-t4rhmcnu56a3.html" },
-                { nombre: "The Good Doctor - 6x6",  url: "https://vidmoly.net/embed-xsaiwftec5z9.html" },
-                { nombre: "The Good Doctor - 6x7",  url: "https://vidmoly.net/embed-h14cmlrtyrg4.html" },
-                { nombre: "The Good Doctor - 6x8",  url: "https://vidmoly.net/embed-zhizfaopn04l.html" },
-                { nombre: "The Good Doctor - 6x9",  url: "https://vidmoly.net/embed-uh4s3hr11k7s.html" },
-                { nombre: "The Good Doctor - 6x10",  url: "https://vidmoly.net/embed-ilnfnml8inob.html" },
-                { nombre: "The Good Doctor - 6x11",  url: "https://vidmoly.net/embed-m1ibdqhkoh7m.html" },
-                { nombre: "The Good Doctor - 6x12",  url: "https://vidmoly.net/embed-du0p6e25m24n.html" },
-                { nombre: "The Good Doctor - 6x13",  url: "https://vidmoly.net/embed-ii3a8reobavy.html" },
-                { nombre: "The Good Doctor - 6x14",  url: "https://vidmoly.net/embed-5c9zmaplsr4l.html" },
-                { nombre: "The Good Doctor - 6x15",  url: "https://vidmoly.net/embed-s5u91vcw2evm.html" },
-                { nombre: "The Good Doctor - 6x16",  url: "https://vidmoly.net/embed-l4gx65fv0sis.html" },
-                { nombre: "The Good Doctor - 6x17",  url: "https://vidmoly.net/embed-hyexyu8f36fq.html" },
-                { nombre: "The Good Doctor - 6x18",  url: "https://vidmoly.net/embed-834au7z2ofp0.html" },
-                { nombre: "The Good Doctor - 6x19",  url: "https://vidmoly.net/embed-u7kme30wypo8.html" },
-                { nombre: "The Good Doctor - 6x20",  url: "https://vidmoly.net/embed-ihce1hnovvoh.html" },
-                { nombre: "The Good Doctor - 6x21",  url: "https://vidmoly.net/embed-ogwezurmwoj0.html" },
-                { nombre: "The Good Doctor - 6x22",  url: "https://vidmoly.net/embed-7dw16wffktqn.html" },                           
-                { nombre: "The Good Doctor - 7x1",  url: "https://mega.nz/embed/mJ8hSIwa#irSioXCMY5i8WVdRYTeo7lQKkSyhzuMu1ZmmXpeUFAo" },
-                { nombre: "The Good Doctor - 7x2",  url: "https://mega.nz/embed/jVVGnCgD#u7ZdRO0lToREtzAJ_Ghh-W5Lt_YBOqpCSwaVDGnnI9o" },
-                { nombre: "The Good Doctor - 7x3",  url: "https://mega.nz/embed/adlxXISK#AqJ46NpiVTfsdi0OfT8FFJAbAdiZGTHBr0GJDRu_Bus" },
-                { nombre: "The Good Doctor - 7x4",  url: "https://mega.nz/embed/uFljHJBT#YuLSzWVBNlYQf5K_7tEeWWv6tHMjBRlqw9akyyL4VGo" },
-                { nombre: "The Good Doctor - 7x5",  url: "https://mega.nz/embed/iM9XjD4J#ZS5DdTQVAzdQGgCp4FOlcAJvbIjjvVFmJp66EyPOSQc" },
-                { nombre: "The Good Doctor - 7x6",  url: "https://mega.nz/embed/PYNVBLjJ#LbKcla2srtqgsdxhQZlstGWyznwiwrG4MPyBwvtXxPE" },
-                { nombre: "The Good Doctor - 7x7",  url: "https://mega.nz/embed/CR8EhSIL#xoDK2SuDv5lwVeWrODU6OqrDRUgMel8NVTv5Munr3hU" },
-                { nombre: "The Good Doctor - 7x8",  url: "https://mega.nz/embed/bN9H3TCT#fd9bJT0hXb8kM53UGRYgBl7oH8UEFQb1_SqzxMU3D5M" },
-                { nombre: "The Good Doctor - 7x9",  url: "https://mega.nz/embed/XA9QnYSA#k7y4jvFmIs99mowxf2PJeD5IE6T-SwanSuirwfjtO2Q" },
-                { nombre: "The Good Doctor - 7x10", url: "https://mega.nz/embed/aJVFjQaT#YfruzkKLGZHcOZvCq8cpae8X795X268iJRPoiJKSrWA" }
-            ],
-            thestrain: [
-                { nombre: "thes train - 1x1", url: "https://vidmoly.net/embed-zqudca2u5x9z.html" },
-                { nombre: "thes train - 1x2", url: "https://vidmoly.net/embed-i8f8v23ot6z8.html" },
-                { nombre: "thes train - 1x3", url: "https://vidmoly.net/embed-4g03eosikdg4.html" },
-                { nombre: "thes train - 1x4", url: "https://vidmoly.net/embed-emt3tv3w56ai.html" },  
-                { nombre: "thes train - 1x5", url: "https://vidmoly.net/embed-td8sap3u140n.html" },
-                { nombre: "thes train - 1x6", url: "https://vidmoly.net/embed-qi3dltwpho5k.html" },
-                { nombre: "thes train - 1x7", url: "https://vidmoly.net/embed-mejswvr12i3l.html" },
-                { nombre: "thes train - 1x8", url: "https://vidmoly.net/embed-7rxtq9zttx8o.html" },                                
-                { nombre: "thes train - 1x9", url: "https://vidmoly.net/embed-yqu6h48e9dsr.html" },
-                { nombre: "thes train - 1x10", url: "https://vidmoly.net/embed-igimhnt127hd.html" },                
-                { nombre: "thes train - 1x11", url: "https://vidmoly.net/embed-7bw71svw32b2.html" },
-                { nombre: "thes train - 1x12", url: "https://vidmoly.net/embed-u13kc9vza3pj.html" },
-                { nombre: "thes train - 1x13", url: "https://vidmoly.net/embed-pd01puz2n6qd.html" }               
-            ],
-
-            LasTame: [
-                { nombre: "LasTame - 1x1",  url: "https://vidmoly.net/embed-vziem9k2wvoj.html" },
-                { nombre: "LasTame - 1x2",  url: "https://vidmoly.net/embed-igf8v320t6z8.html" },
-                { nombre: "LasTame - 1x3",  url: "https://vidmoly.net/embed-4g30eosikdg4.html" },
-                { nombre: "LasTame - 1x4",  url: "https://vidmoly.net/embed-emt3tw3w56ai.html" },
-                { nombre: "LasTame - 1x5",  url: "https://vidmoly.net/embed-td8sap3u140n.html" },
-                { nombre: "LasTame - 1x6",  url: "https://vidmoly.net/embed-qj3dltwpho5k.html" },
-                { nombre: "LasTame - 1x7",  url: "https://vidmoly.net/embed-mlt2n3o88ff1.html" },
-                { nombre: "LasTame - 1x8",  url: "https://vidmoly.net/embed-46c55k1rptdo.html" },
-                { nombre: "LasTame - 1x9",  url: "https://vidmoly.net/embed-ev9ge8jg3rm.html" },
-                { nombre: "LasTame - 1x10", url: "https://vidmoly.net/embed-gcagxnhjbn6h.html" },
-                { nombre: "LasTame - 1x11", url: "https://vidmoly.net/embed-vziem9k2wvoj.html" },
-                { nombre: "LasTame - 1x12", url: "https://vidmoly.net/embed-w9fivrp2m6l.html" }
-            ],
-
-
-
-            
-
-             isladelastentaciones: [
-                { nombre: "La isla de las tentaciones - 7x1", url: "https://vidmoly.net/embed-39qqi2ic5z6k.html" },
-                { nombre: "La isla de las tentaciones - 7x2", url: "https://vidmoly.net/embed-dd491q9p7ful.html" },
-                { nombre: "La isla de las tentaciones - 7x3", url: "https://vidmoly.net/embed-pk3r7fhd3djl.html" },
-                { nombre: "La isla de las tentaciones - 7x4", url: "https://vidmoly.net/embed-yzmui5pdo9kh.html" },
-                { nombre: "La isla de las tentaciones - 7x5", url: "https://vidmoly.net/embed-scu9sy7g7lqe.html" },
-                { nombre: "La isla de las tentacionese -7x6", url: "https://vidmoly.net/embed-q2nojqf2c6tu.html" },
-                { nombre: "La isla de las tentaciones - 7x7", url: "https://vidmoly.net/embed-ojmbijcb4iyw.html" },
-                { nombre: "La isla de las tentaciones - 7x8", url: "https://vidmoly.net/embed-f1o198oxqyaw.html" },
-                { nombre: "La isla de las tentaciones - 7x9", url: "https://vidmoly.net/embed-mjmyoftzpupv.html" },
-                { nombre: "La isla de las tentaciones - 7x10", url: "https://vidmoly.net/embed-evoird3cfpzt.html" },
-                { nombre: "La isla de las tentaciones - 7x11", url: "https://vidmoly.net/embed-83wko1fvkbpz.html" },
-                { nombre: "La isla de las tentaciones - 7x12", url: "https://vidmoly.net/embed-u7bve9nk3vxn.html" },
-                { nombre: "La isla de las tentaciones - 7x13", url: "https://vidmoly.net/embed-8zxteod8jfj3.html" },
-                { nombre: "La isla de las tentaciones - 7x14", url: "https://vidmoly.net/embed-voy5a9cuod4f.html" },
-                { nombre: "La isla de las tentaciones - 7x15", url: "https://vidmoly.net/embed-rla09sjmfzy3.html" },
-                { nombre: "La isla de las tentacionese -7x16", url: "https://vidmoly.net/embed-5ojkucmd2mon.html" },
-                { nombre: "La isla de las tentaciones - 7x17", url: "https://vidmoly.net/embed-l5ty3zhbmpjn.html" },
-                { nombre: "La isla de las tentaciones - 7x18", url: "https://vidmoly.net/embed-eh3bxgb8tif8.html" },
-                { nombre: "La isla de las tentaciones - 7x19", url: "https://vidmoly.net/embed-mg2kw0jpvvd3.html" },
-                { nombre: "La isla de las tentaciones - 7x20", url: "https://vidmoly.net/embed-mjtuv9qo94wp.html" },
-                { nombre: "La isla de las tentaciones - 7x21", url: "https://vidmoly.net/embed-2p0kleka8wbl.html" },                                
-                { nombre: "La isla de las tentaciones - 8x0", url: "https://vidmoly.net/embed-xadmyrr296nh.html" },
-                { nombre: "La isla de las tentaciones - 8x1", url: "https://vidmoly.net/embed-2w556kwwse90.html" },
-                { nombre: "La isla de las tentaciones - 8x2", url: "https://vidmoly.net/embed-ifazuenspv29.html" },
-                { nombre: "La isla de las tentaciones - 8x3", url: "https://vidmoly.net/embed-3t8xwrl90ugv.html" },
-                { nombre: "La isla de las tentaciones - 8x4", url: "https://vidmoly.net/embed-gqkmslir520n.html" },
-                { nombre: "La isla de las tentaciones - 8x5", url: "https://vidmoly.net/embed-8411xpl60m5i.html" },
-                { nombre: "La isla de las tentacionese -8x6", url: "https://vidmoly.net/embed-y51h35scyv8s.html" },
-                { nombre: "La isla de las tentaciones - 8x7", url: "https://vidmoly.net/embed-1i19npttnh0w.html" },
-                { nombre: "La isla de las tentaciones - 8x8", url: "https://vidmoly.net/embed-r8nkg1255d3h.html" },
-                { nombre: "La isla de las tentaciones - 8x9", url: "https://vidmoly.net/embed-dkkqxpepux1h.html" },
-                { nombre: "La isla de las tentaciones - 8x10", url: "https://vidmoly.net/embed-1qlijqg1yht2.html" },
-                { nombre: "La isla de las tentaciones - 8x11", url: "https://vidmoly.net/embed-mvcv5ili6p26.html" },
-                { nombre: "La isla de las tentaciones - 8x12", url: "https://vidmoly.net/embed-d77jbkqejd0f.html" },
-                { nombre: "La isla de las tentaciones - 8x13", url: "https://vidmoly.net/embed-8e1s4xczq43x.html" },
-                { nombre: "La isla de las tentaciones - 8x14", url: "https://vidmoly.net/embed-co5w8s170d1a.html" },
-                { nombre: "La isla de las tentaciones - 8x15", url: "https://vidmoly.net/embed-nvnsi7q1cwff.html" },
-                { nombre: "La isla de las tentaciones - 8x16", url: "https://vidmoly.net/embed-mwlzfdki2003.html" },
-                { nombre: "La isla de las tentaciones - 8x17", url: "https://vidmoly.net/embed-rdav5wd9rvfu.html" },
-                { nombre: "La isla de las tentaciones - 8x18", url: "https://vidmoly.net/embed-f1i055z4vufg.html" },
-                { nombre: "La isla de las tentaciones - 8x19", url: "https://vidmoly.net/embed-96hr76fewvkt.html" },
-                { nombre: "La isla de las tentaciones - 8x20", url: "https://vidmoly.net/embed-jjczozb5u31i.html" }                                                             
-            ],
-DragonBallZ: [
-                { nombre: "Dragon Ball Z - 1x1", url: "https://vidmoly.net/embed-ms7rk1kvij3b.html" },
-                { nombre: "Dragon Ball Z - 1x2", url: "https://vidmoly.net/embed-qsbh9i0ceat1.html" },
-                { nombre: "Dragon Ball Z - 1x3", url: "https://vidmoly.net/embed-646csc61lnpt.html" },
-                { nombre: "Dragon Ball Z - 1x4", url: "https://vidmoly.net/embed-vbe3d6ll283d.html" },
-                { nombre: "Dragon Ball Z - 1x5", url: "https://vidmoly.net/embed-n9purm0406yq.html" },
-                { nombre: "Dragon Ball Z - 1x6", url: "https://vidmoly.net/embed-fd03dvza8xlg.html" },
-                { nombre: "Dragon Ball Z - 1x7", url: "https://vidmoly.net/embed-3rejacjoqrux.html" },
-                { nombre: "Dragon Ball Z - 1x8", url: "https://vidmoly.net/embed-0p6b1m31w0d6.html" },
-                { nombre: "Dragon Ball Z - 1x9", url: "https://vidmoly.net/embed-9xbf5x6lxsix.html" },
-                { nombre: "Dragon Ball Z - 1x10", url: "https://vidmoly.net/embed-byy2rpujtxu1.html" },
-                { nombre: "Dragon Ball Z - 1x11", url: "https://vidmoly.net/embed-dcvjrktk02wg.html" },
-                { nombre: "Dragon Ball Z - 1x12", url: "https://vidmoly.net/embed-309unx09qzzy.html" },
-                { nombre: "Dragon Ball Z - 1x13", url: "https://vidmoly.net/embed-1a05ammvajwb.html" },
-                { nombre: "Dragon Ball Z - 1x14", url: "https://vidmoly.net/embed-s65yeyruf88u.html" },
-                { nombre: "Dragon Ball Z - 1x15", url: "https://vidmoly.net/embed-ms13ue59u244.html" },
-                { nombre: "Dragon Ball Z - 1x16", url: "https://vidmoly.net/embed-ml8tz51hpqp9.html" },
-                { nombre: "Dragon Ball Z - 1x17", url: "https://vidmoly.net/embed-h42dhkkj4iva.html" },
-                { nombre: "Dragon Ball Z - 1x18", url: "https://vidmoly.net/embed-rmmpfu0xpozo.html" },
-                { nombre: "Dragon Ball Z - 1x19", url: "https://vidmoly.net/embed-mj291xhs6v07.html" },
-                { nombre: "Dragon Ball Z - 1x20", url: "https://vidmoly.net/embed-2i59q6selvuh.html" },
-                { nombre: "Dragon Ball Z - 1x21", url: "https://vidmoly.net/embed-nfbwuhd995bo.html" },
-                { nombre: "Dragon Ball Z - 1x22", url: "https://vidmoly.net/embed-sy8s74rv8pmp.html" },
-                { nombre: "Dragon Ball Z - 1x23", url: "https://vidmoly.net/embed-0uy8lh5iy9fe.html" },
-                { nombre: "Dragon Ball Z - 1x24", url: "https://vidmoly.net/embed-9uq612anmpp1.html" },
-                { nombre: "Dragon Ball Z - 1x25", url: "https://vidmoly.net/embed-qb06g2ux63rf.html" },
-                { nombre: "Dragon Ball Z - 1x26", url: "https://vidmoly.net/embed-zgp2zlto7q0r.html" },
-                { nombre: "Dragon Ball Z - 1x27", url: "https://vidmoly.net/embed-brypjxhfae3d.html" },
-                { nombre: "Dragon Ball Z - 1x28", url: "https://vidmoly.net/embed-5kfzaocp1hup.html" },
-                { nombre: "Dragon Ball Z - 1x29", url: "https://vidmoly.net/embed-1ktr0twhz2ie.html" },
-                { nombre: "Dragon Ball Z - 1x30", url: "https://vidmoly.net/embed-ldloqdrkieil.html" },
-                { nombre: "Dragon Ball Z - 1x31", url: "https://vidmoly.net/embed-agvkfi6ptyq2.html" },
-                { nombre: "Dragon Ball Z - 1x32", url: "https://vidmoly.net/embed-1c16ch2p9uwk.html" },
-                { nombre: "Dragon Ball Z - 1x33", url: "https://vidmoly.net/embed-bdzgalkpj255.html" },
-                { nombre: "Dragon Ball Z - 1x34", url: "https://vidmoly.net/embed-9yrfhgr99bti.html" },
-                { nombre: "Dragon Ball Z - 1x35", url: "https://vidmoly.net/embed-hllgmntjmkey.html" },
-                { nombre: "Dragon Ball Z - 1x36", url: "https://vidmoly.net/embed-3ep8t6zs1b2e.html" },
-                { nombre: "Dragon Ball Z - 1x37", url: "https://vidmoly.net/embed-xlvs1iyqbzno.html" },
-                { nombre: "Dragon Ball Z - 1x38", url: "https://vidmoly.net/embed-r6cqmujq3uwy.html" },
-                { nombre: "Dragon Ball Z - 1x39", url: "https://vidmoly.net/embed-2x1wn1r2p2ne.html" },
-                { nombre: "Dragon Ball Z - 2x1", url: "https://vidmoly.net/embed-9v3ifa1eo5yb.html" },
-                { nombre: "Dragon Ball Z - 2x2", url: "https://vidmoly.net/embed-5ibjvcbj9a7o.html" },
-                { nombre: "Dragon Ball Z - 2x3", url: "https://vidmoly.net/embed-yj1uo2oe00hs.html" },
-                { nombre: "Dragon Ball Z - 2x4", url: "https://vidmoly.net/embed-i53469pzksw7.html" },
-                { nombre: "Dragon Ball Z - 2x5", url: "https://vidmoly.net/embed-n5wria1ro79x.html" },
-                { nombre: "Dragon Ball Z - 2x6", url: "https://vidmoly.net/embed-l027nl2qj817.html" },
-                { nombre: "Dragon Ball Z - 2x7", url: "https://vidmoly.net/embed-zlba3jakbo5f.html" },
-                { nombre: "Dragon Ball Z - 2x8", url: "https://vidmoly.net/embed-mlzr37x068w0.html" },
-                { nombre: "Dragon Ball Z - 2x9", url: "https://vidmoly.net/embed-pdj93rjrj392.html" },
-                { nombre: "Dragon Ball Z - 2x10", url: "https://vidmoly.net/embed-iw9qmsvd7khd.html" },
-                { nombre: "Dragon Ball Z - 2x11", url: "https://vidmoly.net/embed-qaxothrj7toz.html" },
-                { nombre: "Dragon Ball Z - 2x12", url: "https://vidmoly.net/embed-auk06zq15v7l.html" },
-                { nombre: "Dragon Ball Z - 2x13", url: "https://vidmoly.net/embed-ctnifexuie1y.html" },
-                { nombre: "Dragon Ball Z - 2x14", url: "https://vidmoly.net/embed-gb75l3dvb5vs.html" },
-                { nombre: "Dragon Ball Z - 2x15", url: "https://vidmoly.net/embed-d04uqa69lk00.html" },
-                { nombre: "Dragon Ball Z - 2x16", url: "https://vidmoly.net/embed-zmghe7u7rhoq.html" },
-                { nombre: "Dragon Ball Z - 2x17", url: "https://vidmoly.net/embed-n4n2oj8d3ij1.html" },
-                { nombre: "Dragon Ball Z - 2x18", url: "https://vidmoly.net/embed-jnz7duz7832x.html" },
-                { nombre: "Dragon Ball Z - 2x19", url: "https://vidmoly.net/embed-upppc42b1t1z.html" },
-                { nombre: "Dragon Ball Z - 2x20", url: "https://vidmoly.net/embed-2i59q6selvuh.html" },
-                { nombre: "Dragon Ball Z - 2x21", url: "https://vidmoly.net/embed-qq1r44jhlst1.html" },
-                { nombre: "Dragon Ball Z - 2x22", url: "https://vidmoly.net/embed-ojpt49xsynl9.html" },
-                { nombre: "Dragon Ball Z - 2x23", url: "https://vidmoly.net/embed-9olyz764jkjd.html" },
-                { nombre: "Dragon Ball Z - 2x24", url: "https://vidmoly.net/embed-q4lqfs9c2jps.html" },
-                { nombre: "Dragon Ball Z - 2x25", url: "https://vidmoly.net/embed-n119qqre2pbn.html" },
-                { nombre: "Dragon Ball Z - 2x26", url: "https://vidmoly.net/embed-08lpkztgkzi8.html" },
-                { nombre: "Dragon Ball Z - 2x27", url: "https://vidmoly.net/embed-8a9wi3d214rj.html" },
-                { nombre: "Dragon Ball Z - 2x28", url: "https://vidmoly.net/embed-7rfux34suyes.html" },
-                { nombre: "Dragon Ball Z - 2x29", url: "https://vidmoly.net/embed-kk23rk5e12qu.html" },
-                { nombre: "Dragon Ball Z - 2x30", url: "https://vidmoly.net/embed-fyd9zmmt9jzn.html" },
-                { nombre: "Dragon Ball Z - 2x31", url: "https://vidmoly.net/embed-6fzc6skynbw1.html" },
-                { nombre: "Dragon Ball Z - 2x32", url: "https://vidmoly.net/embed-phgzbmp2ods6.html" },
-                { nombre: "Dragon Ball Z - 2x33", url: "https://vidmoly.net/embed-ldks9ca6gby9.html" },
-                { nombre: "Dragon Ball Z - 2x34", url: "https://vidmoly.net/embed-760xx2tj2iy3.html" },
-                { nombre: "Dragon Ball Z - 2x35", url: "https://vidmoly.net/embed-0k0n3qv9ines.html" }               
-
-            ],
-            DragonBallSuper: [
-                { nombre: "Dragon Ball Super - 1x1", url: "https://vidmoly.net/embed-0p68dt19e1tq.html" },
-                { nombre: "Dragon Ball Super - 1x2", url: "https://vidmoly.net/embed-qj1504saxldn.html" },
-                { nombre: "Dragon Ball Super - 1x3", url: "https://vidmoly.net/embed-m0q1e9anlww0.html" },
-                { nombre: "Dragon Ball Super - 1x4", url: "https://vidmoly.net/embed-lwnvss26wekc.html" },
-                { nombre: "Dragon Ball Super - 1x5", url: "https://vidmoly.net/embed-2svblz8uyosg.html" },
-                { nombre: "Dragon Ball Super - 1x6", url: "https://vidmoly.net/embed-v8yn9iga4vkb.html" },
-                { nombre: "Dragon Ball Super - 1x7", url: "https://vidmoly.net/embed-v8yn9iga4vkb.html" },
-                { nombre: "Dragon Ball Super - 1x8", url: "https://vidmoly.net/embed-3za8ga0g2m4k.html" },
-                { nombre: "Dragon Ball Super - 1x9", url: "https://vidmoly.net/embed-z0sqv6mlg9tm.html" },
-                { nombre: "Dragon Ball Super - 1x10", url: "https://vidmoly.net/embed-ehq4zje9kxfn.html" },
-                { nombre: "Dragon Ball Super - 1x11", url: "https://vidmoly.net/embed-qr9gmccuw57t.html" },
-                { nombre: "Dragon Ball Super - 1x12", url: "https://vidmoly.net/embed-f31l7rq7huwh.html" },
-                { nombre: "Dragon Ball Super - 1x13", url: "https://vidmoly.net/embed-eardmfbgnl79.html" },
-                { nombre: "Dragon Ball Super - 1x14", url: "https://vidmoly.net/embed-1i6nj7rvjw4p.html" },
-                { nombre: "Dragon Ball Super - 2x1", url: "https://vidmoly.net/embed-0p2tp2tu9fb5.html" },
-                { nombre: "Dragon Ball Super - 2x2", url: "https://vidmoly.net/embed-d1ay54tv423i.html" },
-                { nombre: "Dragon Ball Super - 2x3", url: "https://vidmoly.net/embed-qinejkl46fec.html" },
-                { nombre: "Dragon Ball Super - 2x4", url: "https://vidmoly.net/embed-x423j1ml6x1c.html" },
-                { nombre: "Dragon Ball Super - 2x5", url: "https://vidmoly.net/embed-teos8ogsdjio.html" },
-                { nombre: "Dragon Ball Super - 2x6", url: "https://vidmoly.net/embed-02nw0tclh3eu.html" },
-                { nombre: "Dragon Ball Super - 2x7", url: "https://vidmoly.net/embed-qicpxxk77e8u.html" },
-                { nombre: "Dragon Ball Super - 2x8", url: "https://vidmoly.net/embed-lymla9f7kk5t.html" },
-                { nombre: "Dragon Ball Super - 2x9", url: "https://vidmoly.net/embed-i7akeo1s98sw.html" },
-                { nombre: "Dragon Ball Super - 2x10", url: "https://vidmoly.net/embed-82io0uoc2x4u.html" },
-                { nombre: "Dragon Ball Super - 2x11", url: "https://vidmoly.net/embed-cdc5pa06ya0j.html" },
-                { nombre: "Dragon Ball Super - 2x12", url: "https://vidmoly.net/embed-ydonuao4j0s7.html" },
-                { nombre: "Dragon Ball Super - 2x13", url: "https://vidmoly.net/embed-07gb2zbhqoyq.html" },
-                { nombre: "Dragon Ball Super - 3x1", url: "https://vidmoly.net/embed-tng4kw9c3jn8.html" },
-                { nombre: "Dragon Ball Super - 3x2", url: "https://vidmoly.net/embed-5xz3m2q3tfc1.html" },
-                { nombre: "Dragon Ball Super - 3x3", url: "https://vidmoly.net/embed-nqmectwsglvn.html" },
-                { nombre: "Dragon Ball Super - 3x4", url: "https://vidmoly.net/embed-1jkknoabdeps.html" },
-                { nombre: "Dragon Ball Super - 3x5", url: "https://vidmoly.net/embed-g9ewnjnw3zsc.html" },
-                { nombre: "Dragon Ball Super - 3x6", url: "https://vidmoly.net/embed-3r61ju49djpe.html" },
-                { nombre: "Dragon Ball Super - 3x7", url: "https://vidmoly.net/embed-l4vf3etc3fro.html" },
-                { nombre: "Dragon Ball Super - 3x8", url: "https://vidmoly.net/embed-x4y07kp68l9c.html" },
-                { nombre: "Dragon Ball Super - 3x9", url: "https://vidmoly.net/embed-6k772qmkoefm.html" },
-                { nombre: "Dragon Ball Super - 3x10", url: "https://vidmoly.net/embed-c47zv314zy0q.html" },
-                { nombre: "Dragon Ball Super - 3x11", url: "https://vidmoly.net/embed-74ky4mordzea.html" },
-                { nombre: "Dragon Ball Super - 3x12", url: "https://vidmoly.net/embed-f51sjq4fpck7.html" },
-                { nombre: "Dragon Ball Super - 3x13", url: "https://vidmoly.net/embed-4lf7vrhhz1dc.html" },
-                { nombre: "Dragon Ball Super - 3x14", url: "https://vidmoly.net/embed-v65tvb7deuqr.html" },
-                { nombre: "Dragon Ball Super - 3x15", url: "https://vidmoly.net/embed-vw4cu7k1er9r.html" },
-                { nombre: "Dragon Ball Super - 3x16", url: "https://vidmoly.net/embed-nks16fyrqj8f.html" },
-                { nombre: "Dragon Ball Super - 3x17", url: "https://vidmoly.net/embed-l5pu6ixtepbb.html" },
-                { nombre: "Dragon Ball Super - 3x18", url: "https://vidmoly.net/embed-kxqfltlw2l49.html" },
-                { nombre: "Dragon Ball Super - 3x19", url: "https://vidmoly.net/embed-ggvukf966a2h.html" }
-            ],  
-            
-            Cuandonadiemeve: [
-                { nombre: "Cuando nadie me ve - 1x1", url: "https://vidmoly.net/embed-7k4l21371oqq.html" },
-                { nombre: "Cuando nadie me ve - 1x2", url: "https://vidmoly.net/embed-jmlugaw0kn6p.html" },
-                { nombre: "Cuando nadie me ve - 1x3", url: "https://vidmoly.net/embed-kpt4fhdshbc6.html" }
-                ],
-
-GeronimoStilton: [
-  { nombre: "Geronimo Stilton - 1x01", url: "https://vidmoly.net/embed-cua1arsxi4b8.html" },
-  { nombre: "Geronimo Stilton - 1x02", url: "https://vidmoly.net/embed-h8mqofplllno.html" },
-  { nombre: "Geronimo Stilton - 1x03", url: "https://vidmoly.net/embed-helgm6wmlbfz.html" },
-  { nombre: "Geronimo Stilton - 1x04", url: "https://vidmoly.net/embed-6dfhrhhp5ajf.html" },
-  { nombre: "Geronimo Stilton - 1x05", url: "https://vidmoly.net/embed-9eb0qfcbaujb.html" },
-  { nombre: "Geronimo Stilton - 1x06", url: "https://vidmoly.net/embed-x6osczc33env.html" },
-  { nombre: "Geronimo Stilton - 1x07", url: "https://vidmoly.net/embed-m6k52kv00aqc.html" },
-  { nombre: "Geronimo Stilton - 1x08", url: "https://vidmoly.net/embed-1k3sf56gelwv.html" },
-  { nombre: "Geronimo Stilton - 1x09", url: "https://vidmoly.net/embed-y2j7lc8nzg8s.html" },
-  { nombre: "Geronimo Stilton - 1x10", url: "https://vidmoly.net/embed-a1c75o79ufyd.html" },
-  { nombre: "Geronimo Stilton - 1x11", url: "https://vidmoly.net/embed-ucnjb7hwiqty.html" },
-  { nombre: "Geronimo Stilton - 1x12", url: "https://vidmoly.net/embed-ho2zl9mrbncq.html" },
-  { nombre: "Geronimo Stilton - 1x13", url: "https://vidmoly.net/embed-9avnfqwde6p2.html" },
-  { nombre: "Geronimo Stilton - 1x14", url: "https://vidmoly.net/embed-raex6fgz3hu3.html" },
-  { nombre: "Geronimo Stilton - 1x15", url: "https://vidmoly.net/embed-b7mjwjxgcav7.html" },
-  { nombre: "Geronimo Stilton - 1x16", url: "https://vidmoly.net/embed-dyplwphx59z1.html" },
-  { nombre: "Geronimo Stilton - 1x17", url: "https://vidmoly.net/embed-3w90tzqeqza8.html" },
-  { nombre: "Geronimo Stilton - 1x18", url: "https://vidmoly.net/embed-8ulbvf023o5q.html" },
-  { nombre: "Geronimo Stilton - 1x19", url: "https://vidmoly.net/embed-6i4my4cs3nez.html" },
-  { nombre: "Geronimo Stilton - 1x20", url: "https://vidmoly.net/embed-y7wbc7r5y7gz.html" },
-  { nombre: "Geronimo Stilton - 1x21", url: "https://vidmoly.net/embed-yoy9u0253vq5.html" },
-  { nombre: "Geronimo Stilton - 1x22", url: "https://vidmoly.net/embed-fuuz7pe16a0e.html" },
-  { nombre: "Geronimo Stilton - 1x23", url: "https://vidmoly.net/embed-nfvc1i1r5qtt.html" },
-  { nombre: "Geronimo Stilton - 1x24", url: "https://vidmoly.net/embed-5ff2l2mipwl6.html" },
-  { nombre: "Geronimo Stilton - 1x25", url: "https://vidmoly.net/embed-rahe6e992s8j.html" },
-  { nombre: "Geronimo Stilton - 1x26", url: "https://vidmoly.net/embed-d8oezblhewv2.html" }
-  
-  
-];
-
-
-  Herederosdelanoche: [
-                { nombre: "Herederos de la noche - 1x1",  url: "https://vidmoly.net/embed-kpwgwfmo141n.html" },
-                { nombre: "Herederos de la noche - 1x2",  url: "https://vidmoly.net/embed-268ud3y4jwm8.html" },
-                { nombre: "Herederos de la noche - 1x3",  url: "https://vidmoly.net/embed-o5k4c6htimvz.html" },
-                { nombre: "Herederos de la noche - 1x4",  url: "https://vidmoly.net/embed-o26c0weh0dl0.html" },
-                { nombre: "Herederos de la noche - 1x5",  url: "https://vidmoly.net/embed-ig44elrp1ww6.html" },
-                { nombre: "Herederos de la noche - 1x6",  url: "https://vidmoly.net/embed-2aqajvhm1tv9.html" },
-                { nombre: "Herederos de la noche - 1x7",  url: "https://vidmoly.net/embed-9jaitkij5a4r.html" },
-                { nombre: "Herederos de la noche - 1x8",  url: "https://vidmoly.net/embed-3ekk55sx4ybe.html" },
-                { nombre: "Herederos de la noche - 1x9",  url: "https://vidmoly.net/embed-7kgxeraz126v.html" },
-                { nombre: "Herederos de la noche - 1x10",  url: "https://vidmoly.net/embed-81ajdtiwmdt1.html" },
-                { nombre: "Herederos de la noche - 1x11",  url: "https://vidmoly.net/embed-wrvp5gqulo8i.html" },
-                { nombre: "Herederos de la noche - 1x12",  url: "https://vidmoly.net/embed-mpolgek4xblq.html" },
-                { nombre: "Herederos de la noche - 1x13",  url: "https://vidmoly.net/embed-c5bzaiv3vcf0.html" },
-                { nombre: "Herederos de la noche - 2x1",  url: "https://vidmoly.net/embed-479e2uukiils.html" },
-                { nombre: "Herederos de la noche - 2x2",  url: "https://vidmoly.net/embed-09t1lofnbfzq.html" },
-                { nombre: "Herederos de la noche - 2x3",  url: "https://vidmoly.net/embed-kx25aoggto6q.html" },
-                { nombre: "Herederos de la noche - 2x4",  url: "https://vidmoly.net/embed-d4bcyu7pagpu.html" },
-                { nombre: "Herederos de la noche - 2x5",  url: "https://vidmoly.net/embed-gbeem9it1jje.html" },
-                { nombre: "Herederos de la noche - 2x6",  url: "https://vidmoly.net/embed-aza6fe8b9uzl.html" },
-                { nombre: "Herederos de la noche - 2x7",  url: "https://vidmoly.net/embed-y6in2dttne4v.html" },
-                { nombre: "Herederos de la noche - 2x8",  url: "https://vidmoly.net/embed-sh50x98abxlm.html" },
-                { nombre: "Herederos de la noche - 2x9",  url: "https://vidmoly.net/embed-oxel3jv6etb7.html" },
-                { nombre: "Herederos de la noche - 2x10",  url: "https://vidmoly.net/embed-j25j27022vsu.html" },
-                { nombre: "Herederos de la noche - 2x11",  url: "https://vidmoly.net/embed-cmrfvzae5nzj.html" },
-                { nombre: "Herederos de la noche - 2x12",  url: "https://vidmoly.net/embed-v3l4mnths9d2.html" },
-                { nombre: "Herederos de la noche - 2x13",  url: "https://vidmoly.net/embed-x5tqrtgft6eb.html" }            
-                ],
-            Machosalfas : [
-                { nombre: "Machos alfas - 1x1", url: "https://vidmoly.net/embed-k9wpjc41xm8m.html" },
-                { nombre: "Machos alfas - 1x2", url: "https://vidmoly.net/embed-ouam4qa2i5er.html" },
-                { nombre: "Machos alfas - 1x3", url: "https://vidmoly.net/embed-6f4cx2azmjoc.html" },
-                { nombre: "Machos alfas - 1x4", url: "https://vidmoly.net/embed-fuoz461s0hdr.html" },  
-                { nombre: "Machos alfas - 1x5", url: "https://vidmoly.net/embed-u5qmv7pzkd2g.html" },
-                { nombre: "Machos alfas - 1x6", url: "https://vidmoly.net/embed-en74iu3cf2x7.html" },
-                { nombre: "Machos alfas - 1x7", url: "https://vidmoly.net/embed-3fvrcflqkrm7.html" },
-                { nombre: "Machos alfas - 1x8", url: "https://vidmoly.net/embed-qhc4cy5bfl77.html" },                                
-                { nombre: "Machos alfas - 1x9", url: "https://vidmoly.net/embed-uv4oae4ap8lo.html" },
-                { nombre: "Machos alfas - 1x10", url: "https://vidmoly.net/embed-u4n59kz6isxr.html" },                
-                { nombre: "Machos alfas - 2x1", url: "https://vidmoly.net/embed-mm7ms8uczyln.html" },
-                { nombre: "Machos alfas - 2x2", url: "https://vidmoly.net/embed-qlf5cnx781om.html" },
-                { nombre: "Machos alfas - 2x3", url: "https://vidmoly.net/embed-8368xaofyto8.html" },
-                { nombre: "Machos alfas - 2x4", url: "https://vidmoly.net/embed-if5vhuv5ebt5.html" },  
-                { nombre: "Machos alfas - 2x5", url: "https://vidmoly.net/embed-9qpfxjyg1pmg.html" },
-                { nombre: "Machos alfas - 2x6", url: "https://vidmoly.net/embed-34a64s8xvw0j.html" },
-                { nombre: "Machos alfas - 2x7", url: "https://vidmoly.net/embed-rke29n9icnkj.html" },
-                { nombre: "Machos alfas - 2x8", url: "https://vidmoly.net/embed-ktd8mxea1mwv.html" },                                
-                { nombre: "Machos alfas - 2x9", url: "https://vidmoly.net/embed-2wsjuz0rllh0.html" },
-                { nombre: "Machos alfas - 2x10", url: "https://vidmoly.net/embed-z3ddmm4aw35m.html" },
-                { nombre: "Machos alfas - 3x1", url: "https://vidmoly.net/embed-kugkzqdf90br.html" },
-                { nombre: "Machos alfas - 3x2", url: "https://vidmoly.net/embed-gnviucmktoy1.html" },
-                { nombre: "Machos alfas - 3x3", url: "https://vidmoly.net/embed-zft5ast2tynv.html" },
-                { nombre: "Machos alfas - 3x4", url: "https://vidmoly.net/embed-uwlntpzvvffz.html" },  
-                { nombre: "Machos alfas - 3x5", url: "https://vidmoly.net/embed-dmanxb96k58u.html" },
-                { nombre: "Machos alfas - 3x6", url: "https://vidmoly.net/embed-hjnvlqfoi9rd.html" },
-                { nombre: "Machos alfas - 3x7", url: "https://vidmoly.net/embed-ep8u1rmbx47q.html" },
-                { nombre: "Machos alfas - 3x8", url: "https://vidmoly.net/embed-f0tcv1g8i9u4.html" },                                
-                { nombre: "Machos alfas - 3x9", url: "https://vidmoly.net/embed-s4atcx5w6hbh.html" },
-                { nombre: "Machos alfas - 3x10", url: "https://vidmoly.net/embed-b7aa3n0wi364.html" }, 
-                { nombre: "Machos alfas - 4x1", url: "https://vidmoly.net/embed-plf4q6epoioe.html" },
-                { nombre: "Machos alfas - 4x2", url: "https://vidmoly.net/embed-q88tuu9pow3i.html" },
-                { nombre: "Machos alfas - 4x3", url: "https://vidmoly.net/embed-6u17yhyakogz.html" },
-                { nombre: "Machos alfas - 4x4", url: "https://vidmoly.net/embed-x6oo038m1x3c.html" },  
-                { nombre: "Machos alfas - 4x5", url: "https://vidmoly.net/embed-5bujbts4b47i.html" },
-                { nombre: "Machos alfas - 4x6", url: "https://vidmoly.net/embed-sk573mbq3io2.html" }                                        
-            ]
-        };
-
-        const selectSerie    = document.getElementById('serie');
-        const selectCapitulo = document.getElementById('capitulo');
-        const megaPlayer     = document.getElementById('megaPlayer');
-
-        // Cuando cambias de serie
-        selectSerie.addEventListener('change', function () {
-            const serie = this.value;
-
-            // Limpiar capítulos anteriores
-            selectCapitulo.innerHTML = "";
-
-            // Vaciar reproductor al cambiar de serie
-            megaPlayer.src = "";
-
-            if (!serie) {
-                selectCapitulo.disabled = true;
-                const opt = document.createElement('option');
-                opt.value = "";
-                opt.textContent = "-- Elige primero una serie --";
-                selectCapitulo.appendChild(opt);
-                return;
-            }
-
-            selectCapitulo.disabled = false;
-
-            const optDefault = document.createElement('option');
-            optDefault.value = "";
-            optDefault.textContent = "-- Elige un capítulo --";
-            selectCapitulo.appendChild(optDefault);
-
-            // Rellenar capítulos de la serie elegida
-            datosSeries[serie].forEach(cap => {
-                const opt = document.createElement('option');
-                opt.value = cap.url;          // enlace embed de MEGA
-                opt.textContent = cap.nombre; // texto visible
-                selectCapitulo.appendChild(opt);
-            });
-        });
-
-        // Cuando eliges un capítulo
-        selectCapitulo.addEventListener('change', function () {
-            const url = this.value;
-            if (url) {
-                // Cargar el reproductor de MEGA dentro del iframe
-                megaPlayer.src = url;
-            } else {
-                megaPlayer.src = "";
-            }
-        });
-    </script>
-
-</body>
-</html>
-
-        
         select:focus {
             outline: none;
             border-color: #ff6b6b;
         }
-        
+
         select:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+            opacity: 1 !important;
+            cursor: pointer !important;
+            background: #1a1a2e;
+            border-color: #ff6b6b;
         }
-        
+
         option {
             background: #1a1a2e;
             color: #fff;
         }
-        
+
         .player-section {
             background: #252540;
             border-radius: 15px;
             padding: 20px;
         }
-        
+
         .player-title {
             font-size: 1.2rem;
             font-weight: 600;
@@ -957,7 +108,7 @@ GeronimoStilton: [
             text-align: center;
             color: #ff6b6b;
         }
-        
+
         .player-wrapper {
             position: relative;
             width: 100%;
@@ -966,7 +117,7 @@ GeronimoStilton: [
             border-radius: 12px;
             overflow: hidden;
         }
-        
+
         .player-wrapper iframe {
             position: absolute;
             top: 0;
@@ -975,7 +126,7 @@ GeronimoStilton: [
             height: 100%;
             border: none;
         }
-        
+
         .empty-player {
             position: absolute;
             top: 50%;
@@ -984,19 +135,25 @@ GeronimoStilton: [
             text-align: center;
             color: #666;
         }
-        
+
         .empty-player.hidden {
             display: none;
         }
-        
+
         .empty-player-icon {
             font-size: 3.5rem;
             margin-bottom: 10px;
         }
-        
+
         @media (max-width: 768px) {
-            body { padding: 10px; }
-            .controls-section, .player-section { padding: 15px; }
+            body {
+                padding: 10px;
+            }
+
+            .controls-section,
+            .player-section {
+                padding: 15px;
+            }
         }
     </style>
 </head>
@@ -1005,11 +162,11 @@ GeronimoStilton: [
         <h1>VenomPlayer</h1>
         <p>Tu plataforma de series</p>
     </div>
-    
+
     <div class="container">
         <div class="controls-section">
             <div class="control-group">
-                <label for="serie">📺 Serie</label>
+                <label for="serie">Serie</label>
                 <select id="serie">
                     <option value="">-- Elige una serie --</option>
                     <option value="house">House</option>
@@ -1023,24 +180,25 @@ GeronimoStilton: [
                     <option value="DragonBallSuper">Dragon Ball Super</option>
                     <option value="Machosalfas">Machos alfas</option>
                     <option value="Cuandonadiemeve">Cuando nadie me ve</option>
+                    <option value="GeronimoStilton">Geronimo Stilton</option>
                     <option value="Herederosdelanoche">Herederos de la noche</option>
                     <option value="isladelastentaciones">La isla de las tentaciones</option>
                 </select>
             </div>
-            
+
             <div class="control-group">
-                <label for="capitulo">🎬 Capítulo</label>
+                <label for="capitulo">Capítulo</label>
                 <select id="capitulo" disabled>
                     <option value="">-- Elige primero una serie --</option>
                 </select>
             </div>
         </div>
-        
+
         <div class="player-section">
-            <div class="player-title">▶ Reproductor</div>
+            <div class="player-title">Reproductor</div>
             <div class="player-wrapper">
                 <div class="empty-player" id="emptyPlayer">
-                    <div class="empty-player-icon">📺</div>
+                    <div class="empty-player-icon">▶️</div>
                     <p>Selecciona una serie y capítulo</p>
                 </div>
                 <iframe id="megaPlayer" allowfullscreen loading="lazy"></iframe>
@@ -1075,7 +233,7 @@ GeronimoStilton: [
                 { nombre: "House - 1x22", url: "https://vidmoly.net/embed-xpncpt4dc8ri.html" }
             ],
 
-The100: [
+            The100: [
                 { nombre: "The 100 - 1x1",  url: "https://vidmoly.net/embed-1yuy59r3rojg.html" },
                 { nombre: "The 100 - 1x2",  url: "https://vidmoly.net/embed-pk7zk7g0y91n.html" },
                 { nombre: "The 100 - 1x3",  url: "https://vidmoly.net/embed-a8s88cxojeg3.html" },
@@ -1105,10 +263,9 @@ The100: [
                 { nombre: "The 100 - 2x14", url: "https://vidmoly.net/wewvcd91chfr.html" },
                 { nombre: "The 100 - 2x15", url: "https://vidmoly.net/1r5a2d5ett61.html" },
                 { nombre: "The 100 - 2x16", url: "https://vidmoly.net/eqeyoeccu98.html" }
+            ],
 
-],
-
-FallingSkies: [
+            FallingSkies: [
                 { nombre: "Falling Skies - 1x1", url: "https://vidmoly.net/embed-qfehtlr28vs8.html" },
                 { nombre: "Falling Skies - 1x2", url: "https://vidmoly.net/embed-qxp71mkniq5e.html" },
                 { nombre: "Falling Skies - 1x3", url: "https://vidmoly.net/embed-hkro3ax680de.html" },
@@ -1161,12 +318,10 @@ FallingSkies: [
                 { nombre: "Falling Skies - 5x8",  url: "https://vidmoly.net/embed-kf5719ovfu9q.html" },
                 { nombre: "Falling Skies - 5x9",  url: "https://vidmoly.net/embed-4zmhcud7dpok.html" },
                 { nombre: "Falling Skies - 5x10", url: "https://vidmoly.net/embed-hqd4totwltf0.html" }
-                
             ],
 
-
-            teenwolf : [
-                { nombre: "Teen Wolf - 1x1", url: "https://vidmoly.net/embed-3le21eq61agx.html" },
+            teenwolf: [
+{ nombre: "Teen Wolf - 1x1", url: "https://vidmoly.net/embed-3le21eq61agx.html" },
                 { nombre: "Teen Wolf - 1x2", url: "https://vidmoly.net/embed-8rcuohl60o57.html" },
                 { nombre: "Teen Wolf - 1x3", url: "https://vidmoly.net/embed-enwvhsor7hzx.html" },
                 { nombre: "Teen Wolf - 1x4", url: "https://vidmoly.net/embed-glcphdutr8dq.html" },
@@ -1265,10 +420,11 @@ FallingSkies: [
                 { nombre: "Teen Wolf - 6x17", url: "https://vidmoly.net/embed-z8fr5mcnrf4c.html" },
                 { nombre: "Teen Wolf - 6x18", url: "https://vidmoly.net/embed-u52ifxlem0rc.html" },
                 { nombre: "Teen Wolf - 6x19", url: "https://vidmoly.net/embed-28axlzf6ipd5.html" },
-                { nombre: "Teen Wolf - 6x20", url: "https://vidmoly.net/embed-pq3g24cwh4ra.html" }                                                                 
-                ],
- thegooddoctor: [
-                { nombre: "The Good Doctor - 1x1",  url: "https://vidmoly.net/embed-sk7fo6gasf0j.html" },
+                { nombre: "Teen Wolf - 6x20", url: "https://vidmoly.net/embed-pq3g24cwh4ra.html" }                     
+            ],
+
+            thegooddoctor: [
+{ nombre: "The Good Doctor - 1x1",  url: "https://vidmoly.net/embed-sk7fo6gasf0j.html" },
                 { nombre: "The Good Doctor - 1x2",  url: "https://vidmoly.net/embed-s1hgty667c2d.html" },
                 { nombre: "The Good Doctor - 1x3",  url: "https://vidmoly.net/embed-r93467quebfz.html" },
                 { nombre: "The Good Doctor - 1x4",  url: "https://vidmoly.net/embed-8dy4zwmqaoi7.html" },
@@ -1395,8 +551,9 @@ FallingSkies: [
                 { nombre: "The Good Doctor - 7x9",  url: "https://mega.nz/embed/XA9QnYSA#k7y4jvFmIs99mowxf2PJeD5IE6T-SwanSuirwfjtO2Q" },
                 { nombre: "The Good Doctor - 7x10", url: "https://mega.nz/embed/aJVFjQaT#YfruzkKLGZHcOZvCq8cpae8X795X268iJRPoiJKSrWA" }
             ],
+
             thestrain: [
-                { nombre: "thes train - 1x1", url: "https://vidmoly.net/embed-zqudca2u5x9z.html" },
+               { nombre: "thes train - 1x1", url: "https://vidmoly.net/embed-zqudca2u5x9z.html" },
                 { nombre: "thes train - 1x2", url: "https://vidmoly.net/embed-i8f8v23ot6z8.html" },
                 { nombre: "thes train - 1x3", url: "https://vidmoly.net/embed-4g03eosikdg4.html" },
                 { nombre: "thes train - 1x4", url: "https://vidmoly.net/embed-emt3tv3w56ai.html" },  
@@ -1426,12 +583,8 @@ FallingSkies: [
                 { nombre: "LasTame - 1x12", url: "https://vidmoly.net/embed-w9fivrp2m6l.html" }
             ],
 
-
-
-            
-
-             isladelastentaciones: [
-                { nombre: "La isla de las tentaciones - 7x1", url: "https://vidmoly.net/embed-39qqi2ic5z6k.html" },
+            isladelastentaciones: [
+       { nombre: "La isla de las tentaciones - 7x1", url: "https://vidmoly.net/embed-39qqi2ic5z6k.html" },
                 { nombre: "La isla de las tentaciones - 7x2", url: "https://vidmoly.net/embed-dd491q9p7ful.html" },
                 { nombre: "La isla de las tentaciones - 7x3", url: "https://vidmoly.net/embed-pk3r7fhd3djl.html" },
                 { nombre: "La isla de las tentaciones - 7x4", url: "https://vidmoly.net/embed-yzmui5pdo9kh.html" },
@@ -1472,10 +625,11 @@ FallingSkies: [
                 { nombre: "La isla de las tentaciones - 8x17", url: "https://vidmoly.net/embed-rdav5wd9rvfu.html" },
                 { nombre: "La isla de las tentaciones - 8x18", url: "https://vidmoly.net/embed-f1i055z4vufg.html" },
                 { nombre: "La isla de las tentaciones - 8x19", url: "https://vidmoly.net/embed-96hr76fewvkt.html" },
-                { nombre: "La isla de las tentaciones - 8x20", url: "https://vidmoly.net/embed-jjczozb5u31i.html" }                                                             
+                { nombre: "La isla de las tentaciones - 8x20", url: "https://vidmoly.net/embed-jjczozb5u31i.html" }                                                
             ],
-DragonBallZ: [
-                { nombre: "Dragon Ball Z - 1x1", url: "https://vidmoly.net/embed-ms7rk1kvij3b.html" },
+
+            DragonBallZ: [
+{ nombre: "Dragon Ball Z - 1x1", url: "https://vidmoly.net/embed-ms7rk1kvij3b.html" },
                 { nombre: "Dragon Ball Z - 1x2", url: "https://vidmoly.net/embed-qsbh9i0ceat1.html" },
                 { nombre: "Dragon Ball Z - 1x3", url: "https://vidmoly.net/embed-646csc61lnpt.html" },
                 { nombre: "Dragon Ball Z - 1x4", url: "https://vidmoly.net/embed-vbe3d6ll283d.html" },
@@ -1548,11 +702,11 @@ DragonBallZ: [
                 { nombre: "Dragon Ball Z - 2x32", url: "https://vidmoly.net/embed-phgzbmp2ods6.html" },
                 { nombre: "Dragon Ball Z - 2x33", url: "https://vidmoly.net/embed-ldks9ca6gby9.html" },
                 { nombre: "Dragon Ball Z - 2x34", url: "https://vidmoly.net/embed-760xx2tj2iy3.html" },
-                { nombre: "Dragon Ball Z - 2x35", url: "https://vidmoly.net/embed-0k0n3qv9ines.html" }               
-
+                { nombre: "Dragon Ball Z - 2x35", url: "https://vidmoly.net/embed-0k0n3qv9ines.html" } 
             ],
+
             DragonBallSuper: [
-                { nombre: "Dragon Ball Super - 1x1", url: "https://vidmoly.net/embed-0p68dt19e1tq.html" },
+			{ nombre: "Dragon Ball Super - 1x1", url: "https://vidmoly.net/embed-0p68dt19e1tq.html" },
                 { nombre: "Dragon Ball Super - 1x2", url: "https://vidmoly.net/embed-qj1504saxldn.html" },
                 { nombre: "Dragon Ball Super - 1x3", url: "https://vidmoly.net/embed-m0q1e9anlww0.html" },
                 { nombre: "Dragon Ball Super - 1x4", url: "https://vidmoly.net/embed-lwnvss26wekc.html" },
@@ -1598,45 +752,9 @@ DragonBallZ: [
                 { nombre: "Dragon Ball Super - 3x17", url: "https://vidmoly.net/embed-l5pu6ixtepbb.html" },
                 { nombre: "Dragon Ball Super - 3x18", url: "https://vidmoly.net/embed-kxqfltlw2l49.html" },
                 { nombre: "Dragon Ball Super - 3x19", url: "https://vidmoly.net/embed-ggvukf966a2h.html" }
-            ],  
-            
-            Cuandonadiemeve: [
-                { nombre: "Cuando nadie me ve - 1x1", url: "https://vidmoly.net/embed-7k4l21371oqq.html" },
-                { nombre: "Cuando nadie me ve - 1x2", url: "https://vidmoly.net/embed-jmlugaw0kn6p.html" },
-                { nombre: "Cuando nadie me ve - 1x3", url: "https://vidmoly.net/embed-kpt4fhdshbc6.html" }
-                ],
-
-
-  Herederosdelanoche: [
-                { nombre: "Herederos de la noche - 1x1",  url: "https://vidmoly.net/embed-kpwgwfmo141n.html" },
-                { nombre: "Herederos de la noche - 1x2",  url: "https://vidmoly.net/embed-268ud3y4jwm8.html" },
-                { nombre: "Herederos de la noche - 1x3",  url: "https://vidmoly.net/embed-o5k4c6htimvz.html" },
-                { nombre: "Herederos de la noche - 1x4",  url: "https://vidmoly.net/embed-o26c0weh0dl0.html" },
-                { nombre: "Herederos de la noche - 1x5",  url: "https://vidmoly.net/embed-ig44elrp1ww6.html" },
-                { nombre: "Herederos de la noche - 1x6",  url: "https://vidmoly.net/embed-2aqajvhm1tv9.html" },
-                { nombre: "Herederos de la noche - 1x7",  url: "https://vidmoly.net/embed-9jaitkij5a4r.html" },
-                { nombre: "Herederos de la noche - 1x8",  url: "https://vidmoly.net/embed-3ekk55sx4ybe.html" },
-                { nombre: "Herederos de la noche - 1x9",  url: "https://vidmoly.net/embed-7kgxeraz126v.html" },
-                { nombre: "Herederos de la noche - 1x10",  url: "https://vidmoly.net/embed-81ajdtiwmdt1.html" },
-                { nombre: "Herederos de la noche - 1x11",  url: "https://vidmoly.net/embed-wrvp5gqulo8i.html" },
-                { nombre: "Herederos de la noche - 1x12",  url: "https://vidmoly.net/embed-mpolgek4xblq.html" },
-                { nombre: "Herederos de la noche - 1x13",  url: "https://vidmoly.net/embed-c5bzaiv3vcf0.html" },
-                { nombre: "Herederos de la noche - 2x1",  url: "https://vidmoly.net/embed-479e2uukiils.html" },
-                { nombre: "Herederos de la noche - 2x2",  url: "https://vidmoly.net/embed-09t1lofnbfzq.html" },
-                { nombre: "Herederos de la noche - 2x3",  url: "https://vidmoly.net/embed-kx25aoggto6q.html" },
-                { nombre: "Herederos de la noche - 2x4",  url: "https://vidmoly.net/embed-d4bcyu7pagpu.html" },
-                { nombre: "Herederos de la noche - 2x5",  url: "https://vidmoly.net/embed-gbeem9it1jje.html" },
-                { nombre: "Herederos de la noche - 2x6",  url: "https://vidmoly.net/embed-aza6fe8b9uzl.html" },
-                { nombre: "Herederos de la noche - 2x7",  url: "https://vidmoly.net/embed-y6in2dttne4v.html" },
-                { nombre: "Herederos de la noche - 2x8",  url: "https://vidmoly.net/embed-sh50x98abxlm.html" },
-                { nombre: "Herederos de la noche - 2x9",  url: "https://vidmoly.net/embed-oxel3jv6etb7.html" },
-                { nombre: "Herederos de la noche - 2x10",  url: "https://vidmoly.net/embed-j25j27022vsu.html" },
-                { nombre: "Herederos de la noche - 2x11",  url: "https://vidmoly.net/embed-cmrfvzae5nzj.html" },
-                { nombre: "Herederos de la noche - 2x12",  url: "https://vidmoly.net/embed-v3l4mnths9d2.html" },
-                { nombre: "Herederos de la noche - 2x13",  url: "https://vidmoly.net/embed-x5tqrtgft6eb.html" }            
-                ],
-            Machosalfas : [
-                { nombre: "Machos alfas - 1x1", url: "https://vidmoly.net/embed-k9wpjc41xm8m.html" },
+			],
+            Machosalfas: [
+			                { nombre: "Machos alfas - 1x1", url: "https://vidmoly.net/embed-k9wpjc41xm8m.html" },
                 { nombre: "Machos alfas - 1x2", url: "https://vidmoly.net/embed-ouam4qa2i5er.html" },
                 { nombre: "Machos alfas - 1x3", url: "https://vidmoly.net/embed-6f4cx2azmjoc.html" },
                 { nombre: "Machos alfas - 1x4", url: "https://vidmoly.net/embed-fuoz461s0hdr.html" },  
@@ -1671,29 +789,88 @@ DragonBallZ: [
                 { nombre: "Machos alfas - 4x3", url: "https://vidmoly.net/embed-6u17yhyakogz.html" },
                 { nombre: "Machos alfas - 4x4", url: "https://vidmoly.net/embed-x6oo038m1x3c.html" },  
                 { nombre: "Machos alfas - 4x5", url: "https://vidmoly.net/embed-5bujbts4b47i.html" },
-                { nombre: "Machos alfas - 4x6", url: "https://vidmoly.net/embed-sk573mbq3io2.html" }                                        
-            ]
+                { nombre: "Machos alfas - 4x6", url: "https://vidmoly.net/embed-sk573mbq3io2.html" } 
+			],
+            Cuandonadiemeve: [
+			                { nombre: "Cuando nadie me ve - 1x1", url: "https://vidmoly.net/embed-7k4l21371oqq.html" },
+                { nombre: "Cuando nadie me ve - 1x2", url: "https://vidmoly.net/embed-jmlugaw0kn6p.html" },
+                { nombre: "Cuando nadie me ve - 1x3", url: "https://vidmoly.net/embed-kpt4fhdshbc6.html" }
+			],
+            GeronimoStilton: [
+			  { nombre: "Geronimo Stilton - 1x01", url: "https://vidmoly.net/embed-cua1arsxi4b8.html" },
+  { nombre: "Geronimo Stilton - 1x02", url: "https://vidmoly.net/embed-h8mqofplllno.html" },
+  { nombre: "Geronimo Stilton - 1x03", url: "https://vidmoly.net/embed-helgm6wmlbfz.html" },
+  { nombre: "Geronimo Stilton - 1x04", url: "https://vidmoly.net/embed-6dfhrhhp5ajf.html" },
+  { nombre: "Geronimo Stilton - 1x05", url: "https://vidmoly.net/embed-9eb0qfcbaujb.html" },
+  { nombre: "Geronimo Stilton - 1x06", url: "https://vidmoly.net/embed-x6osczc33env.html" },
+  { nombre: "Geronimo Stilton - 1x07", url: "https://vidmoly.net/embed-m6k52kv00aqc.html" },
+  { nombre: "Geronimo Stilton - 1x08", url: "https://vidmoly.net/embed-1k3sf56gelwv.html" },
+  { nombre: "Geronimo Stilton - 1x09", url: "https://vidmoly.net/embed-y2j7lc8nzg8s.html" },
+  { nombre: "Geronimo Stilton - 1x10", url: "https://vidmoly.net/embed-a1c75o79ufyd.html" },
+  { nombre: "Geronimo Stilton - 1x11", url: "https://vidmoly.net/embed-ucnjb7hwiqty.html" },
+  { nombre: "Geronimo Stilton - 1x12", url: "https://vidmoly.net/embed-ho2zl9mrbncq.html" },
+  { nombre: "Geronimo Stilton - 1x13", url: "https://vidmoly.net/embed-9avnfqwde6p2.html" },
+  { nombre: "Geronimo Stilton - 1x14", url: "https://vidmoly.net/embed-raex6fgz3hu3.html" },
+  { nombre: "Geronimo Stilton - 1x15", url: "https://vidmoly.net/embed-b7mjwjxgcav7.html" },
+  { nombre: "Geronimo Stilton - 1x16", url: "https://vidmoly.net/embed-dyplwphx59z1.html" },
+  { nombre: "Geronimo Stilton - 1x17", url: "https://vidmoly.net/embed-3w90tzqeqza8.html" },
+  { nombre: "Geronimo Stilton - 1x18", url: "https://vidmoly.net/embed-8ulbvf023o5q.html" },
+  { nombre: "Geronimo Stilton - 1x19", url: "https://vidmoly.net/embed-6i4my4cs3nez.html" },
+  { nombre: "Geronimo Stilton - 1x20", url: "https://vidmoly.net/embed-y7wbc7r5y7gz.html" },
+  { nombre: "Geronimo Stilton - 1x21", url: "https://vidmoly.net/embed-yoy9u0253vq5.html" },
+  { nombre: "Geronimo Stilton - 1x22", url: "https://vidmoly.net/embed-fuuz7pe16a0e.html" },
+  { nombre: "Geronimo Stilton - 1x23", url: "https://vidmoly.net/embed-nfvc1i1r5qtt.html" },
+  { nombre: "Geronimo Stilton - 1x24", url: "https://vidmoly.net/embed-5ff2l2mipwl6.html" },
+  { nombre: "Geronimo Stilton - 1x25", url: "https://vidmoly.net/embed-rahe6e992s8j.html" },
+  { nombre: "Geronimo Stilton - 1x26", url: "https://vidmoly.net/embed-d8oezblhewv2.html" }
+			],
+            Herederosdelanoche: [{ nombre: "Herederos de la noche - 1x1",  url: "https://vidmoly.net/embed-kpwgwfmo141n.html" },
+                { nombre: "Herederos de la noche - 1x2",  url: "https://vidmoly.net/embed-268ud3y4jwm8.html" },
+                { nombre: "Herederos de la noche - 1x3",  url: "https://vidmoly.net/embed-o5k4c6htimvz.html" },
+                { nombre: "Herederos de la noche - 1x4",  url: "https://vidmoly.net/embed-o26c0weh0dl0.html" },
+                { nombre: "Herederos de la noche - 1x5",  url: "https://vidmoly.net/embed-ig44elrp1ww6.html" },
+                { nombre: "Herederos de la noche - 1x6",  url: "https://vidmoly.net/embed-2aqajvhm1tv9.html" },
+                { nombre: "Herederos de la noche - 1x7",  url: "https://vidmoly.net/embed-9jaitkij5a4r.html" },
+                { nombre: "Herederos de la noche - 1x8",  url: "https://vidmoly.net/embed-3ekk55sx4ybe.html" },
+                { nombre: "Herederos de la noche - 1x9",  url: "https://vidmoly.net/embed-7kgxeraz126v.html" },
+                { nombre: "Herederos de la noche - 1x10",  url: "https://vidmoly.net/embed-81ajdtiwmdt1.html" },
+                { nombre: "Herederos de la noche - 1x11",  url: "https://vidmoly.net/embed-wrvp5gqulo8i.html" },
+                { nombre: "Herederos de la noche - 1x12",  url: "https://vidmoly.net/embed-mpolgek4xblq.html" },
+                { nombre: "Herederos de la noche - 1x13",  url: "https://vidmoly.net/embed-c5bzaiv3vcf0.html" },
+                { nombre: "Herederos de la noche - 2x1",  url: "https://vidmoly.net/embed-479e2uukiils.html" },
+                { nombre: "Herederos de la noche - 2x2",  url: "https://vidmoly.net/embed-09t1lofnbfzq.html" },
+                { nombre: "Herederos de la noche - 2x3",  url: "https://vidmoly.net/embed-kx25aoggto6q.html" },
+                { nombre: "Herederos de la noche - 2x4",  url: "https://vidmoly.net/embed-d4bcyu7pagpu.html" },
+                { nombre: "Herederos de la noche - 2x5",  url: "https://vidmoly.net/embed-gbeem9it1jje.html" },
+                { nombre: "Herederos de la noche - 2x6",  url: "https://vidmoly.net/embed-aza6fe8b9uzl.html" },
+                { nombre: "Herederos de la noche - 2x7",  url: "https://vidmoly.net/embed-y6in2dttne4v.html" },
+                { nombre: "Herederos de la noche - 2x8",  url: "https://vidmoly.net/embed-sh50x98abxlm.html" },
+                { nombre: "Herederos de la noche - 2x9",  url: "https://vidmoly.net/embed-oxel3jv6etb7.html" },
+                { nombre: "Herederos de la noche - 2x10",  url: "https://vidmoly.net/embed-j25j27022vsu.html" },
+                { nombre: "Herederos de la noche - 2x11",  url: "https://vidmoly.net/embed-cmrfvzae5nzj.html" },
+                { nombre: "Herederos de la noche - 2x12",  url: "https://vidmoly.net/embed-v3l4mnths9d2.html" },
+                { nombre: "Herederos de la noche - 2x13",  url: "https://vidmoly.net/embed-x5tqrtgft6eb.html" }            
+				]
         };
 
-        const selectSerie    = document.getElementById('serie');
+        const selectSerie = document.getElementById('serie');
         const selectCapitulo = document.getElementById('capitulo');
-        const megaPlayer     = document.getElementById('megaPlayer');
+        const megaPlayer = document.getElementById('megaPlayer');
+        const emptyPlayer = document.getElementById('emptyPlayer');
 
-        // Cuando cambias de serie
         selectSerie.addEventListener('change', function () {
             const serie = this.value;
 
-            // Limpiar capítulos anteriores
-            selectCapitulo.innerHTML = "";
-
-            // Vaciar reproductor al cambiar de serie
-            megaPlayer.src = "";
+            selectCapitulo.innerHTML = '';
+            megaPlayer.src = '';
+            emptyPlayer.classList.remove('hidden');
 
             if (!serie) {
                 selectCapitulo.disabled = true;
+
                 const opt = document.createElement('option');
-                opt.value = "";
-                opt.textContent = "-- Elige primero una serie --";
+                opt.value = '';
+                opt.textContent = '-- Elige primero una serie --';
                 selectCapitulo.appendChild(opt);
                 return;
             }
@@ -1701,31 +878,37 @@ DragonBallZ: [
             selectCapitulo.disabled = false;
 
             const optDefault = document.createElement('option');
-            optDefault.value = "";
-            optDefault.textContent = "-- Elige un capítulo --";
+            optDefault.value = '';
+            optDefault.textContent = '-- Elige un capítulo --';
             selectCapitulo.appendChild(optDefault);
 
-            // Rellenar capítulos de la serie elegida
+            if (!datosSeries[serie] || datosSeries[serie].length === 0) {
+                const opt = document.createElement('option');
+                opt.value = '';
+                opt.textContent = '-- No hay capítulos disponibles --';
+                selectCapitulo.appendChild(opt);
+                return;
+            }
+
             datosSeries[serie].forEach(cap => {
                 const opt = document.createElement('option');
-                opt.value = cap.url;          // enlace embed de MEGA
-                opt.textContent = cap.nombre; // texto visible
+                opt.value = cap.url;
+                opt.textContent = cap.nombre;
                 selectCapitulo.appendChild(opt);
             });
         });
 
-        // Cuando eliges un capítulo
         selectCapitulo.addEventListener('change', function () {
             const url = this.value;
+
             if (url) {
-                // Cargar el reproductor de MEGA dentro del iframe
                 megaPlayer.src = url;
+                emptyPlayer.classList.add('hidden');
             } else {
-                megaPlayer.src = "";
+                megaPlayer.src = '';
+                emptyPlayer.classList.remove('hidden');
             }
         });
     </script>
-
 </body>
-</html>
-
+</html>+
